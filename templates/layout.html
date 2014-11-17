@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Pika pika</title>
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap/css/bootstrap.css') }}">
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap/css/bootstrap-theme.css') }}">
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css')}}">
+
+		{% block header %}
+		{% endblock %}
+	</head>
+	<body>
+
+		<header>
+			<div class="container">
+				<h1 class="logo">Pika pika</h1>
+				<strong><nav>
+					<ul class="menu">
+						<li><a href="{{url_for('index')}}">Home</a></li>
+						<li><a href="{{url_for('about')}}">About</a></li>
+
+						{% if not session.logged_in %}
+					    <li><a href="{{ url_for('login') }}">Login</a></li>
+					  	{% else %}
+					    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+					  	{% endif %}
+					</ul>
+				</nav></strong>
+			</div>
+		</header>
+
+		<div class="container">
+
+			<div class="row">
+
+				{% with messages = get_flashed_messages() %}
+				  {% if messages %}
+				    {% for message in messages %}
+				      <div class="alert alert-success" role="alert">{{ message }}</div>
+				    {% endfor %}
+				  {% endif %}
+				{% endwith %}
+
+			</div>
+
+			<div class="row">
+
+				{% block content %}
+				{% endblock %}
+
+			</div>
+		</div>
+
+	</body>
+</html>

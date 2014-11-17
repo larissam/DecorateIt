@@ -1,0 +1,52 @@
+{% extends 'layout.html' %}
+
+{% block header %}
+
+<style>
+body {
+  background: url('../static/images/color.jpg');
+}
+#registrationFormBox {
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 30px;
+  border-radius: 25px;
+}
+
+.form-group {
+  padding-left: 0px;
+}
+</style>
+
+{% endblock %}
+
+{% block content %}
+
+<div id="registrationFormBox">
+  <form method="POST" role="form">
+      <h2> Register </h2>
+
+      <!-- username is email address -->
+      <!-- using bootstrap form control here -->
+      <div class="row">
+        <div class="form-group"> <!--col-xs-5-->
+          <label for="email">Email address</label>
+          <input type="text" class="form-control" id="email" placeholder="Email Address" required autofocus name="email"/>
+        </div>
+        <div class="form-group">
+          <label for="password">Create a password</label>
+          <input type="password" class="form-control" placeholder="Password" required name="password"/>
+        </div>
+        <div class="form-group">
+          <label for="password">Confirm your password </label>
+          <input type="password" class="form-control" placeholder="Password" required name="password"/>
+        </div>
+        <button type="submit" class="btn btn-primary">Sign Up!</button>
+      </div>
+  </form>
+
+  <div class="row">
+    <a href="{{ url_for('login') }}">Already a member? Click here to login</a>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<h2>Upload file or <a href="{{ url_for('photobooth') }}">take a picture?</a></h2>
+
+<form action="" method="POST">
+	<div class="form-group">
+    	<label for="uploadFile">Upload File</label>
+    	<input type="file" id="upload">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+{% endblock %}

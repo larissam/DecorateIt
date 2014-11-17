@@ -1,0 +1,45 @@
+* { font-family: Calibri, Sans-serif; outline: none; } 
+body, html { margin: 0; padding: 0; overflow: hidden; background: url(background.gif); } 
+canvas { clear: both; display: block; z-index: -1; } 
+input { background: white; border: 1px solid black; border-radius: 4px; padding: 3px 5px; } 
+input[type=text] { padding: 5px; } 
+button { padding: 6px 10px; color: rgb(255, 255, 255); background: rgba(0, 0, 0, 0.3); border: 1px solid rgb(40, 40, 40); border-radius: 4px; } 
+button:hover, button.hover { background: rgba(0, 0, 0, 0.2); } 
+button:active, button.active { background: rgba(0, 0, 0, 0.4); } 
+ 
+ul#mainmenu { list-style: none; padding: 2px; margin: 0; float: left; background: rgb(150, 150, 150); font-size: 1.2em; width: 778px; } 
+ul#mainmenu li { float: left; margin: 0; padding: 0 2px 0 0; position: relative; } 
+ul#mainmenu li button { float: left; } 
+ul#mainmenu li ul.submenu { list-style: none; position: absolute; left: -2px; top: 34px; background: rgb(150, 150, 150); margin: 0; padding: 0; display: none; float: left; width: 170px; border-radius: 0 0 4px 4px; } 
+ul#mainmenu li ul.submenu li { margin: 0; padding: 0; clear: both; width: 170px; } 
+ul#mainmenu li ul.submenu li button { width: 162px; text-align: left; margin: 4px; padding-left: 20px; } 
+ul#mainmenu li ul.submenu li button:hover { background: rgba(0, 0, 0, 0.2); } 
+ul#mainmenu li ul.submenu li button:active { background: rgba(0, 0, 0, 0.4); } 
+ul#mainmenu li ul.submenu li hr { margin: 4px; border-top: 1px solid rgba(0, 0, 0, 0.4); border-bottom: 1px solid rgb(205, 205, 205); } 
+ 
+div#overlay { background: rgba(0, 0, 0, 0.6); position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: 1; display: none; } 
+ 
+ul#layers { width: 232px; position: fixed; right: 0; top: 37px; background: rgb(150, 150, 150); border-top: 1px dotted rgb(100, 100, 100); list-style: none; margin: 0; padding: 0 5px 5px; overflow-y: auto; overflow-x: hidden; } 
+ul#layers li { margin-top: 5px; padding: 5px; background: rgb(180, 180, 180); border-radius: 4px; } 
+ul#layers li.active { background: rgb(160, 160, 160); padding: 3px; border: 2px dotted black; } 
+ul#layers li img { width: 42px; height: 42px; float: left; padding: 2px; color: rgb(255, 255, 255); background: rgba(0, 0, 0, 0.3); border: 1px solid rgb(40, 40, 40); border-radius: 4px; } 
+ul#layers li h1 { font-size: 16px; padding: 0 5px; margin: 3px 0; width: 132px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; } 
+ul#layers li span { padding: 0 5px; margin: 3px 0; width: 132px; } 
+ul#layers li span button { padding: 3px 5px; margin: 0 3px 0 0; } 
+ 
+button#button-move, #button-select, #button-text { background-repeat: no-repeat; background-position: 50% 50%; padding: 6px 15px; } 
+button#button-move { background-image: url(move.gif); } 
+button#button-text { background-image: url(text.gif); } 
+button#button-openfile input, button#button-importfile input { position: relative; left: -23px; top: -8px; width: 162px; opacity: 0; } 
+ 
+div#dialog-tooltext select { padding: 4px; width: 173px; color: rgb(0, 0, 0); border: 1px solid rgb(40, 40, 40); border-radius: 4px; } 
+ 
+div.dialog { border: 1px solid black; background: rgb(240, 240, 240); position: fixed; border-radius: 4px; z-index: 2; display: none; padding: 40px; } 
+ 
+div#cropoverlay { position: fixed; left: 0; top: 0; z-index: 2; background: rgba(255, 255, 255, 0.15); width: 120px; height: 120px; border: 1px dotted black; border-radius: 0; padding: 0; display: none; } 
+div#cropoverlay div { width: 20px; height: 20px; position: absolute; z-index: 1000; right: 0; bottom: 0;  border-top: 1px solid black;  border-left: 1px solid black; } 
+ 
+.ui-resizable { position: relative;} 
+.ui-resizable-handle { position: absolute;font-size: 0.1px;z-index: 99999; display: block; } 
+.ui-resizable-disabled .ui-resizable-handle, .ui-resizable-autohide .ui-resizable-handle { display: none; } 
+.ui-resizable-se { cursor: se-resize; width: 12px; height: 12px; right: 1px; bottom: 1px; }

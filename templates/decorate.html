@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+
+{% block header %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css')}}">
+
+<script language="javascript" type="text/javascript" src="{{ url_for('static', filename='js/jquery-1.11.0.min.js')}}"></script>
+
+{% endblock %}
+
+{% block content %}
+	<h2>Decorate Your Photos!</h2>
+
+	<!-- old width 965-->
+	<iframe src="{{ url_for('static', filename='editor.html') }}" style="height:524px; width:995px; border:15px solid black;"></iframe>
+
+{% endblock %}

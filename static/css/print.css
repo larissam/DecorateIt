@@ -1,0 +1,2 @@
+body * { visibility: hidden; } 
+canvas { visibility: visible; position: absolute; top: 0; left: 0; }

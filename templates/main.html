@@ -1,0 +1,186 @@
+{% extends "layout.html" %}
+
+{% block header %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap/css/bootstrap.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap/css/bootstrap-theme.css') }}">
+<script type="text/javascript" src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js') }}"></script>
+
+<script language="javascript" type="text/javascript" src="{{ url_for('static', filename='js/jquery-1.11.0.min.js')}}"></script>
+
+<style>
+	/* for gallery */
+		.gallery {
+			display: block;
+			text-align: center;
+			position: relative;
+			padding: .7em .7em .7em .7em;
+			min-height: 0;
+			font-size: 100%;
+			background: #470024;
+			border-top: 10px solid black;
+		}
+		.gallery > img {
+			-webkit-filter: opacity(0.4);
+		}
+
+		.gallery >img:hover {
+			-webkit-filter: opacity(1);
+		}
+		.gallery-img-active {
+			-webkit-filter: opacity(1);
+		}
+
+	/* for accordion */
+		h3 > img {
+			-webkit-filter: invert(1);
+		}
+		.h3-faux-accordion {
+			display: block;
+			text-align: center;
+			position: relative;
+			margin: 2px 0 0 0;
+			padding: .5em .5em .5em .7em;
+			min-height: 0;
+			font-size: 100%;
+			height: 42px; /* JS changes this. used to be 48 */
+		}
+
+	/* for accordion icons and tool selection */
+		button {
+			border: none;
+			background: none;
+			/*-webkit-filter: opacity(0.4);*/
+			-webkit-filter: opacity(1);
+		}
+
+		button:hover {
+			-webkit-filter: brightness(50%);
+		}
+
+		button:focus {
+			outline: 0 !important;
+		}
+		.accordion-button-adjustment {
+			-webkit-filter: opacity(0.4) !important;
+		}
+
+		.icon-inactive {
+			display:inline-block; 
+			-webkit-filter: invert(1);
+		}
+
+		.button-active {
+			border: none;
+			background: none;
+			-webkit-filter: none;
+		}
+
+	
+
+	/* for radio buttons */
+
+	/* for thumbnails */
+	.thumbnail-size {
+		width: 300px;
+	}
+
+	.add-button-size {
+		margin-top: 51px;
+		margin-bottom: 51px;
+		margin-left: 86px;
+		margin-right: 86px;
+	}
+
+	/* for hover overlays */
+		.hidden {
+			visibility: hidden;
+		}
+
+
+	</style>
+
+
+
+{% endblock %}
+{% block content %}
+
+{% if session.logged_in %}
+
+<h2>Your Purikuras</h2>
+
+<div id="purikuraList">
+    {% for purikura in purikura_list %}
+    <div class="col-md-3">
+    	<a href="/purikura/{{ purikura.id }}"><img src="{{ purikura.src }}" /></a>
+        <a class="btn btn-primary" href="/purikura/{{ purikura.id }}">Details</a>
+    </div>
+    {% endfor %}
+
+    <div class="col-md-3">
+    	<!-- the link goes to a "details" page -->
+
+    	<!-- width styling is so it scales smaller -->
+    	<button><a href="{{ url_for('show_purikura') }}"><img src="{{ url_for('static', filename='images/bunu.jpg') }}" class="img-thumbnail thumbnail-size" /></a></button>
+    	<!-- <div class="hidden">
+    		<a href=""><img src="{{ url_for('static', filename='images/socialmediaiconfacebook.png') }}" /></a>
+    	</div> -->
+    </div>
+    <div class="col-md-3">
+    	<!-- the link goes to a "details" page -->
+
+    	<!-- width styling is so it scales smaller -->
+    	<button><a href="{{ url_for('show_purikura') }}"><img src="{{ url_for('static', filename='images/bunu.jpg') }}" class="img-thumbnail thumbnail-size" /></a></button>
+    	<!-- <div class="hidden">
+    		<a href=""><img src="{{ url_for('static', filename='images/socialmediaiconfacebook.png') }}" /></a>
+    	</div> -->
+    </div>
+    <div class="col-md-3">
+    	<!-- the link goes to a "details" page -->
+
+    	<!-- width styling is so it scales smaller -->
+    	<button><a href="{{ url_for('show_purikura') }}"><img src="{{ url_for('static', filename='images/bunu.jpg') }}" class="img-thumbnail thumbnail-size" /></a></button>
+    	<!-- <div class="hidden">
+    		<a href=""><img src="{{ url_for('static', filename='images/socialmediaiconfacebook.png') }}" /></a>
+    	</div> -->
+    </div>
+    <div class="col-md-3">
+    	<!-- the link goes to a "details" page -->
+
+    	<!-- width styling is so it scales smaller -->
+    	<button><a href="{{ url_for('show_purikura') }}"><img src="{{ url_for('static', filename='images/bunu.jpg') }}" class="img-thumbnail thumbnail-size" /></a></button>
+    	<!-- <div class="hidden">
+    		<a href=""><img src="{{ url_for('static', filename='images/socialmediaiconfacebook.png') }}" /></a>
+    	</div> -->
+    </div>
+    <div class="col-md-3">
+    	<!-- the link goes to a "details" page -->
+
+    	<!-- width styling is so it scales smaller -->
+    	<button><a href="{{ url_for('show_purikura') }}"><img src="{{ url_for('static', filename='images/bunu.jpg') }}" class="img-thumbnail thumbnail-size" /></a></button>
+    	<!-- <div class="hidden">
+    		<a href=""><img src="{{ url_for('static', filename='images/socialmediaiconfacebook.png') }}" /></a>
+    	</div> -->
+    </div>
+    <div class="col-md-3">
+    	<!-- the link goes to a "details" page -->
+
+    	<!-- width styling is so it scales smaller -->
+    	<button><a href="{{ url_for('choose') }}"><img src="{{ url_for('static', filename='images/navigatorplus.png') }}" class="img-thumbnail add-button-size" /></a></button>
+    	<!-- <div class="hidden">
+    		<a href=""><img src="{{ url_for('static', filename='images/socialmediaiconfacebook.png') }}" /></a>
+    	</div> -->
+    </div>
+</div>
+
+
+
+
+
+<script>
+		
+</script>
+
+{% endif %}
+
+
+{% endblock %}
