@@ -23,7 +23,9 @@ from werkzeug import secure_filename
 
 from datetime import datetime
 
-UPLOAD_FOLDER = '/Users/Larissa/pika/app/static/images/purikuras/'
+CURRENT_FOLDER = os.path.dirname(os.path.abspath(__file__))
+
+UPLOAD_FOLDER = CURRENT_FOLDER + '/static/images/purikuras/'
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 
 
@@ -127,7 +129,6 @@ def allowed_file(filename):
 
 @app.route('/uploadfile', methods=['POST'])
 def upload_file():
-	print "HAIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII"
 	
 	file = request.files['file']
 
