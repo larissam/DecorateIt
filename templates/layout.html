@@ -16,7 +16,12 @@
 				<h1 class="logo">Pika pika</h1>
 				<strong><nav>
 					<ul class="menu">
-						<li><a href="{{url_for('index')}}">Home</a></li>
+						{% if not session.logged_in %}
+						<li><a href="{{url_for('login')}}">Home</a></li>
+						{% else %}
+						<li><a href="{{url_for('main')}}">Home</a></li>
+						{% endif %}
+						
 						<li><a href="{{url_for('about')}}">About</a></li>
 
 						{% if not session.logged_in %}

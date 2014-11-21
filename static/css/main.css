@@ -33,6 +33,7 @@ header h1.logo:hover {
 .container {
 	width: 940px;
 	margin: 0 auto;
+	padding-top: 5px;
 }
 
 div.jumbo {
@@ -63,7 +64,7 @@ h3 {
 
 .menu {
 	float: right;
-	margin-top: 8px;
+	margin-top: 3px;
 }
 
 .menu li {

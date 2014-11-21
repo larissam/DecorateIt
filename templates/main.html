@@ -96,6 +96,41 @@
 			visibility: hidden;
 		}
 
+	div.purikura {
+		-webkit-filter: opacity(0.4);
+	}
+
+	div.purikura:hover {
+		-webkit-filter: opacity(1);
+	}
+
+	div.purikuraOptions {
+		position: relative;
+		top: 30px;
+		left: 230px;
+	}
+
+	.purikura, .purikura img {
+	  position:relative;
+	  width:250px;
+	}
+	.purikuraOptions {
+	  display:none;
+	  position:absolute;
+	  top:0;
+	  right:0;
+	  width:15px;
+	  height:15px;
+	  background-image:url( "{{ url_for('static', filename='images/gallerydelete.png') }}" );
+	}
+	.purikura:hover .purikuraOptions {
+	  display:block;
+	}
+	.purikuraOptions:hover {
+	  background-image:url( "{{ url_for('static', filename='images/gallerydelete.png') }}" );
+	}
+
+
 
 	</style>
 
@@ -106,61 +141,9 @@
 
 {% if session.logged_in %}
 
-<h2>Your Purikuras</h2>
+<h2>My Gallery</h2>
 
 <div id="purikuraList">
-    {% for purikura in purikura_list %}
-    <div class="col-md-3">
-    	<a href="/purikura/{{ purikura.id }}"><img src="{{ purikura.src }}" /></a>
-        <a class="btn btn-primary" href="/purikura/{{ purikura.id }}">Details</a>
-    </div>
-    {% endfor %}
-
-    <div class="col-md-3">
-    	<!-- the link goes to a "details" page -->
-
-    	<!-- width styling is so it scales smaller -->
-    	<button><a href="{{ url_for('show_purikura') }}"><img src="{{ url_for('static', filename='images/bunu.jpg') }}" class="img-thumbnail thumbnail-size" /></a></button>
-    	<!-- <div class="hidden">
-    		<a href=""><img src="{{ url_for('static', filename='images/socialmediaiconfacebook.png') }}" /></a>
-    	</div> -->
-    </div>
-    <div class="col-md-3">
-    	<!-- the link goes to a "details" page -->
-
-    	<!-- width styling is so it scales smaller -->
-    	<button><a href="{{ url_for('show_purikura') }}"><img src="{{ url_for('static', filename='images/bunu.jpg') }}" class="img-thumbnail thumbnail-size" /></a></button>
-    	<!-- <div class="hidden">
-    		<a href=""><img src="{{ url_for('static', filename='images/socialmediaiconfacebook.png') }}" /></a>
-    	</div> -->
-    </div>
-    <div class="col-md-3">
-    	<!-- the link goes to a "details" page -->
-
-    	<!-- width styling is so it scales smaller -->
-    	<button><a href="{{ url_for('show_purikura') }}"><img src="{{ url_for('static', filename='images/bunu.jpg') }}" class="img-thumbnail thumbnail-size" /></a></button>
-    	<!-- <div class="hidden">
-    		<a href=""><img src="{{ url_for('static', filename='images/socialmediaiconfacebook.png') }}" /></a>
-    	</div> -->
-    </div>
-    <div class="col-md-3">
-    	<!-- the link goes to a "details" page -->
-
-    	<!-- width styling is so it scales smaller -->
-    	<button><a href="{{ url_for('show_purikura') }}"><img src="{{ url_for('static', filename='images/bunu.jpg') }}" class="img-thumbnail thumbnail-size" /></a></button>
-    	<!-- <div class="hidden">
-    		<a href=""><img src="{{ url_for('static', filename='images/socialmediaiconfacebook.png') }}" /></a>
-    	</div> -->
-    </div>
-    <div class="col-md-3">
-    	<!-- the link goes to a "details" page -->
-
-    	<!-- width styling is so it scales smaller -->
-    	<button><a href="{{ url_for('show_purikura') }}"><img src="{{ url_for('static', filename='images/bunu.jpg') }}" class="img-thumbnail thumbnail-size" /></a></button>
-    	<!-- <div class="hidden">
-    		<a href=""><img src="{{ url_for('static', filename='images/socialmediaiconfacebook.png') }}" /></a>
-    	</div> -->
-    </div>
     <div class="col-md-3">
     	<!-- the link goes to a "details" page -->
 
@@ -170,6 +153,35 @@
     		<a href=""><img src="{{ url_for('static', filename='images/socialmediaiconfacebook.png') }}" /></a>
     	</div> -->
     </div>
+    <a href="#" class="purikuraOptions"></a>
+
+    {% for purikura in purikura_list %}
+    <div class="col-md-3">
+    	<!-- <a href="/purikura/{{ purikura.id }}"><img src="{{ purikura.combined_src }}" /></a> -->
+        <!-- <a class="btn btn-primary" href="/purikura/{{ purikura.id }}">Details</a> -->
+
+        <!-- <div class="purikura">
+        	<div class="purikuraOptions hidden">
+    			<button><img src="{{ url_for('static', filename='images/gallerydelete.png') }}" /></button>
+    		</div>	
+        	<a href="/purikura/{{ purikura.id }}"><img src="{{ purikura.combined_src }}" class="img-thumbnail thumbnail-size" /></a>
+        	
+        </div> -->
+
+        <div class="purikura">
+		  <img src="{{ purikura.combined_src }}" class="img-thumbnail thumbnail-size"/>
+		  
+		  <form action="{{ url_for('delete_purikura') }}" method=POST>
+		  	<input type="hidden" name="filename" value="{{ purikura.combined_src }}">
+		  	<button class="purikuraOptions"></button>
+		  </form>
+		</div>
+        
+        
+    </div>
+    {% endfor %}
+
+    
 </div>
 
 
@@ -177,6 +189,7 @@
 
 
 <script>
+
 		
 </script>
 

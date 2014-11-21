@@ -8,6 +8,10 @@
 <script language="javascript" type="text/javascript" src="{{ url_for('static', filename='js/jquery-1.11.0.min.js')}}"></script>
 
 <style>
+		body {
+			background-color: #171717;
+			margin:0px;
+		}
 	/* for gallery */
 		.gallery {
 			display: block;
@@ -49,11 +53,11 @@
 		button {
 			border: none;
 			background: none;
-			-webkit-filter: opacity(0.4);
+			-webkit-filter: opacity(0.4) invert(1);
 		}
 
 		button:hover {
-			-webkit-filter: opacity(1);
+			-webkit-filter: opacity(1) invert(1);
 		}
 
 		button:focus {
@@ -65,7 +69,15 @@
 
 		.icon-inactive {
 			display:inline-block; 
-			-webkit-filter: invert(1);
+			-webkit-filter: opacity(0.4) invert(1);
+		}
+
+		button.icon-inactive:hover {
+			-webkit-filter: opacity(0.4) invert(1) !important;
+		}
+
+		.icon-active {
+			-webkit-filter: opacity(1) invert(1) !important;
 		}
 
 		.button-active {
@@ -91,64 +103,30 @@
 
 <!-- sizing matches the editor later. had to add 15 to measurements b/c of the border -->
 <!-- old style:style="/*height:644px;*/ width:980px; border:15px solid black;"-->
-<div style="border: 15px solid; width: 995px; height: 524px;">
-	<table>
-		<tr>
-			<td style="vertical-align: top;">
-					<div style="position:relative;">
-						<canvas id="canvas" width="700" height="494"></canvas>
-						<button id="snap" style="position: absolute; top: 250px; left: 450px; z-index: 100;" class="text-hidden"><img src="{{ url_for('static', filename='images/navigatorcamera.png') }}" style="-webkit-filter: invert(1);"/></button>
-						<p id="enableVideoText" style="position:absolute; top:200px; left:500px; z-index:101; font-size:60px;">Enable your video!</p>
-						<p id="countdown" style="position: absolute; top: -100px; left: 450px; z-index: 100; font-size:300px;" class="text-hidden">3</p>
-						<p id="waitText" style="position:absolute; top:200px; left:500px; z-index:101; font-size:60px;" class="text-hidden">Prepare to smile!</p>
-						<video id="video" width="700" height="494" autoplay style="display:none;"></video>
-					</div>
-					<!-- <button id="snap">Snap Photo</button> -->
 
-					
-			</td>
-			<td style="vertical-align: top; width:265px;">
-
-				<!-- gallery -->
-				<!-- i believe js should populate this -->
-				<!-- change the height attribute afterwards. 500px is just a sample -->
-				<div class="h3-faux-accordion" id="output" style="background-color: #8A002E; height:450px; margin-top:0px;">
-
-					<!-- WERE NOT GOING TO USE A FORM. JUST USE A BUNCH OF EVENT LISTENERS AND FLAG THE ONES YOU WANT -->
-					<!-- YOU CAN USE THIS TECHNIQUE FOR THE STYLING AS WELL -->
-					<form id="snapshots" action="{{ url_for('process_image') }}" method="POST">
-					<!-- you're going to have a bunch of <input type="checkbox" name="selectedPhotos" value="1"> -->
-					<!-- let's make the css so that if selected it's bold -->
-					<!-- have a submit button that when clicked, call js to send to the server -->
-
-					
-					<!-- <input type="radio" value="hi" />
-					<img src="{{ url_for('static', filename='images/pikachu.png') }}" style="height: 100px; width:100px;" />
-					<input type="radio" value="hi" />
-					<img src="{{ url_for('static', filename='images/pikachu.png') }}" style="height: 100px; width:100px;" /> -->
-					</form>
-
-						
-				</div>
-
-				<!-- submit photos option -->
-				<div>
-					<!-- margin 0px just for this guy b/c want top plumb with editor window -->
-					<h3 class="h3-faux-accordion" style="background-color: #B8005C; margin-bottom:0px;">
-						<button><a href="" id="download"><img src="{{ url_for('static', filename='images/navigatorupload.png') }}" style="height:32px; width:32px" class="icon-inactive"/></a></button>
-
-					</h3>
-				</div>
+<div class="col-md-12 text-center" style="margin-top:50px;">
+	<div style="position:relative;">
+		<canvas id="canvas" width="700" height="494"></canvas>
+		<button id="snap" style="position: absolute; top: 250px; left: 450px; z-index: 100;" class="text-hidden"><img src="{{ url_for('static', filename='images/navigatorcamera.png') }}"/></button>
+		<p id="enableVideoText" style="position:absolute; top:200px; left:500px; z-index:101; font-size:60px;">Enable your video!</p>
+		<p id="countdown" style="position: absolute; top: -100px; left: 450px; z-index: 100; font-size:300px;" class="text-hidden">3</p>
+		<p id="waitText" style="position:absolute; top:200px; left:500px; z-index:101; font-size:60px;" class="text-hidden">Prepare to smile!</p>
+		<video id="video" width="700" height="494" autoplay style="display:none;"></video>
+	</div>
+	<div>
+		<form id="snapshots" action="{{ url_for('upload_webcam_photo') }}" method=POST>
+			<!-- <input type="radio" value="hi" />
+			<img src="{{ url_for('static', filename='images/pikachu.png') }}" style="height: 100px; width:100px;" />
+			<input type="radio" value="hi" />
+			<img src="{{ url_for('static', filename='images/pikachu.png') }}" style="height: 100px; width:100px;" /> -->
+			<button id="submitButton" type="submit" class="icon-inactive" disabled><img src="{{ url_for('static', filename='images/navigatorupload.png') }}" style="height:32px; width:32px" /></button>
+			<!-- <button><a href="" id="upload"></a></button> -->
+		</form>
+	</div>
 
 
-				<!-- this should be in the header. currenty hidden. remove later -->
-				<form action="/logout" method="POST" style="visibility:hidden;">
-					<button id="logout" type="submit" method="POST">Logout!</button>
-				</form>
-			</td>
-		</tr>
-	</table>
 </div>
+
 
 
 
@@ -271,8 +249,9 @@
 						entry.value = data; //this is a really long string...
 
 						
-						$form.append(entry);
-						$form.append(img.outerHTML);
+						
+						$form.prepend(img.outerHTML);
+						$form.prepend(entry);
 					}, 3000);
 
 					photoShots--;
@@ -283,12 +262,14 @@
 
 			setTimeout(function() {
 				document.getElementById("countdown").className = "text-hidden";
-				var submitButton = document.createElement("input");
-				submitButton.type = "submit";
+				document.getElementById("submitButton").disabled = false;
+				document.getElementById("submitButton").className = "icon-active";
+				// var submitButton = document.createElement("input");
+				// submitButton.type = "submit";
 
-				$form.append(submitButton);
-				console.log("appended the submit button");
-			}, 30000); //29000
+				// $form.append(submitButton);
+				// console.log("appended the submit button");
+			}, 29000); //29000
 
 
 				//SEND THE DATA HERE
