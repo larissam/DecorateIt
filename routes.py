@@ -7,20 +7,16 @@ import numpy as np
 import jinja2
 import model
 import io
-
 import os
+import json
 
 #import base64
 
 from base64 import decodestring
-
 from binascii import a2b_base64
-
 from PIL import Image
-
 from flask import Flask, request, redirect, url_for
 from werkzeug import secure_filename
-
 from datetime import datetime
 
 CURRENT_FOLDER = os.path.dirname(os.path.abspath(__file__))
@@ -28,32 +24,34 @@ CURRENT_FOLDER = os.path.dirname(os.path.abspath(__file__))
 UPLOAD_FOLDER = CURRENT_FOLDER + '/static/images/purikuras/'
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 
-
-
 app = Flask(__name__)
 app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT' #why do I have this again..?
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 #editor = Blueprint('editor', __name__, template_folder='static')
 
-
 @app.route('/', methods=['GET', 'POST'])
 def index():
 	if request.method == 'POST':
 		email = request.form['email']
 		password = request.form['password']
+		passwordcheck = request.form['passwordcheck']
 
 		# Prevent users from having the same usernames; usernames should be unique.
 		isExisting = model.session.query(model.User).filter_by(email=email).first()
 		if isExisting:
-			flash('This username already exists. Please select another one!')
+			flash('This email already exists. Please use another one!', 'danger')
+			return redirect(url_for("index"))
+
+		if password != passwordcheck:
+			flash('Your passwords do not match. Please try again!', 'danger')
 			return redirect(url_for("index"))
 
 		# Creates a new user account as long as the username is unique.
 		newuser = model.User(email=email, password=password)
 		model.session.add(newuser)
 		model.session.commit()
-		flash('Your account has been created!')
+		flash('Your account has been created!', 'success')
 		return redirect(url_for("login"))
 
 	return render_template("register.html", title = "Register")
@@ -73,7 +71,7 @@ def login():
 		user = model.session.query(model.User).filter_by(email=email).first() #look for existing flask function
 
 		if not user or user.password != password:
-			flash("Incorrect username or password. Please try again!")
+			flash("Incorrect username or password. Please try again!", 'danger')
 			return redirect(url_for("login"))
 
 
@@ -90,7 +88,7 @@ def login():
 @app.route('/logout')
 def logout():
 	session.clear()
-	flash("Logged out!")
+	flash("You have been successfully logged out.", 'success')
 	return redirect(url_for('login'))
 
 @app.route('/main')
@@ -147,6 +145,11 @@ def upload_file():
 		full_filename = "static/images/purikuras/" + filename
 		print "full_filename: ", full_filename
 
+		#for file dimensions
+		# im = Image(str(full_filename))
+		# print "image dimensions: ", im.size
+
+
 
         #save file path to database
 
@@ -171,7 +174,8 @@ def photobooth():
 def upload_webcam_photo():
 	raw_file = request.form['selectedPhotos']
 
-	storage_filename = 'static/images/purikuras/testphotoboothimage.jpeg'
+	storage_filename = "static/images/purikuras/" + str(session['id']) + 'webcamphoto' + str(datetime.utcnow()).replace(" ", "") + ".jpeg"
+
 	convert_datauri_to_file(raw_file, storage_filename)
 
 	#factor this out later
@@ -208,26 +212,37 @@ def decorate():
 
 @app.route('/deletepurikura', methods=['POST'])
 def delete_purikura():
-	purikura = model.session.query(model.Purikura).filter_by(user_id=session['id'], combined_src=request.form['filename']).delete()
+	to_be_deleted = request.form['filename']
+	purikura = model.session.query(model.Purikura).filter_by(user_id=session['id'], combined_src=to_be_deleted).delete()
 	model.session.commit()
+	os.remove(to_be_deleted)
 	return redirect(url_for('main'))
 
 
-@app.route('/updatepurikura')
+@app.route('/updatepurikura', methods=['POST'])
 def update_purikura():
 	#the frontend will send you the filename. you should know the user id.
 	#query for the purikura
 	#change some stuff
 	#put the revised stuff back in the database
 	#redirect to main?
-	
 
+	print request.form['updated_src']
+
+	updated_image_data = request.form['updated_src']
+	storage_filename = request.form['filename']
+
+	convert_datauri_to_file(updated_image_data, storage_filename)
 	
-	
-	purikura = model.session.query(model.Purikura).filter_by(user_id=session['id'], combined_src=request.form['filename'])
-	purikura.combined_src = "" #some new thing you pass in?
+	purikura = model.session.query(model.Purikura).filter_by(user_id=session['id'], combined_src=storage_filename)
+	purikura.combined_src = storage_filename #some new thing you pass in?
 	model.session.commit()
-	return json.dumps({'status':'OK','user':user,'pass':password})
+
+
+	print ("HeYYYYYYYYYYYYYYYY!")
+	return json.dumps({'status':'OK'})
+
+	#return redirect(url_for('about'))
 
 if __name__ == '__main__':
     # debug=True gives us error messages in the browser and also "reloads" our web app

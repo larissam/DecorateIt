@@ -1,17 +1,18 @@
 {% extends "layout.html" %}
 
 {% block header %}
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap/css/bootstrap.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap/css/bootstrap.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap/css/bootstrap-theme.css') }}">
 	<script type="text/javascript" src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js') }}"></script>
-
-<script language="javascript" type="text/javascript" src="{{ url_for('static', filename='js/jquery-1.11.0.min.js')}}"></script>
+	<script language="javascript" type="text/javascript" src="{{ url_for('static', filename='js/jquery-1.11.0.min.js')}}"></script>
 
 <style>
 		body {
 			background-color: #171717;
 			margin:0px;
+			color: #FFFFFC;
 		}
+
 	/* for gallery */
 		.gallery {
 			display: block;
@@ -93,24 +94,24 @@
 
 	/* for radio buttons */
 
-
 	</style>
-
-
 
 {% endblock %}
 {% block content %}
 
 <!-- sizing matches the editor later. had to add 15 to measurements b/c of the border -->
 <!-- old style:style="/*height:644px;*/ width:980px; border:15px solid black;"-->
+<audio>
+	<source src="../static/audio/camera.mp3"></source>
+</audio>
 
 <div class="col-md-12 text-center" style="margin-top:50px;">
 	<div style="position:relative;">
 		<canvas id="canvas" width="700" height="494"></canvas>
-		<button id="snap" style="position: absolute; top: 250px; left: 450px; z-index: 100;" class="text-hidden"><img src="{{ url_for('static', filename='images/navigatorcamera.png') }}"/></button>
-		<p id="enableVideoText" style="position:absolute; top:200px; left:500px; z-index:101; font-size:60px;">Enable your video!</p>
-		<p id="countdown" style="position: absolute; top: -100px; left: 450px; z-index: 100; font-size:300px;" class="text-hidden">3</p>
-		<p id="waitText" style="position:absolute; top:200px; left:500px; z-index:101; font-size:60px;" class="text-hidden">Prepare to smile!</p>
+		<button id="snap" style="position: absolute; top: 170px; left: 420px; z-index: 100;" class="text-hidden"><img src="{{ url_for('static', filename='images/navigatorcamera.png') }}"/></button>
+		<p id="enableVideoText" style="position:absolute; top:215px; left:380px; z-index:101; font-size:45px;">Enable your video!</p>
+		<p id="countdown" style="position: absolute; top: 40px; left: 500px; z-index: 30; font-size:300px;" class="text-hidden">3</p>
+		<p id="waitText" style="position:absolute; top:215px; left:400px; z-index:101; font-size:45px;" class="text-hidden" >Prepare to smile!</p>
 		<video id="video" width="700" height="494" autoplay style="display:none;"></video>
 	</div>
 	<div>
@@ -119,17 +120,12 @@
 			<img src="{{ url_for('static', filename='images/pikachu.png') }}" style="height: 100px; width:100px;" />
 			<input type="radio" value="hi" />
 			<img src="{{ url_for('static', filename='images/pikachu.png') }}" style="height: 100px; width:100px;" /> -->
-			<button id="submitButton" type="submit" class="icon-inactive" disabled><img src="{{ url_for('static', filename='images/navigatorupload.png') }}" style="height:32px; width:32px" /></button>
+			<!-- <button id="submitButton" type="submit" class="text-hidden"><img src="{{ url_for('static', filename='images/navigatorupload.png') }}" style="height:32px; width:32px" /></button> -->
+			<!-- class="icon-inactive" disabled -->
 			<!-- <button><a href="" id="upload"></a></button> -->
 		</form>
 	</div>
-
-
 </div>
-
-
-
-
 
 <script>
 
@@ -175,19 +171,11 @@
 				},20);
 				//once you've loaded the video, make the enable text hidden and the photoshoot button visible
 				document.getElementById("enableVideoText").className = "text-hidden";
+				// document.getElementById("submitButton").className = "text-hidden";
 				document.getElementById("snap").className = "";
 			}, false);
-
-			
-
 			
 			//This is doing the snapshot stuff
-
-			//stores image data. then you can choose which ones to send?
-			var dataStore = [];
-
-			//puts a true in the field if you want to send them
-			var imagesToSend = []; //for sending data according to index, but that has other probs
 
 			document.getElementById("snap").addEventListener("click", function() {
 				document.getElementById("snap").className = "text-hidden"; //hide the snap button
@@ -213,15 +201,22 @@
 					var maxTime = 3;
 
 					var countdownInterval = setInterval(function(){
-						//console.log(maxTime);
-						
-						document.getElementById("countdown").innerHTML = maxTime;
-
-						if (maxTime == 1) {
-							console.log("stopping the coundown");
+						console.log(maxTime);
+						if (maxTime == 0) {
+							console.log("stopping the coundown after" + maxTime);
+							document.getElementById("countdown").style.display = 'none';
 							clearInterval(countdownInterval);
+							var audio = document.getElementsByTagName("audio")[0];
+							console.log(audio);
+								audio.play();
 						}
-						maxTime--;
+						//console.log(maxTime);
+						else {
+							document.getElementById("countdown").style.display = 'block';
+							document.getElementById("countdown").innerHTML = maxTime;
+					
+							maxTime--;
+						}
 					}, 500);
 					
 					//needs to take at least 2s because countdown has to take 1.5s total.
@@ -229,10 +224,7 @@
 					setTimeout(function(){
 						ctx.drawImage(video, 0, 0, canvas.width, canvas.height); //This is what saves the canvas to an image
 
-				      	var data = canvas.toDataURL('image/jpeg', 1.0);
-				      	//console.log(data);
-				      	dataStore[index] = data;
-				      	imagesToSend[index] = false;
+				      	var data = canvas.toDataURL('image/jpeg', 1.0);;
 
 				      	var img = document.createElement("img");
 				      	img.src = data;
@@ -247,8 +239,6 @@
 						entry.name = "selectedPhotos";
 						//entry.value = index; //thought we could just send the index, but that has other probs
 						entry.value = data; //this is a really long string...
-
-						
 						
 						$form.prepend(img.outerHTML);
 						$form.prepend(entry);
@@ -257,47 +247,30 @@
 					photoShots--;
 				}, 3000); //this is pretty fast. but it's because there's this delay in the beginning.
 			});
-
 			
-
 			setTimeout(function() {
 				document.getElementById("countdown").className = "text-hidden";
-				document.getElementById("submitButton").disabled = false;
-				document.getElementById("submitButton").className = "icon-active";
-				// var submitButton = document.createElement("input");
-				// submitButton.type = "submit";
+				// document.getElementById("submitButton").className = "";
+				// document.getElementById("submitButton").disabled = false;
+				// document.getElementById("submitButton").className = "icon-active";
+				var submitButton = document.createElement("input");
+				submitButton.id = "submitButton";
+				submitButton.type = "submit";
+				submitButton.classList.add("btn");
+				submitButton.classList.add("btn-primary");
+				$form.append(submitButton);
 
-				// $form.append(submitButton);
-				// console.log("appended the submit button");
+				// Blacking out canvas after finished taking pictures
+				video.pause();
+				video.src="";
+				ctx.fillStyle = 'black';
+		      	ctx.fillRect(0,0,canvas.width, canvas.height);
+
 			}, 29000); //29000
 
 
-				//SEND THE DATA HERE
-
-				// old stuff from before
-
-				//data = data.replace(/^data:image\/(png|jpg);base64,/, "")
-    //             //newblob = dataURItoBlob(data);
-    //             //ws.send(newblob);
-    //             $.ajax({
-    //             	url: "/test",
-    //             	type: 'POST',
-    //             	data: '{"imageData": "' + data + '"}',
-    //             	dataType: 'json',
-    //             	success: function (msg) {
-    //             		alert("Picture Uploaded.")
-    //             	}
-    //             });
-
-
-			// });
-
 		}, false);
 
-
-
 	</script>
-
-
 
 {% endblock %}

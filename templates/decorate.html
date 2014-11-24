@@ -2,13 +2,9 @@
 
 {% block header %}
 
-
-<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css')}}">
-
-<script language="javascript" type="text/javascript" src="{{ url_for('static', filename='js/jquery-1.11.0.min.js')}}"></script>
-
-
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap/css/bootstrap.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css')}}">
+	<script language="javascript" type="text/javascript" src="{{ url_for('static', filename='js/jquery-1.11.0.min.js')}}"></script>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap/css/bootstrap.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap/css/bootstrap-theme.css') }}">
 	<script type="text/javascript" src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js') }}"></script>
 
@@ -23,9 +19,6 @@
 		});
 	});
 	</script>
-
-
-
 
 	<!-- random styles for this particular page. will be put into a css file later -->
 	<style>
@@ -255,22 +248,55 @@
 
 //canvas stuff
 
-var el = document.getElementById('c');
-var ctx = el.getContext('2d');
-
-var background = document.getElementById('photo');
-var backgroundctx = background.getContext('2d');
 
 
 var imageObj = new Image();
 imageObj.src = "{{ filename }}";
+console.log(imageObj);
+
+var el;
+var ctx;
+var background;
+var backgroundctx;
+
+
 
 imageObj.onload = function() {
+        console.log(imageObj.width);
+		console.log(imageObj.height);
+
+		var width = imageObj.width;
+		var height = imageObj.height;
+
+		if (width > 700) {
+			width = 700;
+			//height is scaled
+		}
+
+		if (height > 494) {
+			height = 494;
+			//width is scaled
+		}
+
+		el = document.getElementById('c');
+		el.width = imageObj.width;
+		el.height = imageObj.height;
+		ctx = el.getContext('2d');
+
+		background = document.getElementById('photo');
+		background.width = imageObj.width;
+		background.height = imageObj.height;
+		backgroundctx = background.getContext('2d');
+
         backgroundctx.drawImage(imageObj, 0, 0);
+
+        setUpCanvas();
       };
 //imageObj.src = '{{ url_for('static', filename=filename) }}';
 
-setUpCanvas();
+
+
+
 
 //colors
 var colorPurple = "#cb3594";
@@ -642,7 +668,7 @@ function clearCanvas() {
 
 function setUpCanvas() {
 	//this function will be expanded later? maybe?
-	ctx.strokeRect(0,0,el.width, el.height);
+	//ctx.strokeRect(0,0,el.width, el.height);
 	ctx.lineWidth = 5; //tried putting medium here. didn't like it
 	ctx.shadowBlur = 5;
 	ctx.lineJoin = ctx.lineCap = 'round';
@@ -687,7 +713,7 @@ function updateActiveSizeElement(newElement) {
 };
 
 function updateActiveBrushOrStampElement(newElement) {
-	console.log(newElement);
+	//console.log(newElement);
 
 	//all this logic is to make sure the header is lighted/dimmed when selecting the eraser
 	if (newElement == document.getElementById("changeToolToEraser")) {
@@ -702,7 +728,7 @@ function updateActiveBrushOrStampElement(newElement) {
 		}
 	} else {
 		var headerToBeUpdated = document.getElementById("accordion").childNodes;
-		console.log(headerToBeUpdated);
+		//console.log(headerToBeUpdated);
 		for (var i = 1; i< headerToBeUpdated.length; i += 4) {
 			//console.log(i, headerToBeUpdated[i]);
 			 if (headerToBeUpdated[i].classList.contains("ui-state-active")) {
@@ -819,15 +845,29 @@ function drawWithMarker(color, shadowColor) {
 //for saving image
 document.getElementById('save').addEventListener('click', function(){
 	//should send dataurls for processing.
-	$ajax({
+	//console.log("clicked save button");
+
+	//doing some of the same processing as download to gt the uri.
+
+	//you can't edit the canvases you have, so create a new one.
+	var copyForDownloading = document.createElement('canvas');
+	var ctxCopyForDownloading = copyForDownloading.getContext('2d');
+	ctxCopyForDownloading.canvas.width = document.getElementById("photo").width;
+	ctxCopyForDownloading.canvas.height = document.getElementById("photo").height;
+
+	//copy the working canvases onto the canvas to be downloaded
+	ctxCopyForDownloading.drawImage(document.getElementById("photo"), 0, 0);
+	ctxCopyForDownloading.drawImage(document.getElementById("c"), 0, 0);
+
+	$.ajax({
 		type: "POST",
 		url: "{{ url_for('update_purikura') }}",
-		data: { filename: '{{ filename }}'},
+		data: { filename: '{{ filename }}', updated_src: copyForDownloading.toDataURL('image/jpeg', 1.0) },
 		success: function(response) {
-			console.log(response);
+			//console.log(response);
 		},
 		error: function(error) {
-			console.log(error)
+			//console.log(error)
 		}
 
 	});

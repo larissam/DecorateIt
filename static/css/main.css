@@ -5,6 +5,11 @@ body {
 	color: #444;
 }
 
+p {
+	/*font-family: Georgia, Times, 'Times New Roman', serif;*/
+	text-align: center;
+}
+
 /* Dark grey header with white logo */
 
 header {
@@ -36,6 +41,19 @@ header h1.logo:hover {
 	padding-top: 5px;
 }
 
+.container-nav {
+	width: 1115px;
+	margin: 0 auto;
+	padding-top: 5px;
+	padding-bottom: 30px;
+}
+
+#registrationFormBox {
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 30px;
+  border-radius: 25px;
+}
+
 div.jumbo {
 	padding: 10px 0 30px 0;
 	background-color: #eeeeee;
@@ -46,7 +64,7 @@ div.jumbo {
 
 h2 {
 	font-size: 3em;
-	margin-top: 40px;
+	/*margin-top: 40px;*/
 	text-align: center;
 	letter-spacing: -2px;
 }
@@ -79,3 +97,17 @@ h3 {
 	color: #999;
 	text-decoration: none;
 }
+
+.alert {
+	margin-top: 20px;
+}
+/*
+#messagebox {
+	line-height: 75px;
+	min-height: 75px;
+	height:;
+}*/
+
+/*.col-md-6 {
+	min-height: 75px;
+}*/
