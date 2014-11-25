@@ -196,10 +196,7 @@
 
 					var index=0; //this keeps track of which thing to send. not sure using this.
 
-					$form = $("#snapshots");
-
 					var maxTime = 3;
-
 					var countdownInterval = setInterval(function(){
 						console.log(maxTime);
 						if (maxTime == 0) {
@@ -219,8 +216,6 @@
 						}
 					}, 500);
 					
-					//needs to take at least 2s because countdown has to take 1.5s total.
-					//making it 3s to give 1.5s buffer
 					setTimeout(function(){
 						ctx.drawImage(video, 0, 0, canvas.width, canvas.height); //This is what saves the canvas to an image
 
@@ -231,34 +226,31 @@
 				      	img.style.width = "100px";
 				      	img.style.height = "100px";
 
-						// $output = $("#output");
-						// $output.append(img);
-
 						var entry = document.createElement("input");
 						entry.type = "radio";
 						entry.name = "selectedPhotos";
-						//entry.value = index; //thought we could just send the index, but that has other probs
 						entry.value = data; //this is a really long string...
 						
-						$form.prepend(img.outerHTML);
-						$form.prepend(entry);
-					}, 3000);
+						$("#snapshots").prepend(img.outerHTML);
+						$("#snapshots").prepend(entry);
+					}, 3000); //needs to take at least 2s because countdown has to take 1.5s total; making it 3s to give 1.5s buffer
 
 					photoShots--;
 				}, 3000); //this is pretty fast. but it's because there's this delay in the beginning.
 			});
-			
+
+
+			//make the submit button appear after you're done taking pictures
 			setTimeout(function() {
 				document.getElementById("countdown").className = "text-hidden";
-				// document.getElementById("submitButton").className = "";
-				// document.getElementById("submitButton").disabled = false;
-				// document.getElementById("submitButton").className = "icon-active";
+
 				var submitButton = document.createElement("input");
 				submitButton.id = "submitButton";
 				submitButton.type = "submit";
 				submitButton.classList.add("btn");
 				submitButton.classList.add("btn-primary");
-				$form.append(submitButton);
+				$("#snapshots").append(submitButton);
+				console.log("i am here!!!!");
 
 				// Blacking out canvas after finished taking pictures
 				video.pause();
