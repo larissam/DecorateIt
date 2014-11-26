@@ -1,28 +1,27 @@
 from flask import Flask, render_template, request, redirect, session, url_for, flash, escape, Blueprint
-
-#import re
-#import Image
-import cv2
-import numpy as np
 import jinja2
-import model
+
+# Modules for converting and saving photobooth images to disk.
 import io
 import os
 import json
-
-#import base64
-
 from base64 import decodestring
 from binascii import a2b_base64
-from PIL import Image
-from flask import Flask, request, redirect, url_for
 from werkzeug import secure_filename
 from datetime import datetime
+
+# Modules for image processing
+import cv2
+import numpy as np
+from PIL import Image
+
+# Our database model
+import model
 
 CURRENT_FOLDER = os.path.dirname(os.path.abspath(__file__))
 
 UPLOAD_FOLDER = CURRENT_FOLDER + '/static/images/purikuras/'
-ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 
 app = Flask(__name__)
 app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT' #why do I have this again..?
