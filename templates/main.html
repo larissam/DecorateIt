@@ -47,14 +47,17 @@
 
 	/* for accordion icons and tool selection */
 		button {
-			border: none;
 			background: none;
-			/*-webkit-filter: opacity(0.4);*/
+			border: none;
+			box-shadow: 0 1px 2px rgba(0, 0, 0, 0);
+/*			transition: all .1s ease-in-out; 
+*/			/*-webkit-filter: opacity(0.4);*/
 			-webkit-filter: opacity(1);
 		}
 
 		button:hover {
-			-webkit-filter: brightness(50%);
+			transform: scale(1.1);
+			/*-webkit-filter: brightness(50%);*/
 		}
 
 		button:focus {
@@ -75,12 +78,15 @@
 			-webkit-filter: none;
 		}
 
-	
+		#addButton {
+			box-shadow: 0 1px 2px rgba(0, 0, 0, 0);
+			border: 1px solid white;
+		}
 
-	/* for radio buttons */
+	/* for radio buttons 
 
 	/* for thumbnails */
-	.thumbnail-size {
+	.thumbnail-custom {
 		width: 300px;
 	}
 
@@ -114,6 +120,7 @@
 	  position:relative;
 	  width:250px;
 	}
+
 	.purikuraOptions {
 	  display:none;
 	  position:absolute;
@@ -123,9 +130,11 @@
 	  height:25px;
 	  background-image:url( "{{ url_for('static', filename='images/gallerydelete.png') }}" );
 	}
+
 	.purikura:hover .purikuraOptions {
 	  display:block;
 	}
+
 	.purikuraOptions:hover {
 	  background-image:url( "{{ url_for('static', filename='images/gallerydelete.png') }}" );
 	}
@@ -142,22 +151,16 @@
 
 {% if session.logged_in %}
 
-<h2>My Gallery</h2>
-
 <div id="purikuraList">
-
-
-    
 </div>
 
 <div id="container">
-
 
 <div class="col-md-3 brick">
     	<!-- the link goes to a "details" page -->
 
     	<!-- width styling is so it scales smaller -->
-    	<button><a href="{{ url_for('choose') }}"><img src="{{ url_for('static', filename='images/navigatorplus.png') }}" class="img-thumbnail add-button-size" /></a></button>
+    	<button><a href="{{ url_for('choose') }}"><img src="{{ url_for('static', filename='images/addImage.jpg') }}" class="img-thumbnail add-button-size" id="addButton" onmouseover="this.src='{{ url_for('static', filename='images/addImageGreen.jpg') }}';" onmouseout="this.src='{{ url_for('static', filename='images/addImage.jpg') }}';" /></a></button>
     	<!-- <div class="hidden">
     		<a href=""><img src="{{ url_for('static', filename='images/socialmediaiconfacebook.png') }}" /></a>
     	</div> -->
@@ -177,15 +180,12 @@
         </div> -->
 
         <div class="purikura">
-		  <img src="{{ purikura.combined_src }}" class="img-thumbnail thumbnail-size"/>
-		  
+		  <img src="{{ purikura.combined_src }}" class="img-thumbnail thumbnail-custom"/>
 		  <form action="{{ url_for('delete_purikura') }}" method=POST>
 		  	<input type="hidden" name="filename" value="{{ purikura.combined_src }}">
 		  	<button class="purikuraOptions"></button>
 		  </form>
 		</div>
-        
-        
     </div>
     {% endfor %}
 

@@ -23,7 +23,7 @@
 						{% if not session.logged_in %}
 							<li><a href="{{url_for('login')}}">Home</a></li>
 						{% else %}
-							<li><a href="{{url_for('main')}}">Home</a></li>
+							<li><a href="{{url_for('main')}}">Gallery</a></li>
 						{% endif %}
 
 						<li><a href="{{url_for('about')}}">About</a></li>

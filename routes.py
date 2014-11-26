@@ -161,6 +161,7 @@ def upload_file():
         return redirect(url_for('decorate', filename=full_filename))
 	# 	#return redirect(url_for('show_purikura', filename=full_filename))
  
+ #only do this if image is of minimum size.
 def enhance_image(raw_file):
 	#do image processing stuff
 	return raw_file
@@ -174,7 +175,7 @@ def photobooth():
 def upload_webcam_photo():
 	raw_file = request.form['selectedPhotos']
 
-	storage_filename = "static/images/purikuras/" + str(session['id']) + 'webcamphoto' + str(datetime.utcnow()).replace(" ", "") + ".jpeg"
+	storage_filename = "static/images/purikuras/" + str(session['id']) + 'webcamphoto' + str(datetime.utcnow()).replace(" ", "") + ".jpg"
 
 	convert_datauri_to_file(raw_file, storage_filename)
 
