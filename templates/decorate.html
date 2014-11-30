@@ -135,9 +135,10 @@
 	<div>
 		<!-- margin 0px just for this guy b/c want top plumb with editor window -->
 		<h3 class="h3-faux-accordion" style="background-color: #660033; margin:0px;">
-			<!-- save will put it in your user account. haven't implemented yet -->
-			<button><a id="save"><img src="{{ url_for('static', filename='images/navigatorsave.png') }}" style="height:32px; width:32px" class="icon-inactive"/></a></button>
-			<button><a id="download"><img src="{{ url_for('static', filename='images/navigatordownload.png') }}" style="height:32px; width:32px" class="icon-inactive"/></a></button>
+			
+			<button><a id="save"><img src="{{ url_for('static', filename='images/navigatorsave.png') }}" style="height:32px; width:32px;" class="icon-inactive"/></a></button>
+			<button><a id="download"><img src="{{ url_for('static', filename='images/navigatordownload.png') }}" style="height:32px; width:32px;" class="icon-inactive"/></a></button>
+			<button><a id="email"><img src="{{ url_for('static', filename='images/email.png') }}" style="height:26px; width:32px;" class="icon-inactive"/></a></button>
 
 		</h3>
 	</div>
@@ -166,30 +167,26 @@
 
 	<!-- we will also have to set the width of this so it's not dynamic -->
 	<div id="accordion">
-
-		
 		<h3 style="background-color: #FF5050; text-align: center;"><button><img src="{{ url_for('static', filename='images/navigatormarker.png') }}" class="icon-inactive"/></button></h3>
 		<div style="border: 2px solid #FF5050; background-color:white;">
 			<button id="changeColorToPurple"><img src="{{ url_for('static', filename='images/brush2a.png') }}" style="height:32px; width:32px" /></button>
-			<button id="changeColorToGreen"><img  src="{{ url_for('static', filename='images/brush3a.png') }}" style="height:32px; width:32px" /></button>
+			<button id="changeColorToBlack"><img src="{{ url_for('static', filename='images/brushblack.png') }}" style="height:32px; width:32px;" /></button>
+			<button id="changeColorToWhite"><img src="{{ url_for('static', filename='images/brushwhite.png') }}" style="height:32px; width:32px;" /></button>
+			<button id="changeColorToGreen"><img src="{{ url_for('static', filename='images/brush3a.png') }}" style="height:32px; width:32px" /></button>
+			<button id="changeColorToMint"><img src="{{ url_for('static', filename='images/brushmint.png') }}" style="height:32px; width:32px" /></button>
+			<button id="changeColorToRed"><img src ="{{ url_for('static', filename='images/brushred.png') }}" style="height:32px; width:32px;" /></button>
+			<button id="changeColorToOrange"><img src="{{ url_for('static', filename='images/brushOrange.png') }}" style="height:32px; width:32px;" /></button>
 			<button id="changeColorToYellow"><img src="{{ url_for('static', filename='images/brush4a.png') }}" style="height:32px; width:32px" /></button>
-			<button id="changeColorToPink"><img  src="{{ url_for('static', filename='images/brush1a.png') }}" style="height:32px; width:32px" /></button>
+			<button id="changeColorToLightYellow"><img src="{{ url_for('static', filename='images/brushlightyellow.png') }}" style="height:32px; width:32px;" /></button>
+			<button id="changeColorToLavender"><img src="{{ url_for('static', filename='images/brushlavender.png') }}" style="height:32px; width:32px" /></button>
+			<button id="changeColorToPink"><img src="{{ url_for('static', filename='images/brush1a.png') }}" style="height:32px; width:32px" /></button>
+			<button id="changeColorToSkyBlue"><img src="{{ url_for('static', filename='images/brushSkyBlue.png') }}" style="height:32px; width: 32px;" /></button>
 			<button id="changeColorToWhitePurple"><img src="{{ url_for('static', filename='images/brush2.png') }}" style="height:32px; width:32px" /></button>
+			<button id="changeColorToWhiteBlue"><img src="{{ url_for('static', filename='images/brushbluewhite.png') }}" style="height:32px; width: 32px;" /></button>
 			<button id="changeColorToWhiteYellow"><img src="{{ url_for('static', filename='images/brush4.png') }}" style="height:32px; width:32px" /></button>
 			<button id="changeColorToWhitePink"><img src="{{ url_for('static', filename='images/brush1.png') }}" style="height:32px; width:32px" /></button>
-			<!-- placeholders -->
-			<button id=""><img src="{{ url_for('static', filename='images/brush1.png') }}" style="height:32px; width:32px" /></button>
-			<button id=""><img src="{{ url_for('static', filename='images/brush1.png') }}" style="height:32px; width:32px" /></button>
-			<button id=""><img src="{{ url_for('static', filename='images/brush1.png') }}" style="height:32px; width:32px" /></button>
-			<button id=""><img src="{{ url_for('static', filename='images/brush1.png') }}" style="height:32px; width:32px" /></button>
-			<button id=""><img src="{{ url_for('static', filename='images/brush1.png') }}" style="height:32px; width:32px" /></button>
-			<button id=""><img src="{{ url_for('static', filename='images/brush1.png') }}" style="height:32px; width:32px" /></button>
-			<button id=""><img src="{{ url_for('static', filename='images/brush1.png') }}" style="height:32px; width:32px" /></button>
-			<button id=""><img src="{{ url_for('static', filename='images/brush1.png') }}" style="height:32px; width:32px" /></button>
-			<button id=""><img src="{{ url_for('static', filename='images/brush1.png') }}" style="height:32px; width:32px" /></button>
 		</div>
-
-		
+	
 		<h3 style="background-color: #FF987E; text-align: center;"><button><img src="{{ url_for('static', filename='images/navigatorbrush.png') }}" class="icon-inactive"/></button></h3>
 		<div style="border: 2px solid #FF987E; background-color:white;">
 			<button id="changeToolToBrush"><img  src="{{ url_for('static', filename='images/brush.png') }}" style="height:32px; width:32px;" /></button>
@@ -210,23 +207,22 @@
 			<button id=""><img  src="{{ url_for('static', filename='images/brush.png') }}" style="height:32px; width:32px;" /></button>
 			<button id=""><img  src="{{ url_for('static', filename='images/brush.png') }}" style="height:32px; width:32px;" /></button>
 		</div>
-
 		
 		<h3 style="background-color: #FFCC99; text-align: center;"><button><img src="{{ url_for('static', filename='images/navigatorstamp.png') }}" class="icon-inactive"/></button></h3>
 		<div style="border: 2px solid #FFCC99; background-color:white;">
-			<button id="changeStamp2"><img  src="{{ url_for('static', filename='images/2.png') }}" style="height:32px; width:32px;"/></button>
-			<button id="changeStamp3"><img  src="{{ url_for('static', filename='images/3.png') }}" style="height:32px; width:32px;"/></button>
-			<button id="changeStamp4"><img  src="{{ url_for('static', filename='images/jd2.png') }}" style="height:32px; width:32px;"/></button>
+			<button id="changeStamp2"><img src="{{ url_for('static', filename='images/2.png') }}" style="height:32px; width:32px;"/></button>
+			<button id="changeStamp3"><img src="{{ url_for('static', filename='images/3.png') }}" style="height:32px; width:32px;"/></button>
+			<button id="changeStamp4"><img src="{{ url_for('static', filename='images/jd2.png') }}" style="height:32px; width:32px;"/></button>
 			<!-- these are placeholders -->
-			<button id=""><img  src="{{ url_for('static', filename='images/2.png') }}" style="height:32px; width:32px;"/></button>
-			<button id=""><img  src="{{ url_for('static', filename='images/2.png') }}" style="height:32px; width:32px;"/></button>
-			<button id=""><img  src="{{ url_for('static', filename='images/2.png') }}" style="height:32px; width:32px;"/></button>
-			<button id=""><img  src="{{ url_for('static', filename='images/2.png') }}" style="height:32px; width:32px;"/></button>
-			<button id=""><img  src="{{ url_for('static', filename='images/2.png') }}" style="height:32px; width:32px;"/></button>
-			<button id=""><img  src="{{ url_for('static', filename='images/2.png') }}" style="height:32px; width:32px;"/></button>
-			<button id=""><img  src="{{ url_for('static', filename='images/2.png') }}" style="height:32px; width:32px;"/></button>
-			<button id=""><img  src="{{ url_for('static', filename='images/2.png') }}" style="height:32px; width:32px;"/></button>
-			<button id=""><img  src="{{ url_for('static', filename='images/2.png') }}" style="height:32px; width:32px;"/></button>
+			<button id="spottedHeartStamp"><img src="{{ url_for('static', filename='images/spottedheart.png') }}" style="height:32px; width:32px;"/></button>
+			<button id="pearlHeartStamp"><img src="{{ url_for('static', filename='images/pearlheart.png') }}" style="height:32px; width:32px;"/></button>
+			<button id="goldSparkleStamp"><img  src="{{ url_for('static', filename='images/goldsparkle.png') }}" style="height:32px; width:32px;"/></button>
+			<button id="blueSparkleStamp"><img  src="{{ url_for('static', filename='images/bluesparkle.png') }}" style="height:32px; width:32px;"/></button>
+			<button id="bowtieStamp"><img  src="{{ url_for('static', filename='images/bowtie.png') }}" style="height:32px; width:32px;"/></button>
+			<button id="kittyBowStamp"><img  src="{{ url_for('static', filename='images/kittybow.png') }}" style="height:32px; width:32px;"/></button>
+			<button id="diamondStamp"><img  src="{{ url_for('static', filename='images/diamond.png') }}" style="height:32px; width:32px;"/></button>
+			<button id="pinkDiamondStamp"><img  src="{{ url_for('static', filename='images/pinkdiamond.png') }}" style="height:32px; width:32px;"/></button>
+			<button id="roseStamp"><img  src="{{ url_for('static', filename='images/rose.png') }}" style="height:32px; width:32px;"/></button>
 			<button id=""><img  src="{{ url_for('static', filename='images/2.png') }}" style="height:32px; width:32px;"/></button>
 			<button id=""><img  src="{{ url_for('static', filename='images/2.png') }}" style="height:32px; width:32px;"/></button>
 			<button id=""><img  src="{{ url_for('static', filename='images/2.png') }}" style="height:32px; width:32px;"/></button>
@@ -294,10 +290,6 @@ imageObj.onload = function() {
       };
 //imageObj.src = '{{ url_for('static', filename=filename) }}';
 
-
-
-
-
 //colors
 var colorPurple = "#cb3594";
 var colorGreen = "#659b41";
@@ -321,7 +313,6 @@ var stampSmall = brushSmall;
 var stampMedium = brushMedium;
 var stampLarge = brushLarge;
 var stampXlarge = brushXlarge;
-
 
 //active elements
 var activeSizeElement = document.getElementById("changeSizeToMedium");
@@ -477,8 +468,176 @@ document.getElementById("changeColorToWhitePink").addEventListener('click', func
 	}
 });
 
+document.getElementById("changeColorToWhiteBlue").addEventListener('click', function(){
+	ctx.globalCompositeOperation = "source-over";
+	activeTool = "marker";
+	updateCursor("marker");
+	drawWithMarker("white", "rgb(142,222,249)");
+	updateActiveBrushOrStampElement(document.getElementById("changeColorToWhiteBlue"));
 
+	//markerSize stuff
+	if (activeMarkerSize == markerSmall) {
+		updateActiveSizeElement(document.getElementById("changeSizeToSmall"));
+	} else if (activeMarkerSize == markerMedium) {
+		updateActiveSizeElement(document.getElementById("changeSizeToMedium"));
+	} else if (activeMarkerSize == markerLarge) {
+		updateActiveSizeElement(document.getElementById("changeSizeToLarge"));
+	} else {
+		updateActiveSizeElement(document.getElementById("changeSizeToXLarge"));
+	}
+});
 
+document.getElementById("changeColorToSkyBlue").addEventListener('click', function(){
+	ctx.globalCompositeOperation = "source-over";
+	activeTool = "marker";
+	updateCursor("marker");
+	drawWithMarker("rgb(142,222,249)", "rgb(142,222,249)");
+	updateActiveBrushOrStampElement(document.getElementById("changeColorToSkyBlue"));
+
+	//markerSize stuff
+	if (activeMarkerSize == markerSmall) {
+		updateActiveSizeElement(document.getElementById("changeSizeToSmall"));
+	} else if (activeMarkerSize == markerMedium) {
+		updateActiveSizeElement(document.getElementById("changeSizeToMedium"));
+	} else if (activeMarkerSize == markerLarge) {
+		updateActiveSizeElement(document.getElementById("changeSizeToLarge"));
+	} else {
+		updateActiveSizeElement(document.getElementById("changeSizeToXLarge"));
+	}
+});
+
+document.getElementById("changeColorToOrange").addEventListener('click', function(){
+	ctx.globalCompositeOperation = "source-over";
+	activeTool = "marker";
+	updateCursor("marker");
+	drawWithMarker("rgb(244,157,55)", "rgb(244,157,55)");
+	updateActiveBrushOrStampElement(document.getElementById("changeColorToOrange"));
+
+	//markerSize stuff
+	if (activeMarkerSize == markerSmall) {
+		updateActiveSizeElement(document.getElementById("changeSizeToSmall"));
+	} else if (activeMarkerSize == markerMedium) {
+		updateActiveSizeElement(document.getElementById("changeSizeToMedium"));
+	} else if (activeMarkerSize == markerLarge) {
+		updateActiveSizeElement(document.getElementById("changeSizeToLarge"));
+	} else {
+		updateActiveSizeElement(document.getElementById("changeSizeToXLarge"));
+	}
+});
+
+document.getElementById("changeColorToBlack").addEventListener('click', function(){
+	ctx.globalCompositeOperation = "source-over";
+	activeTool = "marker";
+	updateCursor("marker");
+	drawWithMarker("rgb(0,0,0)", "rgb(0,0,0)");
+	updateActiveBrushOrStampElement(document.getElementById("changeColorToBlack"));
+
+	//markerSize stuff
+	if (activeMarkerSize == markerSmall) {
+		updateActiveSizeElement(document.getElementById("changeSizeToSmall"));
+	} else if (activeMarkerSize == markerMedium) {
+		updateActiveSizeElement(document.getElementById("changeSizeToMedium"));
+	} else if (activeMarkerSize == markerLarge) {
+		updateActiveSizeElement(document.getElementById("changeSizeToLarge"));
+	} else {
+		updateActiveSizeElement(document.getElementById("changeSizeToXLarge"));
+	}
+});
+
+document.getElementById("changeColorToRed").addEventListener('click', function(){
+	ctx.globalCompositeOperation = "source-over";
+	activeTool = "marker";
+	updateCursor("marker");
+	drawWithMarker("rgb(255,34,34)", "rgb(255,34,34)");
+	updateActiveBrushOrStampElement(document.getElementById("changeColorToRed"));
+
+	//markerSize stuff
+	if (activeMarkerSize == markerSmall) {
+		updateActiveSizeElement(document.getElementById("changeSizeToSmall"));
+	} else if (activeMarkerSize == markerMedium) {
+		updateActiveSizeElement(document.getElementById("changeSizeToMedium"));
+	} else if (activeMarkerSize == markerLarge) {
+		updateActiveSizeElement(document.getElementById("changeSizeToLarge"));
+	} else {
+		updateActiveSizeElement(document.getElementById("changeSizeToXLarge"));
+	}
+});
+
+document.getElementById("changeColorToWhite").addEventListener('click', function(){
+	ctx.globalCompositeOperation = "source-over";
+	activeTool = "marker";
+	updateCursor("marker");
+	drawWithMarker("white", "white");
+	updateActiveBrushOrStampElement(document.getElementById("changeColorToWhite"));
+
+	//markerSize stuff
+	if (activeMarkerSize == markerSmall) {
+		updateActiveSizeElement(document.getElementById("changeSizeToSmall"));
+	} else if (activeMarkerSize == markerMedium) {
+		updateActiveSizeElement(document.getElementById("changeSizeToMedium"));
+	} else if (activeMarkerSize == markerLarge) {
+		updateActiveSizeElement(document.getElementById("changeSizeToLarge"));
+	} else {
+		updateActiveSizeElement(document.getElementById("changeSizeToXLarge"));
+	}
+});
+
+document.getElementById("changeColorToMint").addEventListener('click', function(){
+	ctx.globalCompositeOperation = "source-over";
+	activeTool = "marker";
+	updateCursor("marker");
+	drawWithMarker("rgb(22, 230, 188)", "rgb(22, 230, 188)");
+	updateActiveBrushOrStampElement(document.getElementById("changeColorToMint"));
+
+	//markerSize stuff
+	if (activeMarkerSize == markerSmall) {
+		updateActiveSizeElement(document.getElementById("changeSizeToSmall"));
+	} else if (activeMarkerSize == markerMedium) {
+		updateActiveSizeElement(document.getElementById("changeSizeToMedium"));
+	} else if (activeMarkerSize == markerLarge) {
+		updateActiveSizeElement(document.getElementById("changeSizeToLarge"));
+	} else {
+		updateActiveSizeElement(document.getElementById("changeSizeToXLarge"));
+	}
+});
+
+document.getElementById("changeColorToLightYellow").addEventListener('click', function(){
+	ctx.globalCompositeOperation = "source-over";
+	activeTool = "marker";
+	updateCursor("marker");
+	drawWithMarker("rgb(250, 255, 168)", "rgb(250, 255, 168)");
+	updateActiveBrushOrStampElement(document.getElementById("changeColorToLightYellow"));
+
+	//markerSize stuff
+	if (activeMarkerSize == markerSmall) {
+		updateActiveSizeElement(document.getElementById("changeSizeToSmall"));
+	} else if (activeMarkerSize == markerMedium) {
+		updateActiveSizeElement(document.getElementById("changeSizeToMedium"));
+	} else if (activeMarkerSize == markerLarge) {
+		updateActiveSizeElement(document.getElementById("changeSizeToLarge"));
+	} else {
+		updateActiveSizeElement(document.getElementById("changeSizeToXLarge"));
+	}
+});
+
+document.getElementById("changeColorToLavender").addEventListener('click', function(){
+	ctx.globalCompositeOperation = "source-over";
+	activeTool = "marker";
+	updateCursor("marker");
+	drawWithMarker("rgb(249, 183, 248)", "rgb(249, 183, 248)");
+	updateActiveBrushOrStampElement(document.getElementById("changeColorToLavender"));
+
+	//markerSize stuff
+	if (activeMarkerSize == markerSmall) {
+		updateActiveSizeElement(document.getElementById("changeSizeToSmall"));
+	} else if (activeMarkerSize == markerMedium) {
+		updateActiveSizeElement(document.getElementById("changeSizeToMedium"));
+	} else if (activeMarkerSize == markerLarge) {
+		updateActiveSizeElement(document.getElementById("changeSizeToLarge"));
+	} else {
+		updateActiveSizeElement(document.getElementById("changeSizeToXLarge"));
+	}
+});
 //BRUSHES!
 
 //I think this is gross. What's up with the double call to getElementById?
@@ -598,7 +757,176 @@ document.getElementById("changeStamp4").addEventListener('click', function() {
 	}
 });
 
+document.getElementById("spottedHeartStamp").addEventListener('click', function() {
+	ctx.globalCompositeOperation = "source-over";
+	activeTool = "stamp";
+	updateCursor("stamp");
+	drawStamp(document.getElementById("spottedHeartStamp").childNodes[0].src);
+	updateActiveBrushOrStampElement(document.getElementById("spottedHeartStamp"));
 
+	//stampSize stuff
+	if (activeStampSize == stampSmall) {
+		updateActiveSizeElement(document.getElementById("changeSizeToSmall"));
+	} else if (activeStampSize == stampMedium) {
+		updateActiveSizeElement(document.getElementById("changeSizeToMedium"));
+	} else if (activeStampSize == stampLarge) {
+		updateActiveSizeElement(document.getElementById("changeSizeToLarge"));
+	} else {
+		updateActiveSizeElement(document.getElementById("changeSizeToXLarge"));
+	}
+});
+
+document.getElementById("pearlHeartStamp").addEventListener('click', function() {
+	ctx.globalCompositeOperation = "source-over";
+	activeTool = "stamp";
+	updateCursor("stamp");
+	drawStamp(document.getElementById("pearlHeartStamp").childNodes[0].src);
+	updateActiveBrushOrStampElement(document.getElementById("pearlHeartStamp"));
+
+	//stampSize stuff
+	if (activeStampSize == stampSmall) {
+		updateActiveSizeElement(document.getElementById("changeSizeToSmall"));
+	} else if (activeStampSize == stampMedium) {
+		updateActiveSizeElement(document.getElementById("changeSizeToMedium"));
+	} else if (activeStampSize == stampLarge) {
+		updateActiveSizeElement(document.getElementById("changeSizeToLarge"));
+	} else {
+		updateActiveSizeElement(document.getElementById("changeSizeToXLarge"));
+	}
+});
+
+document.getElementById("goldSparkleStamp").addEventListener('click', function() {
+	ctx.globalCompositeOperation = "source-over";
+	activeTool = "stamp";
+	updateCursor("stamp");
+	drawStamp(document.getElementById("goldSparkleStamp").childNodes[0].src);
+	updateActiveBrushOrStampElement(document.getElementById("goldSparkleStamp"));
+
+	//stampSize stuff
+	if (activeStampSize == stampSmall) {
+		updateActiveSizeElement(document.getElementById("changeSizeToSmall"));
+	} else if (activeStampSize == stampMedium) {
+		updateActiveSizeElement(document.getElementById("changeSizeToMedium"));
+	} else if (activeStampSize == stampLarge) {
+		updateActiveSizeElement(document.getElementById("changeSizeToLarge"));
+	} else {
+		updateActiveSizeElement(document.getElementById("changeSizeToXLarge"));
+	}
+});
+
+document.getElementById("blueSparkleStamp").addEventListener('click', function() {
+	ctx.globalCompositeOperation = "source-over";
+	activeTool = "stamp";
+	updateCursor("stamp");
+	drawStamp(document.getElementById("blueSparkleStamp").childNodes[0].src);
+	updateActiveBrushOrStampElement(document.getElementById("blueSparkleStamp"));
+
+	//stampSize stuff
+	if (activeStampSize == stampSmall) {
+		updateActiveSizeElement(document.getElementById("changeSizeToSmall"));
+	} else if (activeStampSize == stampMedium) {
+		updateActiveSizeElement(document.getElementById("changeSizeToMedium"));
+	} else if (activeStampSize == stampLarge) {
+		updateActiveSizeElement(document.getElementById("changeSizeToLarge"));
+	} else {
+		updateActiveSizeElement(document.getElementById("changeSizeToXLarge"));
+	}
+});
+
+document.getElementById("bowtieStamp").addEventListener('click', function() {
+	ctx.globalCompositeOperation = "source-over";
+	activeTool = "stamp";
+	updateCursor("stamp");
+	drawStamp(document.getElementById("bowtieStamp").childNodes[0].src);
+	updateActiveBrushOrStampElement(document.getElementById("bowtieStamp"));
+
+	//stampSize stuff
+	if (activeStampSize == stampSmall) {
+		updateActiveSizeElement(document.getElementById("changeSizeToSmall"));
+	} else if (activeStampSize == stampMedium) {
+		updateActiveSizeElement(document.getElementById("changeSizeToMedium"));
+	} else if (activeStampSize == stampLarge) {
+		updateActiveSizeElement(document.getElementById("changeSizeToLarge"));
+	} else {
+		updateActiveSizeElement(document.getElementById("changeSizeToXLarge"));
+	}
+});
+
+document.getElementById("kittyBowStamp").addEventListener('click', function() {
+	ctx.globalCompositeOperation = "source-over";
+	activeTool = "stamp";
+	updateCursor("stamp");
+	drawStamp(document.getElementById("kittyBowStamp").childNodes[0].src);
+	updateActiveBrushOrStampElement(document.getElementById("kittyBowStamp"));
+
+	//stampSize stuff
+	if (activeStampSize == stampSmall) {
+		updateActiveSizeElement(document.getElementById("changeSizeToSmall"));
+	} else if (activeStampSize == stampMedium) {
+		updateActiveSizeElement(document.getElementById("changeSizeToMedium"));
+	} else if (activeStampSize == stampLarge) {
+		updateActiveSizeElement(document.getElementById("changeSizeToLarge"));
+	} else {
+		updateActiveSizeElement(document.getElementById("changeSizeToXLarge"));
+	}
+});
+
+document.getElementById("diamondStamp").addEventListener('click', function() {
+	ctx.globalCompositeOperation = "source-over";
+	activeTool = "stamp";
+	updateCursor("stamp");
+	drawStamp(document.getElementById("diamondStamp").childNodes[0].src);
+	updateActiveBrushOrStampElement(document.getElementById("diamondStamp"));
+
+	//stampSize stuff
+	if (activeStampSize == stampSmall) {
+		updateActiveSizeElement(document.getElementById("changeSizeToSmall"));
+	} else if (activeStampSize == stampMedium) {
+		updateActiveSizeElement(document.getElementById("changeSizeToMedium"));
+	} else if (activeStampSize == stampLarge) {
+		updateActiveSizeElement(document.getElementById("changeSizeToLarge"));
+	} else {
+		updateActiveSizeElement(document.getElementById("changeSizeToXLarge"));
+	}
+});
+
+document.getElementById("pinkDiamondStamp").addEventListener('click', function() {
+	ctx.globalCompositeOperation = "source-over";
+	activeTool = "stamp";
+	updateCursor("stamp");
+	drawStamp(document.getElementById("pinkDiamondStamp").childNodes[0].src);
+	updateActiveBrushOrStampElement(document.getElementById("pinkDiamondStamp"));
+
+	//stampSize stuff
+	if (activeStampSize == stampSmall) {
+		updateActiveSizeElement(document.getElementById("changeSizeToSmall"));
+	} else if (activeStampSize == stampMedium) {
+		updateActiveSizeElement(document.getElementById("changeSizeToMedium"));
+	} else if (activeStampSize == stampLarge) {
+		updateActiveSizeElement(document.getElementById("changeSizeToLarge"));
+	} else {
+		updateActiveSizeElement(document.getElementById("changeSizeToXLarge"));
+	}
+});
+
+document.getElementById("roseStamp").addEventListener('click', function() {
+	ctx.globalCompositeOperation = "source-over";
+	activeTool = "stamp";
+	updateCursor("stamp");
+	drawStamp(document.getElementById("roseStamp").childNodes[0].src);
+	updateActiveBrushOrStampElement(document.getElementById("roseStamp"));
+
+	//stampSize stuff
+	if (activeStampSize == stampSmall) {
+		updateActiveSizeElement(document.getElementById("changeSizeToSmall"));
+	} else if (activeStampSize == stampMedium) {
+		updateActiveSizeElement(document.getElementById("changeSizeToMedium"));
+	} else if (activeStampSize == stampLarge) {
+		updateActiveSizeElement(document.getElementById("changeSizeToLarge"));
+	} else {
+		updateActiveSizeElement(document.getElementById("changeSizeToXLarge"));
+	}
+});
 //changes size
 //I think the activesizeelement is ok...you just need something like "if it's a merker..."
 

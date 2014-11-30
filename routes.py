@@ -130,8 +130,13 @@ def upload_file():
 	file = request.files['file']
 
 	if file and allowed_file(file.filename):
-		#do the image stuff
-		#file = enhance_image(file)
+
+		#if they want to process the image, then do it
+		if request.form['imageProc'] == "yes":
+			print "YESSSSSSSSSSSSS!"
+			#file = enhance_image(file)
+
+
 		#save to disk
 		filename = secure_filename(file.filename)
 
@@ -147,8 +152,6 @@ def upload_file():
 		#for file dimensions
 		# im = Image(str(full_filename))
 		# print "image dimensions: ", im.size
-
-
 
         #save file path to database
 
