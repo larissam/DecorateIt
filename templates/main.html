@@ -121,7 +121,7 @@
 	  width:250px;
 	}
 
-	.purikuraOptions {
+	.purikuraDelete {
 	  display:none;
 	  position:absolute;
 	  top:15px;
@@ -131,11 +131,21 @@
 	  background-image:url( "{{ url_for('static', filename='images/gallerydelete.png') }}" );
 	}
 
-	.purikura:hover .purikuraOptions {
+	/*.purikuraZoom {
+	  display:none;
+	  position:absolute;
+	  bottom:10px;
+	  right:20px;
+	  width:25px;
+	  height:25px;
+	  background-image:url( "{{ url_for('static', filename='images/gallerydelete.png') }}" );
+	}*/
+
+	.purikura:hover .purikuraDelete{
 	  display:block;
 	}
 
-	.purikuraOptions:hover {
+	.purikuraDelete:hover .purikuraZoom:hover {
 	  background-image:url( "{{ url_for('static', filename='images/gallerydelete.png') }}" );
 	}
 
@@ -151,40 +161,30 @@
 
 {% if session.logged_in %}
 
-<div id="purikuraList">
-</div>
-
 <div id="container">
 
-<div class="col-md-3 brick">
-    	<!-- the link goes to a "details" page -->
+	<!-- Add New Photo button -->
+	<div class="col-md-3 brick">
+	    <button><a href="{{ url_for('choose') }}"><img src="{{ url_for('static', filename='images/addImage.jpg') }}" class="img-thumbnail add-button-size" id="addButton" onmouseover="this.src='{{ url_for('static', filename='images/addImageGreen.jpg') }}';" onmouseout="this.src='{{ url_for('static', filename='images/addImage.jpg') }}';" /></a></button>
+	</div>
+	{% macro input(url) %}
+		  <a href="{{ url_for('decorate', filename='{{ url }}') }}"><img src="{{ purikura.combined_src }}" class="img-thumbnail thumbnail-custom"/></a>
+	{% endmacro %}
 
-    	<!-- width styling is so it scales smaller -->
-    	<button><a href="{{ url_for('choose') }}"><img src="{{ url_for('static', filename='images/addImage.jpg') }}" class="img-thumbnail add-button-size" id="addButton" onmouseover="this.src='{{ url_for('static', filename='images/addImageGreen.jpg') }}';" onmouseout="this.src='{{ url_for('static', filename='images/addImage.jpg') }}';" /></a></button>
-    	<!-- <div class="hidden">
-    		<a href=""><img src="{{ url_for('static', filename='images/socialmediaiconfacebook.png') }}" /></a>
-    	</div> -->
-</div>
-
+	<!-- Decorated Images -->
     {% for purikura in purikura_list %}
     <div class="col-md-3 brick">
-    	<!-- <a href="/purikura/{{ purikura.id }}"><img src="{{ purikura.combined_src }}" /></a> -->
-        <!-- <a class="btn btn-primary" href="/purikura/{{ purikura.id }}">Details</a> -->
-
-        <!-- <div class="purikura">
-        	<div class="purikuraOptions hidden">
-    			<button><img src="{{ url_for('static', filename='images/gallerydelete.png') }}" /></button>
-    		</div>	
-        	<a href="/purikura/{{ purikura.id }}"><img src="{{ purikura.combined_src }}" class="img-thumbnail thumbnail-size" /></a>
-        	
-        </div> -->
-
         <div class="purikura">
-		  <img src="{{ purikura.combined_src }}" class="img-thumbnail thumbnail-custom"/>
+		  <a href="{{ url_for('decorate', filename='{0}'.format(purikura.combined_src)) }}"><img src="{{ purikura.combined_src }}" class="img-thumbnail thumbnail-custom"/></a>
 		  <form action="{{ url_for('delete_purikura') }}" method=POST>
 		  	<input type="hidden" name="filename" value="{{ purikura.combined_src }}">
-		  	<button class="purikuraOptions"></button>
+		  	<button class="purikuraDelete"></button>
 		  </form>
+
+		 <!--  <form action="{{ url_for('delete_purikura') }}" method=POST>
+		  	<input type="hidden" name="filename" value="{{ purikura.combined_src }}">
+		  	<button class="purikuraZoom"></button>
+		  </form> -->
 		</div>
     </div>
     {% endfor %}
@@ -193,7 +193,7 @@
 
 <script>
 
-//reload the page once, just in case you made some database changes when you were using the editor
+//Reload the page once, just in case you made some database changes
 window.onload = function() {
     if(!window.location.hash) {
         window.location = window.location + '#loaded';
@@ -201,41 +201,22 @@ window.onload = function() {
     }
 }
 
-// $(function() {
-//       var wall = new freewall("#purikuraList");
-//       wall.fitWidth();
-//     });
+//Use Freewall.js plugin to display the images		
+var wall = new freewall("#container");
+wall.reset({
+	selector: '.brick',
+	animate: true,
+	cellW: 250, //250 makes it line up well
+	cellH: 'auto',
+	onResize: function() {
+		wall.fitWidth();
+	}
+});
 
-// $(function() {
-//       var wall = new freewall("#container");
-
-
-//       wall.fitWidth();
-//     });
-
-// var temp = "<div class='brick' style='width:{width}px;'><img src='{path}' width='100%'></div>";
-// 			var w = 1, h = 1, html = '', limitItem = {{ purikura_list.length }};
-// 			for (var i = 0; i < limitItem; ++i) {
-// 				w = 1 + 3 * Math.random() << 0;
-// 				html += temp.replace(/\{width\}/g, w*150).replace("{path}", purikura_list[i].combined_src);
-// 			}
-// 			$("#freewall").html(html);
-			
-			var wall = new freewall("#container");
-			wall.reset({
-				selector: '.brick',
-				animate: true,
-				cellW: 250, //250 makes it line up better - why?
-				cellH: 'auto',
-				onResize: function() {
-					wall.fitWidth();
-				}
-			});
-
-			var images = wall.container.find('.brick');
-			images.find('img').load(function() {
-				wall.fitWidth();
-			});
+var images = wall.container.find('.brick');
+images.find('img').load(function() {
+	wall.fitWidth();
+});
 		
 </script>
 

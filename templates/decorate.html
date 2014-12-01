@@ -8,10 +8,13 @@
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap/css/bootstrap-theme.css') }}">
 	<script type="text/javascript" src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js') }}"></script>
 
+	<!-- for the email form -->
+	<script src="http://malsup.github.com/jquery.form.js"></script> 
+
 	<!-- for the accordion stuff -->
 	<link rel="stylesheet" href="{{ url_for('static', filename='jqueryui/jquery-ui.css') }}">
-	<script type="text/javascript" src="{{ url_for('static', filename='js/jquery-1.11.0.min.js') }}"></script>
 	<script type="text/javascript" src="{{ url_for('static', filename='jqueryui/jquery-ui.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap-tooltip.js') }}"></script>
 	<script>
 	$(function() {
 		$( "#accordion" ).accordion({
@@ -64,6 +67,16 @@
 			height: 48px;
 		}
 
+		.form-group {
+			text-align: left;
+		}
+
+		#emailNote {
+			text-align: left;
+			font-size: 13px;
+			color: #FF0000;
+		}
+
 	/* for accordion icons and tool selection */
 		button {
 			border: none;
@@ -111,8 +124,6 @@
 			cursor: url( "{{ url_for('static', filename='images/cursoreraser.png') }}" ), auto;
 		}
 
-
-
 	</style>
 
 {% endblock %}
@@ -136,9 +147,69 @@
 		<!-- margin 0px just for this guy b/c want top plumb with editor window -->
 		<h3 class="h3-faux-accordion" style="background-color: #660033; margin:0px;">
 			
-			<button><a id="save"><img src="{{ url_for('static', filename='images/navigatorsave.png') }}" style="height:32px; width:32px;" class="icon-inactive"/></a></button>
+			<!-- Save function -->
+			<button data-toggle="modal" data-target="#saveModal"><a id="save"><img src="{{ url_for('static', filename='images/navigatorsave.png') }}" style="height:32px; width:32px;" class="icon-inactive"/></a></button>
+
+			<!-- Save function popup -->
+			<div class="modal fade" id="saveModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+			        <h4 class="modal-title" id="myModalLabel">Saved in Gallery!</h4>
+			      </div>
+			      <div class="modal-body">
+			      	<p>Click <a href="{{ url_for('main') }}">here</a> to see it!</p>  
+			      </div>
+			    </div>
+			  </div>
+			</div>
+
 			<button><a id="download"><img src="{{ url_for('static', filename='images/navigatordownload.png') }}" style="height:32px; width:32px;" class="icon-inactive"/></a></button>
-			<button><a id="email"><img src="{{ url_for('static', filename='images/email.png') }}" style="height:26px; width:32px;" class="icon-inactive"/></a></button>
+
+			<!-- Email function -->
+			<button data-toggle="modal" data-target="#emailModal"><a id="email"><img src="{{ url_for('static', filename='images/email.png') }}" style="height:26px; width:32px;" class="icon-inactive"/></a></button>
+
+
+			<!-- Email function popup -->
+			<div class="modal" id="emailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+			        <h4 class="modal-title" id="myModalLabel">Send Image</h4>
+			      </div>
+			      <div class="modal-body">
+			        <form id="emailImage">
+			        	<div class="form-group">
+			              <label for="email">Email addresses:</label>
+			              <p id="emailNote">Please enter email addresses separated by commas.</p>
+			              <input type="text" name="address" class="form-control" placeholder="example@example.com, example2@example.com" required autofocus name="email"/>
+
+			              <br />
+			              <label for="subject">Email subject:</label>
+			              <input type="text" name="subject" class="form-control" placeholder="Subject..." required autofocus name="subject"/>
+
+			              <br />
+			              <label for="subject">Email body:</label>
+			              <textarea class="form-control" rows="3" placeholder="Body..." name="body"></textarea>
+			              <!-- <input type="text" name="body" class="form-control" placeholder="Message..." required autofocus name="body"/> -->
+
+			              <input type="hidden" name="filename" value=" {{ filename }} " />
+			              <!-- <input class="btn btn-primary" type="submit" value="Submit" /> -->
+						  <br />
+			              <input class="btn btn-primary" type="submit" id="submitButton" value="Send email" />
+			            </div>
+<!-- 			            <input type="submit" value="submit" />
+	<button type="submit" class="btn btn-primary">Upload</button>
+ -->			    </form>
+			      </div>
+			      <!-- <div class="modal-footer">
+			        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			      </div> -->
+			    </div>
+			  </div>
+			</div>
 
 		</h3>
 	</div>
@@ -155,7 +226,7 @@
 			<h3 class="h3-faux-accordion" style="background-color: #B8005C;">
 
 				<!-- sizes should be universal. sticking outside for now. still need to implement sizing for brush and stamps -->
-				<button id="changeSizeToSmall" ><img src="{{ url_for('static', filename='images/sizesmall.png') }}" title="hai!" style="height:32px; width: 32px" class="icon-inactive"/></button>
+				<button id="changeSizeToSmall" data-toggle="tooltip" data-placement="top" title="Change tool size to small"><img src="{{ url_for('static', filename='images/sizesmall.png') }}" style="height:32px; width: 32px" class="icon-inactive"/></button>
 				<button id="changeSizeToMedium"><img src="{{ url_for('static', filename='images/sizemedium.png') }}" style="height:32px; width: 32px" class="icon-inactive"/></button>
 				<button id="changeSizeToLarge"><img src="{{ url_for('static', filename='images/sizelarge.png') }}" style="height:32px; width: 32px" class="icon-inactive"/></button>
 				<button id="changeSizeToXLarge"><img src="{{ url_for('static', filename='images/sizexlarge.png') }}" style="height:32px; width: 32px" class="icon-inactive"/></button>
@@ -192,20 +263,8 @@
 			<button id="changeToolToBrush"><img  src="{{ url_for('static', filename='images/brush.png') }}" style="height:32px; width:32px;" /></button>
 			<button id="changeToolToBrush2"><img  src="{{ url_for('static', filename='images/2.png') }}" style="height:32px; width:32px;"/></button>
 			<button id="changeToolToBrush3"><img  src="{{ url_for('static', filename='images/3.png') }}" style="height:32px; width:32px;"/></button>
-			<!-- these are placeholders -->
-			<button id=""><img  src="{{ url_for('static', filename='images/brush.png') }}" style="height:32px; width:32px;" /></button>
-			<button id=""><img  src="{{ url_for('static', filename='images/brush.png') }}" style="height:32px; width:32px;" /></button>
-			<button id=""><img  src="{{ url_for('static', filename='images/brush.png') }}" style="height:32px; width:32px;" /></button>
-			<button id=""><img  src="{{ url_for('static', filename='images/brush.png') }}" style="height:32px; width:32px;" /></button>
-			<button id=""><img  src="{{ url_for('static', filename='images/brush.png') }}" style="height:32px; width:32px;" /></button>
-			<button id=""><img  src="{{ url_for('static', filename='images/brush.png') }}" style="height:32px; width:32px;" /></button>
-			<button id=""><img  src="{{ url_for('static', filename='images/brush.png') }}" style="height:32px; width:32px;" /></button>
-			<button id=""><img  src="{{ url_for('static', filename='images/brush.png') }}" style="height:32px; width:32px;" /></button>
-			<button id=""><img  src="{{ url_for('static', filename='images/brush.png') }}" style="height:32px; width:32px;" /></button>
-			<button id=""><img  src="{{ url_for('static', filename='images/brush.png') }}" style="height:32px; width:32px;" /></button>
-			<button id=""><img  src="{{ url_for('static', filename='images/brush.png') }}" style="height:32px; width:32px;" /></button>
-			<button id=""><img  src="{{ url_for('static', filename='images/brush.png') }}" style="height:32px; width:32px;" /></button>
-			<button id=""><img  src="{{ url_for('static', filename='images/brush.png') }}" style="height:32px; width:32px;" /></button>
+			<button id="changeToolToBlueSparkleBrush"><img src="{{ url_for('static', filename='images/bluesparkle.png') }}" style="height:32px; width:32px;"/></button>
+			<button id="changeToolToPinkSparkleBrush"><img  src="{{ url_for('static', filename='images/pinksparkle.png') }}" style="height:32px; width:32px;"/></button>
 		</div>
 		
 		<h3 style="background-color: #FFCC99; text-align: center;"><button><img src="{{ url_for('static', filename='images/navigatorstamp.png') }}" class="icon-inactive"/></button></h3>
@@ -213,20 +272,29 @@
 			<button id="changeStamp2"><img src="{{ url_for('static', filename='images/2.png') }}" style="height:32px; width:32px;"/></button>
 			<button id="changeStamp3"><img src="{{ url_for('static', filename='images/3.png') }}" style="height:32px; width:32px;"/></button>
 			<button id="changeStamp4"><img src="{{ url_for('static', filename='images/jd2.png') }}" style="height:32px; width:32px;"/></button>
-			<!-- these are placeholders -->
 			<button id="spottedHeartStamp"><img src="{{ url_for('static', filename='images/spottedheart.png') }}" style="height:32px; width:32px;"/></button>
 			<button id="pearlHeartStamp"><img src="{{ url_for('static', filename='images/pearlheart.png') }}" style="height:32px; width:32px;"/></button>
-			<button id="goldSparkleStamp"><img  src="{{ url_for('static', filename='images/goldsparkle.png') }}" style="height:32px; width:32px;"/></button>
-			<button id="blueSparkleStamp"><img  src="{{ url_for('static', filename='images/bluesparkle.png') }}" style="height:32px; width:32px;"/></button>
+			<button id="cherryStamp"><img  src="{{ url_for('static', filename='images/cherries.png') }}" style="height:32px; width:32px;"/></button>
+			<button id="crownStamp"><img  src="{{ url_for('static', filename='images/crown.png') }}" style="height:32px; width:32px;"/></button>
 			<button id="bowtieStamp"><img  src="{{ url_for('static', filename='images/bowtie.png') }}" style="height:32px; width:32px;"/></button>
+			<button id="whiteBowStamp"><img src="{{ url_for('static', filename='images/whitebow.png') }}" style="height:32px; width:32px;"/></button>
 			<button id="kittyBowStamp"><img  src="{{ url_for('static', filename='images/kittybow.png') }}" style="height:32px; width:32px;"/></button>
 			<button id="diamondStamp"><img  src="{{ url_for('static', filename='images/diamond.png') }}" style="height:32px; width:32px;"/></button>
+			<button id="heartDiamondStamp"><img  src="{{ url_for('static', filename='images/heartdiamond.png') }}" style="height:32px; width:32px;"/></button>
 			<button id="pinkDiamondStamp"><img  src="{{ url_for('static', filename='images/pinkdiamond.png') }}" style="height:32px; width:32px;"/></button>
-			<button id="roseStamp"><img  src="{{ url_for('static', filename='images/rose.png') }}" style="height:32px; width:32px;"/></button>
-			<button id=""><img  src="{{ url_for('static', filename='images/2.png') }}" style="height:32px; width:32px;"/></button>
-			<button id=""><img  src="{{ url_for('static', filename='images/2.png') }}" style="height:32px; width:32px;"/></button>
-			<button id=""><img  src="{{ url_for('static', filename='images/2.png') }}" style="height:32px; width:32px;"/></button>
-			<button id=""><img  src="{{ url_for('static', filename='images/2.png') }}" style="height:32px; width:32px;"/></button>
+			<button id="roseStamp"><img src="{{ url_for('static', filename='images/rose.png') }}" style="height:32px; width:32px;"/></button>
+			<button id="daisyStamp"><img src="{{ url_for('static', filename='images/daisy.png') }}" style="height:32px; width:32px;"/></button>
+			<button id="pearlStamp"><img src="{{ url_for('static', filename='images/pearl.png') }}" style="height:32px; width:32px;"/></button>
+			<button id="pinkCrownStamp"><img src="{{ url_for('static', filename='images/pinkcrown.png') }}" style="height:32px; width:32px;"/></button>
+			<button id="blueSparkleStamp"><img src="{{ url_for('static', filename='images/bluesparkle.png') }}" style="height:32px; width:32px;"/></button>
+			<button id="pinkSparkleStamp"><img src="{{ url_for('static', filename='images/pinksparkle.png') }}" style="height:32px; width:32px;"/></button>
+			<button id="orangeSparkleStamp"><img src="{{ url_for('static', filename='images/orangesparkle.png') }}" style="height:32px; width:32px;"/></button>
+			<button id="yellowSparkleStamp"><img src="{{ url_for('static', filename='images/yellowsparkle.png') }}" style="height:32px; width:32px;"/></button>
+			<button id="pinkGlassesStamp"><img src="{{ url_for('static', filename='images/pinkGlasses.png') }}" style="height:32px; width:32px;"/></button>
+			<button id="glassesStamp"><img src="{{ url_for('static', filename='images/glasses.png') }}" style="height:32px; width:32px;"/></button>
+			<button id="stacheStamp"><img src="{{ url_for('static', filename='images/stache.png') }}" style="height:32px; width:32px;"/></button>
+			<button id="bearStamp"><img src="{{ url_for('static', filename='images/teddybear.png') }}" style="height:32px; width:32px;"/></button>
+
 		</div>
 	</div>
 </div>
@@ -234,87 +302,71 @@
 
 <script>
 
-//we need to do a document onload thing here. will get images from the server
-//should create buttons with image elements. (like the pikachus above)
-//should select the first one.
-//later, also need functions to change selected image.
-
-
-
-
-//canvas stuff
-
-
-
+//Get the chosen image from the user
 var imageObj = new Image();
 imageObj.src = "{{ filename }}";
-console.log(imageObj);
 
+//Declare canvas variables
 var el;
 var ctx;
 var background;
 var backgroundctx;
 
-
-
 imageObj.onload = function() {
-        console.log(imageObj.width);
-		console.log(imageObj.height);
 
-		var width = imageObj.width;
-		var height = imageObj.height;
+	//Resize image to fit max size of 700x494
+	if (imageObj.width > 700) {
+		imageObj.height = imageObj.height * (700/imageObj.width); //scale height
+		imageObj.width = 700;
+	}
 
-		if (width > 700) {
-			width = 700;
-			//height is scaled
-		}
+	if (imageObj.height > 494) {
+		imageObj.width = imageObj.width * (494/imageObj.height); //scale width
+		imageObj.height = 494;
+	}
 
-		if (height > 494) {
-			height = 494;
-			//width is scaled
-		}
+	//Copy image onto canvas objects
+	el = document.getElementById('c');
+	el.width = imageObj.width;
+	el.height = imageObj.height;
+	ctx = el.getContext('2d');
 
-		el = document.getElementById('c');
-		el.width = imageObj.width;
-		el.height = imageObj.height;
-		ctx = el.getContext('2d');
+	background = document.getElementById('photo');
+	background.width = imageObj.width;
+	background.height = imageObj.height;
+	backgroundctx = background.getContext('2d');
 
-		background = document.getElementById('photo');
-		background.width = imageObj.width;
-		background.height = imageObj.height;
-		backgroundctx = background.getContext('2d');
+    backgroundctx.drawImage(imageObj, 0, 0);
 
-        backgroundctx.drawImage(imageObj, 0, 0);
+    setUpCanvas();
+ };
 
-        setUpCanvas();
-      };
-//imageObj.src = '{{ url_for('static', filename=filename) }}';
 
-//colors
+//Colors
 var colorPurple = "#cb3594";
 var colorGreen = "#659b41";
 var colorYellow = "#ffcf33";
 var colorBrown = "#986928";
 
-//marker sizes
+//Marker sizes
 var markerSmall = 2;
 var markerMedium = 5;
 var markerLarge = 10;
 var markerXlarge = 15;
 
-//brush sizes
+//Brush sizes
 var brushSmall = 32;
 var brushMedium = 50;
 var brushLarge = 75;
 var brushXlarge = 100;
 
-//stamp sizes are same as brush sizes
+//Stamp sizes are same as brush sizes
 var stampSmall = brushSmall;
 var stampMedium = brushMedium;
 var stampLarge = brushLarge;
 var stampXlarge = brushXlarge;
 
-//active elements
+//Default active elements
 var activeSizeElement = document.getElementById("changeSizeToMedium");
 var activeBrushOrStampElement = document.getElementById("changeColorToPurple");
 
@@ -325,14 +377,11 @@ var activeBrushSize = brushMedium;
 var activeStampSize = stampMedium;
 var activeTool = "marker";
 
-//reset the canvas
-document.getElementById("clear").addEventListener('click', function(){
-	el.width = el.width;
-	clearCanvas();
-	document.getElementById("ui-id-1").click();
-});
 
-//changes color
+/**********************************************************************************
+Markers
+***********************************************************************************/
+
 document.getElementById("changeToolToEraser").addEventListener('click', function(){
 	ctx.globalCompositeOperation = "destination-out";
 	activeTool = "marker";
@@ -340,595 +389,244 @@ document.getElementById("changeToolToEraser").addEventListener('click', function
 	drawWithMarker("purple", "purple");
 	updateActiveBrushOrStampElement(document.getElementById("changeToolToEraser"));
 });
-document.getElementById("changeColorToPurple").addEventListener('click', function(){
-	ctx.globalCompositeOperation = "source-over";
-	activeTool = "marker";
-	updateCursor("marker");
-	drawWithMarker("purple", "purple");
-	updateActiveBrushOrStampElement(document.getElementById("changeColorToPurple"));
-	//you need to highlight the last size you used with a brush
 
-	//marker size stuff - to make sure you show the last selected size per
-	if (activeMarkerSize == markerSmall) {
-		updateActiveSizeElement(document.getElementById("changeSizeToSmall"));
-	} else if (activeMarkerSize == markerMedium) {
-		updateActiveSizeElement(document.getElementById("changeSizeToMedium"));
-	} else if (activeMarkerSize == markerLarge) {
-		updateActiveSizeElement(document.getElementById("changeSizeToLarge"));
-	} else {
-		updateActiveSizeElement(document.getElementById("changeSizeToXLarge"));
-	}
+document.getElementById("changeColorToPurple").addEventListener('click', function(){
+	updateInterface("marker", document.getElementById("changeColorToPurple"));
+	drawWithMarker("purple", "purple");
 });
 document.getElementById("changeColorToGreen").addEventListener('click', function(){
-	ctx.globalCompositeOperation = "source-over";
-	activeTool = "marker";
-	updateCursor("marker");
+	updateInterface("marker", document.getElementById("changeColorToGreen"));
 	drawWithMarker("green", "green");
-	updateActiveBrushOrStampElement(document.getElementById("changeColorToGreen"));
-
-	//markerSize stuff
-	if (activeMarkerSize == markerSmall) {
-		updateActiveSizeElement(document.getElementById("changeSizeToSmall"));
-	} else if (activeMarkerSize == markerMedium) {
-		updateActiveSizeElement(document.getElementById("changeSizeToMedium"));
-	} else if (activeMarkerSize == markerLarge) {
-		updateActiveSizeElement(document.getElementById("changeSizeToLarge"));
-	} else {
-		updateActiveSizeElement(document.getElementById("changeSizeToXLarge"));
-	}
 });
 document.getElementById("changeColorToYellow").addEventListener('click', function(){
-	ctx.globalCompositeOperation = "source-over";
-	activeTool = "marker";
-	updateCursor("marker");
+	updateInterface("marker", document.getElementById("changeColorToYellow"));
 	drawWithMarker("yellow", "yellow");
-	updateActiveBrushOrStampElement(document.getElementById("changeColorToYellow"));
-
-	//markerSize stuff
-	if (activeMarkerSize == markerSmall) {
-		updateActiveSizeElement(document.getElementById("changeSizeToSmall"));
-	} else if (activeMarkerSize == markerMedium) {
-		updateActiveSizeElement(document.getElementById("changeSizeToMedium"));
-	} else if (activeMarkerSize == markerLarge) {
-		updateActiveSizeElement(document.getElementById("changeSizeToLarge"));
-	} else {
-		updateActiveSizeElement(document.getElementById("changeSizeToXLarge"));
-	}
 });
 document.getElementById("changeColorToPink").addEventListener('click', function(){
-	ctx.globalCompositeOperation = "source-over";
-	activeTool = "marker";
-	updateCursor("marker");
+	updateInterface("marker", document.getElementById("changeColorToPink"));
 	drawWithMarker("pink", "pink");
-	updateActiveBrushOrStampElement(document.getElementById("changeColorToPink"));
-
-	//markerSize stuff
-	if (activeMarkerSize == markerSmall) {
-		updateActiveSizeElement(document.getElementById("changeSizeToSmall"));
-	} else if (activeMarkerSize == markerMedium) {
-		updateActiveSizeElement(document.getElementById("changeSizeToMedium"));
-	} else if (activeMarkerSize == markerLarge) {
-		updateActiveSizeElement(document.getElementById("changeSizeToLarge"));
-	} else {
-		updateActiveSizeElement(document.getElementById("changeSizeToXLarge"));
-	}
 });
 document.getElementById("changeColorToWhitePurple").addEventListener('click', function(){
-	ctx.globalCompositeOperation = "source-over";
-	activeTool = "marker";
-	updateCursor("marker");
+	updateInterface("marker", document.getElementById("changeColorToWhitePurple"));
 	drawWithMarker("white", "purple");
-	updateActiveBrushOrStampElement(document.getElementById("changeColorToWhitePurple"));
-
-	//markerSize stuff
-	if (activeMarkerSize == markerSmall) {
-		updateActiveSizeElement(document.getElementById("changeSizeToSmall"));
-	} else if (activeMarkerSize == markerMedium) {
-		updateActiveSizeElement(document.getElementById("changeSizeToMedium"));
-	} else if (activeMarkerSize == markerLarge) {
-		updateActiveSizeElement(document.getElementById("changeSizeToLarge"));
-	} else {
-		updateActiveSizeElement(document.getElementById("changeSizeToXLarge"));
-	}
 });
 document.getElementById("changeColorToWhiteYellow").addEventListener('click', function(){
-	ctx.globalCompositeOperation = "source-over";
-	activeTool = "marker";
-	updateCursor("marker");
+	updateInterface("marker", document.getElementById("changeColorToWhiteYellow"));
 	drawWithMarker("white", "yellow");
-	updateActiveBrushOrStampElement(document.getElementById("changeColorToWhiteYellow"));
-
-	//markerSize stuff
-	if (activeMarkerSize == markerSmall) {
-		updateActiveSizeElement(document.getElementById("changeSizeToSmall"));
-	} else if (activeMarkerSize == markerMedium) {
-		updateActiveSizeElement(document.getElementById("changeSizeToMedium"));
-	} else if (activeMarkerSize == markerLarge) {
-		updateActiveSizeElement(document.getElementById("changeSizeToLarge"));
-	} else {
-		updateActiveSizeElement(document.getElementById("changeSizeToXLarge"));
-	}
 });
 document.getElementById("changeColorToWhitePink").addEventListener('click', function(){
-	ctx.globalCompositeOperation = "source-over";
-	activeTool = "marker";
-	updateCursor("marker");
+	updateInterface("marker", document.getElementById("changeColorToWhitePink"));
 	drawWithMarker("white", "pink");
-	updateActiveBrushOrStampElement(document.getElementById("changeColorToWhitePink"));
-
-	//markerSize stuff
-	if (activeMarkerSize == markerSmall) {
-		updateActiveSizeElement(document.getElementById("changeSizeToSmall"));
-	} else if (activeMarkerSize == markerMedium) {
-		updateActiveSizeElement(document.getElementById("changeSizeToMedium"));
-	} else if (activeMarkerSize == markerLarge) {
-		updateActiveSizeElement(document.getElementById("changeSizeToLarge"));
-	} else {
-		updateActiveSizeElement(document.getElementById("changeSizeToXLarge"));
-	}
 });
 
 document.getElementById("changeColorToWhiteBlue").addEventListener('click', function(){
-	ctx.globalCompositeOperation = "source-over";
-	activeTool = "marker";
-	updateCursor("marker");
+	updateInterface("marker", document.getElementById("changeColorToWhiteBlue"));
 	drawWithMarker("white", "rgb(142,222,249)");
-	updateActiveBrushOrStampElement(document.getElementById("changeColorToWhiteBlue"));
-
-	//markerSize stuff
-	if (activeMarkerSize == markerSmall) {
-		updateActiveSizeElement(document.getElementById("changeSizeToSmall"));
-	} else if (activeMarkerSize == markerMedium) {
-		updateActiveSizeElement(document.getElementById("changeSizeToMedium"));
-	} else if (activeMarkerSize == markerLarge) {
-		updateActiveSizeElement(document.getElementById("changeSizeToLarge"));
-	} else {
-		updateActiveSizeElement(document.getElementById("changeSizeToXLarge"));
-	}
 });
 
 document.getElementById("changeColorToSkyBlue").addEventListener('click', function(){
-	ctx.globalCompositeOperation = "source-over";
-	activeTool = "marker";
-	updateCursor("marker");
+	updateInterface("marker", document.getElementById("changeColorToSkyBlue"));
 	drawWithMarker("rgb(142,222,249)", "rgb(142,222,249)");
-	updateActiveBrushOrStampElement(document.getElementById("changeColorToSkyBlue"));
-
-	//markerSize stuff
-	if (activeMarkerSize == markerSmall) {
-		updateActiveSizeElement(document.getElementById("changeSizeToSmall"));
-	} else if (activeMarkerSize == markerMedium) {
-		updateActiveSizeElement(document.getElementById("changeSizeToMedium"));
-	} else if (activeMarkerSize == markerLarge) {
-		updateActiveSizeElement(document.getElementById("changeSizeToLarge"));
-	} else {
-		updateActiveSizeElement(document.getElementById("changeSizeToXLarge"));
-	}
 });
 
 document.getElementById("changeColorToOrange").addEventListener('click', function(){
-	ctx.globalCompositeOperation = "source-over";
-	activeTool = "marker";
-	updateCursor("marker");
+	updateInterface("marker", document.getElementById("changeColorToOrange"));
 	drawWithMarker("rgb(244,157,55)", "rgb(244,157,55)");
-	updateActiveBrushOrStampElement(document.getElementById("changeColorToOrange"));
-
-	//markerSize stuff
-	if (activeMarkerSize == markerSmall) {
-		updateActiveSizeElement(document.getElementById("changeSizeToSmall"));
-	} else if (activeMarkerSize == markerMedium) {
-		updateActiveSizeElement(document.getElementById("changeSizeToMedium"));
-	} else if (activeMarkerSize == markerLarge) {
-		updateActiveSizeElement(document.getElementById("changeSizeToLarge"));
-	} else {
-		updateActiveSizeElement(document.getElementById("changeSizeToXLarge"));
-	}
 });
 
 document.getElementById("changeColorToBlack").addEventListener('click', function(){
-	ctx.globalCompositeOperation = "source-over";
-	activeTool = "marker";
-	updateCursor("marker");
+	updateInterface("marker", document.getElementById("changeColorToBlack"));
 	drawWithMarker("rgb(0,0,0)", "rgb(0,0,0)");
-	updateActiveBrushOrStampElement(document.getElementById("changeColorToBlack"));
-
-	//markerSize stuff
-	if (activeMarkerSize == markerSmall) {
-		updateActiveSizeElement(document.getElementById("changeSizeToSmall"));
-	} else if (activeMarkerSize == markerMedium) {
-		updateActiveSizeElement(document.getElementById("changeSizeToMedium"));
-	} else if (activeMarkerSize == markerLarge) {
-		updateActiveSizeElement(document.getElementById("changeSizeToLarge"));
-	} else {
-		updateActiveSizeElement(document.getElementById("changeSizeToXLarge"));
-	}
 });
 
 document.getElementById("changeColorToRed").addEventListener('click', function(){
-	ctx.globalCompositeOperation = "source-over";
-	activeTool = "marker";
-	updateCursor("marker");
+	updateInterface("marker", document.getElementById("changeColorToRed"));
 	drawWithMarker("rgb(255,34,34)", "rgb(255,34,34)");
-	updateActiveBrushOrStampElement(document.getElementById("changeColorToRed"));
-
-	//markerSize stuff
-	if (activeMarkerSize == markerSmall) {
-		updateActiveSizeElement(document.getElementById("changeSizeToSmall"));
-	} else if (activeMarkerSize == markerMedium) {
-		updateActiveSizeElement(document.getElementById("changeSizeToMedium"));
-	} else if (activeMarkerSize == markerLarge) {
-		updateActiveSizeElement(document.getElementById("changeSizeToLarge"));
-	} else {
-		updateActiveSizeElement(document.getElementById("changeSizeToXLarge"));
-	}
 });
 
 document.getElementById("changeColorToWhite").addEventListener('click', function(){
-	ctx.globalCompositeOperation = "source-over";
-	activeTool = "marker";
-	updateCursor("marker");
+	updateInterface("marker", document.getElementById("changeColorToWhite"));
 	drawWithMarker("white", "white");
-	updateActiveBrushOrStampElement(document.getElementById("changeColorToWhite"));
-
-	//markerSize stuff
-	if (activeMarkerSize == markerSmall) {
-		updateActiveSizeElement(document.getElementById("changeSizeToSmall"));
-	} else if (activeMarkerSize == markerMedium) {
-		updateActiveSizeElement(document.getElementById("changeSizeToMedium"));
-	} else if (activeMarkerSize == markerLarge) {
-		updateActiveSizeElement(document.getElementById("changeSizeToLarge"));
-	} else {
-		updateActiveSizeElement(document.getElementById("changeSizeToXLarge"));
-	}
 });
 
 document.getElementById("changeColorToMint").addEventListener('click', function(){
-	ctx.globalCompositeOperation = "source-over";
-	activeTool = "marker";
-	updateCursor("marker");
+	updateInterface("marker", document.getElementById("changeColorToMint"));
 	drawWithMarker("rgb(22, 230, 188)", "rgb(22, 230, 188)");
-	updateActiveBrushOrStampElement(document.getElementById("changeColorToMint"));
-
-	//markerSize stuff
-	if (activeMarkerSize == markerSmall) {
-		updateActiveSizeElement(document.getElementById("changeSizeToSmall"));
-	} else if (activeMarkerSize == markerMedium) {
-		updateActiveSizeElement(document.getElementById("changeSizeToMedium"));
-	} else if (activeMarkerSize == markerLarge) {
-		updateActiveSizeElement(document.getElementById("changeSizeToLarge"));
-	} else {
-		updateActiveSizeElement(document.getElementById("changeSizeToXLarge"));
-	}
 });
 
 document.getElementById("changeColorToLightYellow").addEventListener('click', function(){
-	ctx.globalCompositeOperation = "source-over";
-	activeTool = "marker";
-	updateCursor("marker");
+	updateInterface("marker", document.getElementById("changeColorToLightYellow"));
 	drawWithMarker("rgb(250, 255, 168)", "rgb(250, 255, 168)");
-	updateActiveBrushOrStampElement(document.getElementById("changeColorToLightYellow"));
-
-	//markerSize stuff
-	if (activeMarkerSize == markerSmall) {
-		updateActiveSizeElement(document.getElementById("changeSizeToSmall"));
-	} else if (activeMarkerSize == markerMedium) {
-		updateActiveSizeElement(document.getElementById("changeSizeToMedium"));
-	} else if (activeMarkerSize == markerLarge) {
-		updateActiveSizeElement(document.getElementById("changeSizeToLarge"));
-	} else {
-		updateActiveSizeElement(document.getElementById("changeSizeToXLarge"));
-	}
 });
 
 document.getElementById("changeColorToLavender").addEventListener('click', function(){
-	ctx.globalCompositeOperation = "source-over";
-	activeTool = "marker";
-	updateCursor("marker");
+	updateInterface("marker", document.getElementById("changeColorToLavender"));
 	drawWithMarker("rgb(249, 183, 248)", "rgb(249, 183, 248)");
-	updateActiveBrushOrStampElement(document.getElementById("changeColorToLavender"));
-
-	//markerSize stuff
-	if (activeMarkerSize == markerSmall) {
-		updateActiveSizeElement(document.getElementById("changeSizeToSmall"));
-	} else if (activeMarkerSize == markerMedium) {
-		updateActiveSizeElement(document.getElementById("changeSizeToMedium"));
-	} else if (activeMarkerSize == markerLarge) {
-		updateActiveSizeElement(document.getElementById("changeSizeToLarge"));
-	} else {
-		updateActiveSizeElement(document.getElementById("changeSizeToXLarge"));
-	}
 });
-//BRUSHES!
 
-//I think this is gross. What's up with the double call to getElementById?
+
+/**********************************************************************************
+Brushes
+***********************************************************************************/
+
+
 document.getElementById("changeToolToBrush").addEventListener('click', function(){
-	ctx.globalCompositeOperation = "source-over";
-	activeTool = "brush";
-	updateCursor("brush");
-	//console.log("active brush size feeding into fn: ", activeBrushSize);
+	updateInterface("brush", document.getElementById("changeToolToBrush"));
 	drawWithBrush(document.getElementById("changeToolToBrush").childNodes[0].src);
-	updateActiveBrushOrStampElement(document.getElementById("changeToolToBrush"));
-
-	//brushSize stuff
-	if (activeBrushSize == brushSmall) {
-		updateActiveSizeElement(document.getElementById("changeSizeToSmall"));
-	} else if (activeBrushSize == brushMedium) {
-		updateActiveSizeElement(document.getElementById("changeSizeToMedium"));
-	} else if (activeBrushSize == brushLarge) {
-		updateActiveSizeElement(document.getElementById("changeSizeToLarge"));
-	} else {
-		updateActiveSizeElement(document.getElementById("changeSizeToXLarge"));
-	}
 });
 
 document.getElementById("changeToolToBrush2").addEventListener('click', function(){
-	ctx.globalCompositeOperation = "source-over";
-	activeTool = "brush";
-	updateCursor("brush");
+	updateInterface("brush", document.getElementById("changeToolToBrush2"));
 	drawWithBrush(document.getElementById("changeToolToBrush2").childNodes[0].src);
-	updateActiveBrushOrStampElement(document.getElementById("changeToolToBrush2"));
-
-	//brushSize stuff
-	if (activeBrushSize == brushSmall) {
-		updateActiveSizeElement(document.getElementById("changeSizeToSmall"));
-	} else if (activeBrushSize == brushMedium) {
-		updateActiveSizeElement(document.getElementById("changeSizeToMedium"));
-	} else if (activeBrushSize == brushLarge) {
-		updateActiveSizeElement(document.getElementById("changeSizeToLarge"));
-	} else {
-		updateActiveSizeElement(document.getElementById("changeSizeToXLarge"));
-	}
 });
 
 document.getElementById("changeToolToBrush3").addEventListener('click', function(){
-	ctx.globalCompositeOperation = "source-over";
-	activeTool = "brush";
-	updateCursor("brush");
-
+	updateInterface("brush", document.getElementById("changeToolToBrush3"));
 	drawWithBrush(document.getElementById("changeToolToBrush3").childNodes[0].src);
-	updateActiveBrushOrStampElement(document.getElementById("changeToolToBrush3"));
-
-	//brushSize stuff
-	if (activeBrushSize == brushSmall) {
-		updateActiveSizeElement(document.getElementById("changeSizeToSmall"));
-	} else if (activeBrushSize == brushMedium) {
-		updateActiveSizeElement(document.getElementById("changeSizeToMedium"));
-	} else if (activeBrushSize == brushLarge) {
-		updateActiveSizeElement(document.getElementById("changeSizeToLarge"));
-	} else {
-		updateActiveSizeElement(document.getElementById("changeSizeToXLarge"));
-	}
 });
 
-//changes stamps
-//again, super gross with the double call
-document.getElementById("changeStamp2").addEventListener('click', function() {
-	ctx.globalCompositeOperation = "source-over";
-	activeTool = "stamp";
-	updateCursor("stamp");
-	drawStamp(document.getElementById("changeStamp2").childNodes[0].src);
-	updateActiveBrushOrStampElement(document.getElementById("changeStamp2"));
+document.getElementById("changeToolToBlueSparkleBrush").addEventListener('click', function(){
+	updateInterface("brush", document.getElementById("changeToolToBlueSparkleBrush"));
+	drawWithBrush(document.getElementById("changeToolToBlueSparkleBrush").childNodes[0].src);
+});
 
-	//stampSize stuff
-	if (activeStampSize == stampSmall) {
-		updateActiveSizeElement(document.getElementById("changeSizeToSmall"));
-	} else if (activeStampSize == stampMedium) {
-		updateActiveSizeElement(document.getElementById("changeSizeToMedium"));
-	} else if (activeStampSize == stampLarge) {
-		updateActiveSizeElement(document.getElementById("changeSizeToLarge"));
-	} else {
-		updateActiveSizeElement(document.getElementById("changeSizeToXLarge"));
-	}
+document.getElementById("changeToolToPinkSparkleBrush").addEventListener('click', function(){
+	updateInterface("brush", document.getElementById("changeToolToPinkSparkleBrush"));
+	drawWithBrush(document.getElementById("changeToolToPinkSparkleBrush").childNodes[0].src);
+});
+
+
+/**********************************************************************************
+Stamps
+***********************************************************************************/
+
+document.getElementById("changeStamp2").addEventListener('click', function() {
+	updateInterface("stamp", document.getElementById("changeStamp2"));
+	drawStamp(document.getElementById("changeStamp2").childNodes[0].src);
 });
 document.getElementById("changeStamp3").addEventListener('click', function() {
-	ctx.globalCompositeOperation = "source-over";
-	activeTool = "stamp";
-	updateCursor("stamp");
+	updateInterface("stamp", document.getElementById("changeStamp3"));
 	drawStamp(document.getElementById("changeStamp3").childNodes[0].src);
-	updateActiveBrushOrStampElement(document.getElementById("changeStamp3"));
-
-	//stampSize stuff
-	if (activeStampSize == stampSmall) {
-		updateActiveSizeElement(document.getElementById("changeSizeToSmall"));
-	} else if (activeStampSize == stampMedium) {
-		updateActiveSizeElement(document.getElementById("changeSizeToMedium"));
-	} else if (activeStampSize == stampLarge) {
-		updateActiveSizeElement(document.getElementById("changeSizeToLarge"));
-	} else {
-		updateActiveSizeElement(document.getElementById("changeSizeToXLarge"));
-	}
 });
 document.getElementById("changeStamp4").addEventListener('click', function() {
-	ctx.globalCompositeOperation = "source-over";
-	activeTool = "stamp";
-	updateCursor("stamp");
+	updateInterface("stamp", document.getElementById("changeStamp4"));
 	drawStamp(document.getElementById("changeStamp4").childNodes[0].src);
-	updateActiveBrushOrStampElement(document.getElementById("changeStamp4"));
-
-	//stampSize stuff
-	if (activeStampSize == stampSmall) {
-		updateActiveSizeElement(document.getElementById("changeSizeToSmall"));
-	} else if (activeStampSize == stampMedium) {
-		updateActiveSizeElement(document.getElementById("changeSizeToMedium"));
-	} else if (activeStampSize == stampLarge) {
-		updateActiveSizeElement(document.getElementById("changeSizeToLarge"));
-	} else {
-		updateActiveSizeElement(document.getElementById("changeSizeToXLarge"));
-	}
 });
 
 document.getElementById("spottedHeartStamp").addEventListener('click', function() {
-	ctx.globalCompositeOperation = "source-over";
-	activeTool = "stamp";
-	updateCursor("stamp");
+	updateInterface("stamp", document.getElementById("spottedHeartStamp"));
 	drawStamp(document.getElementById("spottedHeartStamp").childNodes[0].src);
-	updateActiveBrushOrStampElement(document.getElementById("spottedHeartStamp"));
-
-	//stampSize stuff
-	if (activeStampSize == stampSmall) {
-		updateActiveSizeElement(document.getElementById("changeSizeToSmall"));
-	} else if (activeStampSize == stampMedium) {
-		updateActiveSizeElement(document.getElementById("changeSizeToMedium"));
-	} else if (activeStampSize == stampLarge) {
-		updateActiveSizeElement(document.getElementById("changeSizeToLarge"));
-	} else {
-		updateActiveSizeElement(document.getElementById("changeSizeToXLarge"));
-	}
 });
 
 document.getElementById("pearlHeartStamp").addEventListener('click', function() {
-	ctx.globalCompositeOperation = "source-over";
-	activeTool = "stamp";
-	updateCursor("stamp");
+	updateInterface("stamp", document.getElementById("pearlHeartStamp"));
 	drawStamp(document.getElementById("pearlHeartStamp").childNodes[0].src);
-	updateActiveBrushOrStampElement(document.getElementById("pearlHeartStamp"));
-
-	//stampSize stuff
-	if (activeStampSize == stampSmall) {
-		updateActiveSizeElement(document.getElementById("changeSizeToSmall"));
-	} else if (activeStampSize == stampMedium) {
-		updateActiveSizeElement(document.getElementById("changeSizeToMedium"));
-	} else if (activeStampSize == stampLarge) {
-		updateActiveSizeElement(document.getElementById("changeSizeToLarge"));
-	} else {
-		updateActiveSizeElement(document.getElementById("changeSizeToXLarge"));
-	}
 });
 
-document.getElementById("goldSparkleStamp").addEventListener('click', function() {
-	ctx.globalCompositeOperation = "source-over";
-	activeTool = "stamp";
-	updateCursor("stamp");
-	drawStamp(document.getElementById("goldSparkleStamp").childNodes[0].src);
-	updateActiveBrushOrStampElement(document.getElementById("goldSparkleStamp"));
-
-	//stampSize stuff
-	if (activeStampSize == stampSmall) {
-		updateActiveSizeElement(document.getElementById("changeSizeToSmall"));
-	} else if (activeStampSize == stampMedium) {
-		updateActiveSizeElement(document.getElementById("changeSizeToMedium"));
-	} else if (activeStampSize == stampLarge) {
-		updateActiveSizeElement(document.getElementById("changeSizeToLarge"));
-	} else {
-		updateActiveSizeElement(document.getElementById("changeSizeToXLarge"));
-	}
+document.getElementById("cherryStamp").addEventListener('click', function() {
+	updateInterface("stamp", document.getElementById("cherryStamp"));
+	drawStamp(document.getElementById("cherryStamp").childNodes[0].src);
 });
 
-document.getElementById("blueSparkleStamp").addEventListener('click', function() {
-	ctx.globalCompositeOperation = "source-over";
-	activeTool = "stamp";
-	updateCursor("stamp");
-	drawStamp(document.getElementById("blueSparkleStamp").childNodes[0].src);
-	updateActiveBrushOrStampElement(document.getElementById("blueSparkleStamp"));
-
-	//stampSize stuff
-	if (activeStampSize == stampSmall) {
-		updateActiveSizeElement(document.getElementById("changeSizeToSmall"));
-	} else if (activeStampSize == stampMedium) {
-		updateActiveSizeElement(document.getElementById("changeSizeToMedium"));
-	} else if (activeStampSize == stampLarge) {
-		updateActiveSizeElement(document.getElementById("changeSizeToLarge"));
-	} else {
-		updateActiveSizeElement(document.getElementById("changeSizeToXLarge"));
-	}
+document.getElementById("crownStamp").addEventListener('click', function() {
+	updateInterface("stamp", document.getElementById("crownStamp"));
+	drawStamp(document.getElementById("crownStamp").childNodes[0].src);
 });
 
 document.getElementById("bowtieStamp").addEventListener('click', function() {
-	ctx.globalCompositeOperation = "source-over";
-	activeTool = "stamp";
-	updateCursor("stamp");
+	updateInterface("stamp", document.getElementById("bowtieStamp"));
 	drawStamp(document.getElementById("bowtieStamp").childNodes[0].src);
-	updateActiveBrushOrStampElement(document.getElementById("bowtieStamp"));
+});
 
-	//stampSize stuff
-	if (activeStampSize == stampSmall) {
-		updateActiveSizeElement(document.getElementById("changeSizeToSmall"));
-	} else if (activeStampSize == stampMedium) {
-		updateActiveSizeElement(document.getElementById("changeSizeToMedium"));
-	} else if (activeStampSize == stampLarge) {
-		updateActiveSizeElement(document.getElementById("changeSizeToLarge"));
-	} else {
-		updateActiveSizeElement(document.getElementById("changeSizeToXLarge"));
-	}
+document.getElementById("whiteBowStamp").addEventListener('click', function() {
+	updateInterface("stamp", document.getElementById("whiteBowStamp"));
+	drawStamp(document.getElementById("whiteBowStamp").childNodes[0].src);
 });
 
 document.getElementById("kittyBowStamp").addEventListener('click', function() {
-	ctx.globalCompositeOperation = "source-over";
-	activeTool = "stamp";
-	updateCursor("stamp");
+	updateInterface("stamp", document.getElementById("kittyBowStamp"));
 	drawStamp(document.getElementById("kittyBowStamp").childNodes[0].src);
-	updateActiveBrushOrStampElement(document.getElementById("kittyBowStamp"));
-
-	//stampSize stuff
-	if (activeStampSize == stampSmall) {
-		updateActiveSizeElement(document.getElementById("changeSizeToSmall"));
-	} else if (activeStampSize == stampMedium) {
-		updateActiveSizeElement(document.getElementById("changeSizeToMedium"));
-	} else if (activeStampSize == stampLarge) {
-		updateActiveSizeElement(document.getElementById("changeSizeToLarge"));
-	} else {
-		updateActiveSizeElement(document.getElementById("changeSizeToXLarge"));
-	}
 });
 
 document.getElementById("diamondStamp").addEventListener('click', function() {
-	ctx.globalCompositeOperation = "source-over";
-	activeTool = "stamp";
-	updateCursor("stamp");
+	updateInterface("stamp", document.getElementById("diamondStamp"));
 	drawStamp(document.getElementById("diamondStamp").childNodes[0].src);
-	updateActiveBrushOrStampElement(document.getElementById("diamondStamp"));
-
-	//stampSize stuff
-	if (activeStampSize == stampSmall) {
-		updateActiveSizeElement(document.getElementById("changeSizeToSmall"));
-	} else if (activeStampSize == stampMedium) {
-		updateActiveSizeElement(document.getElementById("changeSizeToMedium"));
-	} else if (activeStampSize == stampLarge) {
-		updateActiveSizeElement(document.getElementById("changeSizeToLarge"));
-	} else {
-		updateActiveSizeElement(document.getElementById("changeSizeToXLarge"));
-	}
 });
 
 document.getElementById("pinkDiamondStamp").addEventListener('click', function() {
-	ctx.globalCompositeOperation = "source-over";
-	activeTool = "stamp";
-	updateCursor("stamp");
+	updateInterface("stamp", document.getElementById("pinkDiamondStamp"));
 	drawStamp(document.getElementById("pinkDiamondStamp").childNodes[0].src);
-	updateActiveBrushOrStampElement(document.getElementById("pinkDiamondStamp"));
-
-	//stampSize stuff
-	if (activeStampSize == stampSmall) {
-		updateActiveSizeElement(document.getElementById("changeSizeToSmall"));
-	} else if (activeStampSize == stampMedium) {
-		updateActiveSizeElement(document.getElementById("changeSizeToMedium"));
-	} else if (activeStampSize == stampLarge) {
-		updateActiveSizeElement(document.getElementById("changeSizeToLarge"));
-	} else {
-		updateActiveSizeElement(document.getElementById("changeSizeToXLarge"));
-	}
 });
 
 document.getElementById("roseStamp").addEventListener('click', function() {
-	ctx.globalCompositeOperation = "source-over";
-	activeTool = "stamp";
-	updateCursor("stamp");
+	updateInterface("stamp", document.getElementById("roseStamp"));
 	drawStamp(document.getElementById("roseStamp").childNodes[0].src);
-	updateActiveBrushOrStampElement(document.getElementById("roseStamp"));
-
-	//stampSize stuff
-	if (activeStampSize == stampSmall) {
-		updateActiveSizeElement(document.getElementById("changeSizeToSmall"));
-	} else if (activeStampSize == stampMedium) {
-		updateActiveSizeElement(document.getElementById("changeSizeToMedium"));
-	} else if (activeStampSize == stampLarge) {
-		updateActiveSizeElement(document.getElementById("changeSizeToLarge"));
-	} else {
-		updateActiveSizeElement(document.getElementById("changeSizeToXLarge"));
-	}
 });
-//changes size
-//I think the activesizeelement is ok...you just need something like "if it's a merker..."
+
+document.getElementById("pinkCrownStamp").addEventListener('click', function() {
+	updateInterface("stamp", document.getElementById("pinkCrownStamp"));
+	drawStamp(document.getElementById("pinkCrownStamp").childNodes[0].src);
+});
+
+document.getElementById("blueSparkleStamp").addEventListener('click', function() {
+	updateInterface("stamp", document.getElementById("blueSparkleStamp"));
+	drawStamp(document.getElementById("blueSparkleStamp").childNodes[0].src);
+});
+
+document.getElementById("pinkSparkleStamp").addEventListener('click', function() {
+	updateInterface("stamp", document.getElementById("pinkSparkleStamp"));
+	drawStamp(document.getElementById("pinkSparkleStamp").childNodes[0].src);
+});
+
+document.getElementById("orangeSparkleStamp").addEventListener('click', function() {
+	updateInterface("stamp", document.getElementById("orangeSparkleStamp"));
+	drawStamp(document.getElementById("orangeSparkleStamp").childNodes[0].src);
+});
+
+document.getElementById("yellowSparkleStamp").addEventListener('click', function() {
+	updateInterface("stamp", document.getElementById("yellowSparkleStamp"));
+	drawStamp(document.getElementById("yellowSparkleStamp").childNodes[0].src);
+});
+
+document.getElementById("daisyStamp").addEventListener('click', function() {
+	updateInterface("stamp", document.getElementById("daisyStamp"));
+	drawStamp(document.getElementById("daisyStamp").childNodes[0].src);
+});
+
+document.getElementById("pearlStamp").addEventListener('click', function() {
+	updateInterface("stamp", document.getElementById("pearlStamp"));
+	drawStamp(document.getElementById("pearlStamp").childNodes[0].src);
+});
+
+document.getElementById("pinkGlassesStamp").addEventListener('click', function() {
+	updateInterface("stamp", document.getElementById("pinkGlassesStamp"));
+	drawStamp(document.getElementById("pinkGlassesStamp").childNodes[0].src);
+});
+
+
+document.getElementById("glassesStamp").addEventListener('click', function() {
+	updateInterface("stamp", document.getElementById("glassesStamp"));
+	drawStamp(document.getElementById("glassesStamp").childNodes[0].src);
+});
+
+document.getElementById("heartDiamondStamp").addEventListener('click', function() {
+	updateInterface("stamp", document.getElementById("heartDiamondStamp"));
+	drawStamp(document.getElementById("heartDiamondStamp").childNodes[0].src);
+});
+
+document.getElementById("stacheStamp").addEventListener('click', function() {
+	updateInterface("stamp", document.getElementById("stacheStamp"));
+	drawStamp(document.getElementById("stacheStamp").childNodes[0].src);
+});
+
+document.getElementById("bearStamp").addEventListener('click', function() {
+	updateInterface("stamp", document.getElementById("bearStamp"));
+	drawStamp(document.getElementById("bearStamp").childNodes[0].src);
+});
+
+/**********************************************************************************
+Size changes
+***********************************************************************************/
 
 document.getElementById("changeSizeToSmall").addEventListener('click', function(){
 	if (activeTool == "marker") {
@@ -984,7 +682,20 @@ document.getElementById("changeSizeToXLarge").addEventListener('click', function
 	updateActiveSizeElement(document.getElementById("changeSizeToXLarge"));
 });
 
-function clearCanvas() {
+
+/**********************************************************************************
+Canvas-wide functions
+***********************************************************************************/
+
+//Resets the canvas
+document.getElementById("clear").addEventListener('click', function(){
+	el.width = el.width;
+	selectDefaults();
+	document.getElementById("ui-id-1").click();
+});
+
+
+function selectDefaults() {
 	//the sizes of the marker stuff will be taken care of by the clicks.
 	//you still need to update the sizes of the other tools.
 
@@ -994,10 +705,11 @@ function clearCanvas() {
 	document.getElementById("changeSizeToMedium").click();
 }
 
+
+
 function setUpCanvas() {
-	//this function will be expanded later? maybe?
-	//ctx.strokeRect(0,0,el.width, el.height);
-	ctx.lineWidth = 5; //tried putting medium here. didn't like it
+	
+	ctx.lineWidth = 5; 
 	ctx.shadowBlur = 5;
 	ctx.lineJoin = ctx.lineCap = 'round';
 
@@ -1014,12 +726,72 @@ function setUpCanvas() {
 	updateCursor("marker");
 	drawWithMarker("purple", "purple");
 
-
-	//I originally wanted to put the update functions in the onload...
-	//updateActiveSizeElement(activeSizeElement);
-	//updateActiveBrushOrStampElement(activeBrushOrStampElement);
-
 };
+
+/**********************************************************************************
+Interface updates
+***********************************************************************************/
+
+function updateInterface(tool, button){
+	if (tool == "eraser") {
+		ctx.globalCompositeOperation = "destination-out";
+		activeTool = "marker";
+		updateCursor("eraser");
+		drawWithMarker("purple", "purple");
+		updateActiveBrushOrStampElement(button);
+	} else if (tool == "marker") {
+		ctx.globalCompositeOperation = "source-over";
+		activeTool = "marker";
+		updateCursor("marker");
+		updateActiveBrushOrStampElement(button);
+
+		//marker size stuff
+		if (activeMarkerSize == markerSmall) {
+			updateActiveSizeElement(document.getElementById("changeSizeToSmall"));
+		} else if (activeMarkerSize == markerMedium) {
+			updateActiveSizeElement(document.getElementById("changeSizeToMedium"));
+		} else if (activeMarkerSize == markerLarge) {
+			updateActiveSizeElement(document.getElementById("changeSizeToLarge"));
+		} else {
+			updateActiveSizeElement(document.getElementById("changeSizeToXLarge"));
+		}
+	} else if (tool == "brush") {
+		ctx.globalCompositeOperation = "source-over";
+		activeTool = "brush";
+		updateCursor("brush");
+
+		drawWithBrush(button.childNodes[0].src);
+		updateActiveBrushOrStampElement(button);
+
+		//brushSize stuff
+		if (activeBrushSize == brushSmall) {
+			updateActiveSizeElement(document.getElementById("changeSizeToSmall"));
+		} else if (activeBrushSize == brushMedium) {
+			updateActiveSizeElement(document.getElementById("changeSizeToMedium"));
+		} else if (activeBrushSize == brushLarge) {
+			updateActiveSizeElement(document.getElementById("changeSizeToLarge"));
+		} else {
+			updateActiveSizeElement(document.getElementById("changeSizeToXLarge"));
+		}
+	} else {
+		ctx.globalCompositeOperation = "source-over";
+		activeTool = "stamp";
+		updateCursor("stamp");
+		drawStamp(button.childNodes[0].src);
+		updateActiveBrushOrStampElement(button);
+
+		//stampSize stuff
+		if (activeStampSize == stampSmall) {
+			updateActiveSizeElement(document.getElementById("changeSizeToSmall"));
+		} else if (activeStampSize == stampMedium) {
+			updateActiveSizeElement(document.getElementById("changeSizeToMedium"));
+		} else if (activeStampSize == stampLarge) {
+			updateActiveSizeElement(document.getElementById("changeSizeToLarge"));
+		} else {
+			updateActiveSizeElement(document.getElementById("changeSizeToXLarge"));
+		}
+	}
+}
 
 function updateCursor(type) {
 	if (type == "brush") {
@@ -1072,6 +844,10 @@ function updateActiveBrushOrStampElement(newElement) {
 	activeBrushOrStampElement.blur(); //I don't want focus showing up b/c you have multiple things selected
 };
 
+/**********************************************************************************
+Drawing functions
+***********************************************************************************/
+
 function drawStamp(src) {
 	var img = new Image();
 	img.src = src;
@@ -1117,7 +893,8 @@ function drawWithBrush(src) {
 		var dist = distanceBetween(lastPoint, currentPoint);
 		var angle = angleBetween(lastPoint, currentPoint);
 
-		for (var i = 0; i < dist; i+= 75) {
+		//The 100 is what dictates how far apart the images are
+		for (var i = 0; i < dist; i+= 100) {
 			x = lastPoint.x + (Math.sin(angle) * i) - 25;
 			y = lastPoint.y + (Math.cos(angle) * i) - 25;
 			ctx.drawImage(img, x, y, activeBrushSize, activeBrushSize); //the 32's are FOR SCALING!
@@ -1131,7 +908,6 @@ function drawWithBrush(src) {
 	};
 
 };
-
 
 function drawWithMarker(color, shadowColor) {
 
@@ -1170,23 +946,22 @@ function drawWithMarker(color, shadowColor) {
 	};
 };
 
-//for saving image
-document.getElementById('save').addEventListener('click', function(){
-	//should send dataurls for processing.
-	//console.log("clicked save button");
+/**********************************************************************************
+Saving, downloading, and emailing functions
+***********************************************************************************/
 
-	//doing some of the same processing as download to gt the uri.
-
-	//you can't edit the canvases you have, so create a new one.
+function save_image(){
+	//Makes a new canvas for saving
 	var copyForDownloading = document.createElement('canvas');
 	var ctxCopyForDownloading = copyForDownloading.getContext('2d');
 	ctxCopyForDownloading.canvas.width = document.getElementById("photo").width;
 	ctxCopyForDownloading.canvas.height = document.getElementById("photo").height;
 
-	//copy the working canvases onto the canvas to be downloaded
+	//Copies the 2 working canvases onto the canvas for saving
 	ctxCopyForDownloading.drawImage(document.getElementById("photo"), 0, 0);
 	ctxCopyForDownloading.drawImage(document.getElementById("c"), 0, 0);
 
+	//Sends the canvas for saving to the backend for storage in the gallery
 	$.ajax({
 		type: "POST",
 		url: "{{ url_for('update_purikura') }}",
@@ -1199,34 +974,79 @@ document.getElementById('save').addEventListener('click', function(){
 		}
 
 	});
+}
+
+//Saves image in gallery
+document.getElementById('save').addEventListener('click', function(){
+
+	save_image();
 });
 
 
-//for downloading image
-
+//Downloads image to disk
 document.getElementById('download').addEventListener('click', function(){
-	//you can't edit the canvases you have, so create a new one.
+	
+	//Makes a new canvas for downloading
 	var copyForDownloading = document.createElement('canvas');
 	var ctxCopyForDownloading = copyForDownloading.getContext('2d');
 	ctxCopyForDownloading.canvas.width = document.getElementById("photo").width;
 	ctxCopyForDownloading.canvas.height = document.getElementById("photo").height;
 
-	//copy the working canvases onto the canvas to be downloaded
+	//Copies the 2 working canvases onto the canvas for saving
 	ctxCopyForDownloading.drawImage(document.getElementById("photo"), 0, 0);
 	ctxCopyForDownloading.drawImage(document.getElementById("c"), 0, 0);
 
-	//set up the download information
+	//Converts the canvas to data and names the new file
 	this.href = copyForDownloading.toDataURL();
-	this.download = 'purikura.jpeg';
+	this.download = 'purikura.jpg';
 });
 
 
-</script>
 
+//Sends image to user-specified email address
+$("#emailImage").submit(function(e){
+	console.log('sent email...?');
+	
+	save_image();
 
+	//Tells backend to send email with specfied address
+	$.ajax({
+		type: "POST",
+		url: "{{ url_for('send_mail') }}",
+		data: $("#emailImage").serialize(),
+		success: function(response) {
+			//console.log(response);
+		},
+		error: function(error) {
+			//console.log(error)
+		}
 
+	});
 
+	// $('#emailModal').modal('hide');
+	e.preventDefault();
+	
+});
 
+// $('#submitButton').on('click', function() { 
+//   $('.modal').modal('hide');
+// });
 
+document.getElementById('submitButton').addEventListener('click', function(){
+	$('#emailModal').modal('hide');
+});
+
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip({
+  	'placement':'top'
+  });
+});
+
+$('[data-toggle="popover"]').popover({
+	trigger: 'hover',
+	'placement': 'top'
+});
+
+// </script>
 
 {% endblock %}

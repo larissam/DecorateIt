@@ -196,7 +196,6 @@ window.addEventListener("DOMContentLoaded", function() {
 	document.getElementById("video").addEventListener("play", function() {
 		var i = window.setInterval(function() {
 			ctx.drawImage(video,0,0,canvas.width,canvas.height);
-			console.log("drawing webcam");
 		},20);
 		//once you've loaded the video, make the enable text hidden 
 		document.getElementById("enableVideoText").className = "text-hidden";
@@ -208,13 +207,16 @@ window.addEventListener("DOMContentLoaded", function() {
 	//photoshoot!
 	document.getElementById("snap").addEventListener("click", function() {
 		getReady(); //takes 3 seconds
+
 		setTimeout(takePhoto, 4000);
 		setTimeout(takePhoto, 8000);
 		setTimeout(takePhoto, 12000);
 		setTimeout(takePhoto, 16000);
 		setTimeout(takePhoto, 20000);
 		setTimeout(takePhoto, 24000);
-		setTimeout(addSubmit, 28000);
+
+		setTimeout(linkEntries, 28000);
+		setTimeout(addSubmit, 29000);
 	});
 
 	//HELPER FUNCTIONS
@@ -228,7 +230,7 @@ window.addEventListener("DOMContentLoaded", function() {
 		submitButton.classList.add("btn");
 		submitButton.classList.add("btn-primary");
 		$("#snapshots").append(submitButton);
-		$("#submitButton").hide();
+		$("#submitButton").show();
 
 		// Blacking out canvas after finished taking pictures
 		video.pause();
@@ -240,14 +242,11 @@ window.addEventListener("DOMContentLoaded", function() {
 	}
 
 	function takePhoto() {
-		console.log("WE ARE RUNNING THIS FUNCTION!!!!")
 		document.getElementById("countdown").className = ""; //show the countdown ticker
 
 		var maxTime = 3;
 		var countdownInterval = setInterval(function(){
-			console.log(maxTime);
 			if (maxTime == 0) {
-				console.log("stopping the coundown after" + maxTime);
 				document.getElementById("countdown").style.display = 'none';
 				clearInterval(countdownInterval);
 				var audio = document.getElementsByTagName("audio")[0];
@@ -259,7 +258,6 @@ window.addEventListener("DOMContentLoaded", function() {
 				}, 100);
 				
 			}
-			//console.log(maxTime);
 			else {
 				document.getElementById("countdown").style.display = 'block';
 				document.getElementById("countdown").innerHTML = maxTime;
@@ -268,7 +266,6 @@ window.addEventListener("DOMContentLoaded", function() {
 		}, 500);
 		
 		setTimeout(function(){
-			// console.log("photobooth number: ", photoShots);
 			ctx.drawImage(video, 0, 0, canvas.width, canvas.height); //This is what saves the canvas to an image
 
 	      	var data = canvas.toDataURL('image/jpeg', 1.0);;
@@ -288,11 +285,14 @@ window.addEventListener("DOMContentLoaded", function() {
 
 			var label = document.createElement("label");
 			// label.for = idNumber;
-			label.appendChild(img);
-			entry.appendChild(label);
+
+
+			// label.appendChild(img);
+			// entry.appendChild(label);
 			
 			$("#snapshots").append(entry);
 			$("#snapshots").append(img.outerHTML);
+			$("#snapshots").append(label);
 			
 		}, 3000); //needs to take at least 2s because countdown has to take 1.5s total; making it 3s to give 1.5s buffer
 	}
@@ -319,8 +319,19 @@ window.addEventListener("DOMContentLoaded", function() {
 			return false;
 	}
 
-	function revealSubmitButton() {
-		document.getElementsByName("selectedPhotos");
+	function linkEntries(){
+		entries = document.getElementsByTagName("input");
+		console.log(entries);
+
+		labels = document.getElementsByTagName("label");
+		console.log(labels);
+
+		for (var i=1; i<=6; i++) {
+			entries[i].id = i;
+			console.log("this entry: ", entries[i].id);
+			labels[i].for = i;
+			console.log("this label: ", labels[i].for);
+		}
 	}
 
 	// //photoshoot!
