@@ -3,60 +3,72 @@
 {% block header %}
 
 <style>
-body {
-  background: url('../static/images/color.jpg');
-}
-
-.form-group {
-  padding-left: 0px;
-}
-
-header {
-  margin-bottom: 75px;
-}
+  
+  /* set background */
+  body {
+    background: url('../static/images/color.jpg');
+  }
 
 </style>
 
 {% endblock %}
 
 {% block content %}
-<div class="col-md-2">
-</div>
+
+<!-- spacing column -->
+<div class="col-md-2"></div>
+
+<!-- register form container -->
 <div class="col-md-8">
   <div id="registrationFormBox">
+
+    <!-- register form -->
     <form method="POST" role="form">
         <h2> Register </h2>
-
-        <!-- username is email address -->
-        <!-- using bootstrap form control here -->
-        
         <div class="row">
-          <div class="col-md-1">
-          </div>
+
+          <!-- spacing column -->
+          <div class="col-md-1"></div>
+
+          <!-- login form -->
           <div class="col-md-10">
-            <div class="form-group"> <!--col-xs-5-->
+
+            <!-- enter email address -->
+            <div class="form-group">
               <label for="email">Email address</label>
               <input type="text" class="form-control" id="email" placeholder="Email Address" required autofocus name="email"/>
             </div>
+
+            <!-- enter password -->
             <div class="form-group">
               <label for="password">Create a password</label>
               <input type="password" class="form-control" placeholder="Password" required name="password"/>
             </div>
+
+            <!-- confirm password -->
             <div class="form-group">
               <label for="passwordcheck">Confirm your password </label>
               <input type="password" class="form-control" placeholder="Password" required name="passwordcheck" id="passwordcheck" />
             </div>
+
+            <!-- submit form -->
             <button type="submit" class="btn btn-primary">Sign Up!</button>
+
+            <!-- link to login form for already registered users -->
+            <br />
             <br />
             <a href="{{ url_for('login') }}">Already a member? Click here to login</a>
           </div>
-          <div class="col-md-1">
-          </div>
+
+          <!-- spacing column -->
+          <div class="col-md-1"></div>
         </div>
     </form>
+
   </div>
 </div>
-<div class="col-md-2">
-</div>
+
+<!-- spacing column -->
+<div class="col-md-2"></div>
 
 {% endblock %}

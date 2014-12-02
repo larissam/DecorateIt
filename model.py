@@ -4,11 +4,13 @@ from sqlalchemy.orm import relationship, backref, sessionmaker
 
 Base = declarative_base()
 
+#Connect to development database
 ENGINE = create_engine("sqlite:///purikuras.db", echo=True)
 Session = sessionmaker(bind=ENGINE)
 
 session = Session()
 
+#Purikura is the official name for a "decorated image" created by this app
 class Purikura(Base):
   __tablename__ = "purikuras"
   id = Column(Integer, primary_key = True)
@@ -25,15 +27,6 @@ class User(Base):
   id = Column(Integer, primary_key = True)
   email = Column(String(64), nullable=False)
   password = Column(String(64), nullable=False)
-
-# def connect():
-#   global ENGINE
-#   global Session
-
-#   ENGINE = create_engine("sqlite:///purikuras.db", echo=True)
-#   Session = sessionmaker(bind=ENGINE)
-
-#   return Session()
 
 def main():
   pass

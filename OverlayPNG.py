@@ -3,10 +3,6 @@
 
 from cv2 import *
 
-# src     = cv.LoadImage("image.jpg")		# Load a source image
-# overlay = cv.LoadImage("ghost.png")		# Load an image to overlay
-# posx = 170					# Define a point (posx, posy) on the source
-# posy = 100					# image where the overlay will be placed
 S = (0.5, 0.5, 0.5, 0.5)			# Define blending coefficients S and D
 D = (0.5, 0.5, 0.5, 0.5)
 
@@ -33,8 +29,3 @@ def OverlayImage(src, overlay, posx, posy, S, D):
 					merged = tuple(merger)
 
 					cv.Set2D(src, y+posy, x+posx, merged)
-
-# OverlayImage(src, overlay, posx, posy, S, D)
-
-# cv.SaveImage('src.png', src) #Saves the image
-# print "Done"

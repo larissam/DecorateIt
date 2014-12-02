@@ -1,16 +1,36 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Pika pika</title>
-		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap/css/bootstrap.css') }}">
-		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap/css/bootstrap-theme.css') }}">
-		<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css')}}">
-		<script type="text/javascript" src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js') }}"></script>
-		<script language="javascript" type="text/javascript" src="{{ url_for('static', filename='js/jquery-1.11.0.min.js')}}"></script>
-		<script src="/static/js/bootstrap-alert.js" type="text/javascript"></script>
+		<title>DecorateIt</title>
 
+		<!-- set favicon -->
 		<link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon">
         <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
+
+        <!-- import header css -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css')}}">
+
+		<!-- import bootstrap css -->
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap/css/bootstrap.css') }}">
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap/css/bootstrap-theme.css') }}">
+
+		<!-- import jquery -->
+		<script language="javascript" type="text/javascript" src="{{ url_for('static', filename='js/jquery-1.11.0.min.js')}}"></script>
+
+		<!-- import bootstrap js and bootstrap extras -->
+		<script type="text/javascript" src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js') }}"></script>
+		<script src="/static/js/bootstrap-alert.js" type="text/javascript"></script>
+
+		<style>
+		
+			/* give header a little room for alerts */
+			header {
+			    margin-bottom: 75px;
+			}
+
+		</style>
+
+
 
 		{% block header %}
 		{% endblock %}
@@ -19,8 +39,9 @@
 	<body>
 
 		<header>
+			<!-- menu -->
 			<div class="container-nav">
-				<h1 class="logo">Pika Pika</h1>
+				<h1 class="logo">DecorateIt</h1>
 				<strong><nav>
 					<ul class="menu">
 						{% if not session.logged_in %}
@@ -39,6 +60,7 @@
 					</ul>
 				</nav></strong>
 			</div>
+			<!-- alerts -->
 			<div class="container">
 				<div class="row">
 					<div class="col-md-3">
@@ -62,6 +84,7 @@
 
 		</header>
 
+		<!-- content -->
 		<div class="container">
 			<br />
 			<div class="row">
@@ -71,6 +94,8 @@
 
 			</div>			
 		</div>
+
+		<!-- fade javascript for alerts -->
 		<script type="text/javascript">
   			$('.alert').fadeOut(6000)
 		</script>

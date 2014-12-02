@@ -1,6 +1,38 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-	<h2>About</h2>
-	<p>Hackbright project!</p>
+<h2>About DecorateIt</h2>
+
+<h3>DecorateIt is a web application that:</h3>
+<ol>
+	<li>Lets you upload a photo or take one using the built-in photobooth</li>
+	<li>Automatically enhances your photo by enlarging your eyes and smoothing your skin</li>
+	<li>Lets you decorate your chosen photo using markers, brushes, and stamps</li>
+	<li>Lets you download, email, or save your decorated photo to your gallery</li>
+</ol>
+
+<h3>How it works</h3>
+<ul>
+	<li>Image enhancement (eye enlargement and skin smoothing) done using OpenCV. First, OpenCV is used to detect the face and eyes. Then, it enlarges the eyes. To improve blending, it applies a transparency mask (created by deconstructing the image into r,g,b channels and reconstructing it with an alpha/transparency channel) to each enlarged eye before pasting it back on the face. Finally, bilateral filtering is used to smooth facial skin without sacrificing image sharpness.</li>
+	<li>Image editor built using pure HTML5 Canvas and Javascript. Javascript uses the mouse's position on the canvas to determine where to draw. No plugins used.</li>
+	<li>Photobooth built using pure HTML5 canvas and Javascript. No plugins used.</li>
+</ul>
+
+<h3>To get it running locally</h3>
+<ol>
+	<li>Clone this repo
+		<code>$ git clone https://github.com/larissam/DecorateIt-NoOpenCV.git </code>
+	</li>
+	<li>Install dependencies
+		<code>$ pip install -r requirements.txt </code>
+	</li>
+	<li>Install <a href="http://opencv.org/downloads.html">OpenCV 2.4.9</a></li>
+	<li>Run the app from the terminal
+		<code>$ python routes.py </code>
+	</li>
+</ol>
+
+<h3>Notes</h3>
+<p>OpenCV can be difficult to install and configure. For your convenience, is a <a href="https://github.com/larissam/DecorateIt-NoOpenCV">version without the OpenCV image processing</a>. Additionally, here is a <a href="https://github.com/larissam/DecorateIt-Heroku">version deployed on Heroku</a>.</p>
+
 {% endblock %}

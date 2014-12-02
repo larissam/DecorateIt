@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, session, url_for, flash, escape, Blueprint
+from flask import Flask, render_template, request, redirect, session, url_for, flash
 import jinja2
 
 # Modules for converting and saving photobooth images to disk.
@@ -13,8 +13,6 @@ from datetime import datetime
 # Modules for image processing
 import numpy as np
 import cv2
-import sys
-
 from PIL import Image, ImageFilter, ImageOps
 
 from OverlayPNG import OverlayImage
@@ -25,8 +23,6 @@ from flask.ext.mail import Mail, Message
 # Our database model
 import model
 
-# Our image processing file
-# from imageproc import enhance_image
 
 # Paths to local folders for image storage
 CURRENT_FOLDER = os.path.dirname(os.path.abspath(__file__))
@@ -121,19 +117,6 @@ def main():
 	purikuras = model.session.query(model.Purikura).filter_by(user_id=session['id'])
 	
 	return render_template('main.html', purikura_list = purikuras)
-
-#just for testing. getting image from server.
-@app.route('/purikuradetails')
-def show_purikura():
-	filename = request.args.get('filename')
-	return render_template('purikura_details.html', filename=filename)
-
-# @app.route('/purikura/<int:id>')
-# def show_purikura(id):
-# 	#get purikura from the database based on id
-# 	#placeholders for now because we can't insert purikuras into database :(
-# 	purikura = []
-# 	return render_template('purikura_details.html', display_purikura = purikura)
 
 """ Shows the template that allows the user to either upload
 an image or take one with the photobooth. """
@@ -305,8 +288,6 @@ def decorate():
 """ Sends mail to recipients specified by user using Flask-Mail. """
 @app.route('/sendmail', methods=['POST'])
 def send_mail():
-	print request.form['address']
-	print "filename? ", request.form['filename']
 
 	addresses = request.form['address'].split(',')
 	msg = Message(request.form['subject'],
@@ -318,7 +299,6 @@ def send_mail():
 	with app.open_resource(request.form['filename'].strip()) as fp:
 		msg.attach("image.jpg", "image/jpg", fp.read())
 
-	print "i sent mail?"
 	mail.send(msg)
 	return json.dumps({'status':'OK'})
 

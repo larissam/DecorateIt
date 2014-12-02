@@ -3,88 +3,81 @@
 {% block header %}
 
 <style>
-.bigicons {
-	border: none;
-	background: none;
-	-webkit-filter: opacity(0.4);
-}
 
-.bigicons:hover {
-	-webkit-filter: opacity(1);
-}
+	/* styles for the "upload" and "photobooth" options */
+	.bigicons {
+		border: none;
+		background: none;
+		-webkit-filter: opacity(0.4);
+	}
 
-.bigicons:focus {
-	outline: 0 !important;
-}
+	.bigicons:hover {
+		-webkit-filter: opacity(1);
+	}
 
-.bigicons {
-	padding-top: 75px;
-}
+	.bigicons:focus {
+		outline: 0 !important;
+	}
 
-#uploadlink {
-	display: none;
-}
+	.bigicons {
+		padding-top: 75px;
+	}
 
-#uploadlink:target {
-	display: block;
-}
+	/* styles for the upload form */
+	#uploadlink {
+		display: none;
+	}
+
+	#uploadlink:target {
+		display: block;
+	}
 
 </style>
 {% endblock %}
+
 {% block content %}
 
-<!-- <form action="{{ url_for('upload_file') }}" method=POST enctype=multipart/form-data>
-	<div class="form-group">
-    	<label for="uploadFile">Upload File</label>
-    	<input name="file" type="file">
-    </div>
-    <input type=submit value=Upload>
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form> -->
-
+<!-- upload image option -->
 <div class="col-md-4">
 	<button class="bigicons" id="uploadicon">
 		<a href="#uploadlink">
 			<img src="{{ url_for('static', filename='images/upload.png') }}" style="width:300px" />
 		</a>
 	</button>
+	<!-- helper text -->
 	<p style="text-align:center; font-size:30px;">Upload</p>
 
+	<!-- upload form appears if upload option is selected -->
 	<div id="uploadlink">
-<form action="{{ url_for('upload_file') }}" method=post enctype=multipart/form-data>
-	<div class="form-group">
-		<label for="uploadFile"> Select a file to upload: </label>
-		<input type="file" name="file" required>
-		
-		<input type="checkbox" name="imageproc" value="yes"><label for="imageProc">Try out eye enlargement and skin smoothing? (beta)</label>
-
+		<form action="{{ url_for('upload_file') }}" method=post enctype=multipart/form-data>
+			<div class="form-group">
+				<label for="uploadFile"> Select a file to upload: </label>
+				<input type="file" name="file" required>
+				
+				<input type="checkbox" name="imageproc" value="yes"><label for="imageProc">Try out eye enlargement and skin smoothing? (beta)</label>
+			</div>
+			<button type="submit" class="btn btn-primary">Upload</button>
+		</form>
 	</div>
-	<button type="submit" class="btn btn-primary">Upload</button>
-</form>
-</div>
 
 </div>
+
+<!-- "OR" text -->
 <div class="col-md-4">
 	<div style="position:absolute; top:150px; left:130px; font-size:60px;">
 		<p>OR</p>
 	</div>
 </div>
+
+<!-- photobooth option -->
 <div class="col-md-4">
- <button class="bigicons">
- 	<a href="{{ url_for('photobooth') }}">
- 		<img src="{{ url_for('static', filename='images/camera.png') }}" style="width:300px" />
- 	</a>
- </button>
- <!-- put in some padding for now because the images are actually bigger than the cols-->
- <p style="text-align:center; font-size:30px; padding-left:40px;">Take Picture</p>
+	<button class="bigicons">
+	 	<a href="{{ url_for('photobooth') }}">
+	 		<img src="{{ url_for('static', filename='images/camera.png') }}" style="width:300px" />
+	 	</a>
+	</button>
+	 <!-- helper text-->
+	<p style="text-align:center; font-size:30px; padding-left:40px;">Take Picture</p>
 </div>
-
-
-
-
-
-
-
-
 
 {% endblock %}
