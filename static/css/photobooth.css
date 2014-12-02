@@ -1,0 +1,60 @@
+/* general layout and styling */
+body {
+	background-color: #171717;
+	margin:0px;
+	color: #FFFFFC;
+}
+
+#canvas {
+	padding-bottom: 30px;
+}
+
+
+/* for text overlays on video */
+.text-hidden {
+	visibility: hidden;
+}
+
+.faded {
+	-webkit-filter: opacity(0.4);
+}
+
+.visible {
+	-webkit-filter: opacity(1);
+}
+
+
+/* for snapshot gallery */
+#photoStrip {
+	position: absolute;
+	left: 255px;
+	top: 500px;
+	z-index: -5;
+}
+
+:checked + span {
+	-webkit-filter: opacity(0.7);
+}
+
+label {
+		margin-left: 5.5px;
+}
+
+#submitButton {
+	margin-top: 15px;
+	margin-left: 30px;
+}
+
+button {
+	border: none;
+	background: none;
+	-webkit-filter: opacity(0.4) invert(1);
+}
+
+button:hover {
+	-webkit-filter: opacity(1) invert(1);
+}
+
+button:focus {
+	outline: 0 !important;
+}	
