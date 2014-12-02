@@ -7,30 +7,19 @@
 		<link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon">
         <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
 
-        <!-- import header css -->
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css')}}">
+        <!-- import site-wide css -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/overall.css')}}">
 
 		<!-- import bootstrap css -->
-		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap/css/bootstrap.css') }}">
-		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap/css/bootstrap-theme.css') }}">
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap/bootstrap.min.css') }}">
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap/bootstrap-theme.min.css') }}">
 
 		<!-- import jquery -->
 		<script language="javascript" type="text/javascript" src="{{ url_for('static', filename='js/jquery-1.11.0.min.js')}}"></script>
 
 		<!-- import bootstrap js and bootstrap extras -->
-		<script type="text/javascript" src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js') }}"></script>
-		<script src="/static/js/bootstrap-alert.js" type="text/javascript"></script>
-
-		<style>
-		
-			/* give header a little room for alerts */
-			header {
-			    margin-bottom: 75px;
-			}
-
-		</style>
-
-
+		<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap/bootstrap.min.js') }}"></script>
+		<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap/bootstrap-alert.js') }}"></script>
 
 		{% block header %}
 		{% endblock %}

@@ -5,154 +5,8 @@
 <!-- import freewall js -->
 <script language="javascript" type="text/javascript" src="{{ url_for('static', filename='js/freewall.js')}}"></script>
 
-<style>
-	/* for gallery */
-		.gallery {
-			display: block;
-			text-align: center;
-			position: relative;
-			padding: .7em .7em .7em .7em;
-			min-height: 0;
-			font-size: 100%;
-			background: #470024;
-			border-top: 10px solid black;
-		}
-		.gallery > img {
-			-webkit-filter: opacity(0.4);
-		}
-
-		.gallery >img:hover {
-			-webkit-filter: opacity(1);
-		}
-		.gallery-img-active {
-			-webkit-filter: opacity(1);
-		}
-
-	/* for accordion */
-		h3 > img {
-			-webkit-filter: invert(1);
-		}
-		.h3-faux-accordion {
-			display: block;
-			text-align: center;
-			position: relative;
-			margin: 2px 0 0 0;
-			padding: .5em .5em .5em .7em;
-			min-height: 0;
-			font-size: 100%;
-			height: 42px; /* JS changes this. used to be 48 */
-		}
-
-	/* for accordion icons and tool selection */
-		button {
-			background: none;
-			border: none;
-			box-shadow: 0 1px 2px rgba(0, 0, 0, 0);
-/*			transition: all .1s ease-in-out; 
-*/			/*-webkit-filter: opacity(0.4);*/
-			-webkit-filter: opacity(1);
-		}
-
-		button:hover {
-			transform: scale(1.1);
-			/*-webkit-filter: brightness(50%);*/
-		}
-
-		button:focus {
-			outline: 0 !important;
-		}
-		.accordion-button-adjustment {
-			-webkit-filter: opacity(0.4) !important;
-		}
-
-		.icon-inactive {
-			display:inline-block; 
-			-webkit-filter: invert(1);
-		}
-
-		.button-active {
-			border: none;
-			background: none;
-			-webkit-filter: none;
-		}
-
-		#addButton {
-			box-shadow: 0 1px 2px rgba(0, 0, 0, 0);
-			border: 1px solid white;
-		}
-
-	/* for radio buttons 
-
-	/* for thumbnails */
-	.thumbnail-custom {
-		width: 300px;
-	}
-
-	.add-button-size {
-		margin-top: 51px;
-		margin-bottom: 51px;
-		margin-left: 86px;
-		margin-right: 86px;
-	}
-
-	/* for hover overlays */
-		.hidden {
-			visibility: hidden;
-		}
-
-	div.purikura {
-		-webkit-filter: opacity(1);
-	}
-
-	div.purikura:hover {
-		-webkit-filter: opacity(0.5);
-	}
-
-	div.purikuraOptions {
-		position: relative;
-		top: 30px;
-		left: 230px;
-	}
-
-	.purikura, .purikura img {
-	  position:relative;
-	  width:250px;
-	}
-
-	.purikuraDelete {
-	  display:none;
-	  position:absolute;
-	  top:15px;
-	  right:15px;
-	  width:25px;
-	  height:25px;
-	  background-image:url( "{{ url_for('static', filename='images/gallerydelete.png') }}" );
-	}
-
-	/*.purikuraZoom {
-	  display:none;
-	  position:absolute;
-	  bottom:10px;
-	  right:20px;
-	  width:25px;
-	  height:25px;
-	  background-image:url( "{{ url_for('static', filename='images/gallerydelete.png') }}" );
-	}*/
-
-	.purikura:hover .purikuraDelete{
-	  display:block;
-	}
-
-	.purikuraDelete:hover .purikuraZoom:hover {
-	  background-image:url( "{{ url_for('static', filename='images/gallerydelete.png') }}" );
-	}
-
-	.brick img {
-		margin: 0;
-		display: block;
-	}
-
-</style>
+<!-- styles for main page -->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
 
 {% endblock %}
 {% block content %}
@@ -165,24 +19,24 @@
 	<div class="col-md-3 brick">
 	    <button><a href="{{ url_for('choose') }}"><img src="{{ url_for('static', filename='images/addImage.jpg') }}" class="img-thumbnail add-button-size" id="addButton" onmouseover="this.src='{{ url_for('static', filename='images/addImageGreen.jpg') }}';" onmouseout="this.src='{{ url_for('static', filename='images/addImage.jpg') }}';" /></a></button>
 	</div>
+
+	<!-- Jinja2 code to allow dynamic linking of loaded decorated images -->
 	{% macro input(url) %}
 		  <a href="{{ url_for('decorate', filename='{{ url }}') }}"><img src="{{ purikura.combined_src }}" class="img-thumbnail thumbnail-custom"/></a>
 	{% endmacro %}
 
-	<!-- Decorated Images -->
+	<!-- Load decorated images -->
     {% for purikura in purikura_list %}
     <div class="col-md-3 brick">
         <div class="purikura">
-		  <a href="{{ url_for('decorate', filename='{0}'.format(purikura.combined_src)) }}"><img src="{{ purikura.combined_src }}" class="img-thumbnail thumbnail-custom"/></a>
-		  <form action="{{ url_for('delete_purikura') }}" method=POST>
-		  	<input type="hidden" name="filename" value="{{ purikura.combined_src }}">
-		  	<button class="purikuraDelete"></button>
-		  </form>
+        	<!-- Display decorated image and open it up in the editor when clicked -->
+        	<a href="{{ url_for('decorate', filename='{0}'.format(purikura.combined_src)) }}"><img src="{{ purikura.combined_src }}" class="img-thumbnail thumbnail-custom"/></a>
 
-		 <!--  <form action="{{ url_for('delete_purikura') }}" method=POST>
-		  	<input type="hidden" name="filename" value="{{ purikura.combined_src }}">
-		  	<button class="purikuraZoom"></button>
-		  </form> -->
+        	<!-- Form that deletes decorated image -->
+        	<form action="{{ url_for('delete_purikura') }}" method=POST>
+		  		<input type="hidden" name="filename" value="{{ purikura.combined_src }}">
+		  		<button class="purikuraDelete"></button>
+			</form>
 		</div>
     </div>
     {% endfor %}
@@ -191,7 +45,7 @@
 
 <script>
 
-//Reload the page once, just in case you made some database changes
+//Reload the page once to show database changes
 window.onload = function() {
     if(!window.location.hash) {
         window.location = window.location + '#loaded';

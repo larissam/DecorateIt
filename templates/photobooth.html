@@ -1,119 +1,115 @@
 {% extends "layout.html" %}
 
 {% block header %}
-	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap/css/bootstrap.css') }}">
-	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap/css/bootstrap-theme.css') }}">
-	<script type="text/javascript" src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js') }}"></script>
-	<script language="javascript" type="text/javascript" src="{{ url_for('static', filename='js/jquery-1.11.0.min.js')}}"></script>
 
 <style>
-		body {
-			background-color: #171717;
-			margin:0px;
-			color: #FFFFFC;
-		}
+	body {
+		background-color: #171717;
+		margin:0px;
+		color: #FFFFFC;
+	}
 
 	/* for gallery */
-		.gallery {
-			display: block;
-			text-align: center;
-			position: relative;
-			padding: .7em .7em .7em .7em;
-			min-height: 0;
-			font-size: 100%;
-			background: #470024;
-			border-top: 10px solid black;
-		}
-		.gallery > img {
-			-webkit-filter: opacity(0.4);
-		}
+	.gallery {
+		display: block;
+		text-align: center;
+		position: relative;
+		padding: .7em .7em .7em .7em;
+		min-height: 0;
+		font-size: 100%;
+		background: #470024;
+		border-top: 10px solid black;
+	}
+	.gallery > img {
+		-webkit-filter: opacity(0.4);
+	}
 
-		.gallery > img:hover {
-			-webkit-filter: opacity(1);
-		}
-		.gallery-img-active {
-			-webkit-filter: opacity(1);
-		}
+	.gallery > img:hover {
+		-webkit-filter: opacity(1);
+	}
+	.gallery-img-active {
+		-webkit-filter: opacity(1);
+	}
 
 	/* for accordion */
-		h3 > img {
-			-webkit-filter: invert(1);
-		}
-		.h3-faux-accordion {
-			display: block;
-			text-align: center;
-			position: relative;
-			margin: 2px 0 0 0;
-			padding: .5em .5em .5em .7em;
-			min-height: 0;
-			font-size: 100%;
-			height: 42px; /* JS changes this. used to be 48 */
-		}
+	h3 > img {
+		-webkit-filter: invert(1);
+	}
+	.h3-faux-accordion {
+		display: block;
+		text-align: center;
+		position: relative;
+		margin: 2px 0 0 0;
+		padding: .5em .5em .5em .7em;
+		min-height: 0;
+		font-size: 100%;
+		height: 42px; /* JS changes this. used to be 48 */
+	}
 
 	/* for accordion icons and tool selection */
-		button {
-			border: none;
-			background: none;
-			-webkit-filter: opacity(0.4) invert(1);
-		}
+	button {
+		border: none;
+		background: none;
+		-webkit-filter: opacity(0.4) invert(1);
+	}
 
-		button:hover {
-			-webkit-filter: opacity(1) invert(1);
-		}
+	button:hover {
+		-webkit-filter: opacity(1) invert(1);
+	}
 
-		button:focus {
-			outline: 0 !important;
-		}
-		.accordion-button-adjustment {
-			-webkit-filter: opacity(0.4) !important;
-		}
+	button:focus {
+		outline: 0 !important;
+	}
+	.accordion-button-adjustment {
+		-webkit-filter: opacity(0.4) !important;
+	}
 
-		.icon-inactive {
-			display:inline-block; 
-			-webkit-filter: opacity(0.4) invert(1);
-		}
+	.icon-inactive {
+		display:inline-block; 
+		-webkit-filter: opacity(0.4) invert(1);
+	}
 
-		button.icon-inactive:hover {
-			-webkit-filter: opacity(0.4) invert(1) !important;
-		}
+	button.icon-inactive:hover {
+		-webkit-filter: opacity(0.4) invert(1) !important;
+	}
 
-		.icon-active {
-			-webkit-filter: opacity(1) invert(1) !important;
-		}
+	.icon-active {
+		-webkit-filter: opacity(1) invert(1) !important;
+	}
 
-		.button-active {
-			border: none;
-			background: none;
-			-webkit-filter: none;
-		}
+	.button-active {
+		border: none;
+		background: none;
+		-webkit-filter: none;
+	}
 
 	/* for text overlays on video */
-		.text-hidden {
-			visibility: hidden;
-		}
+	.text-hidden {
+		visibility: hidden;
+	}
 
-		#submitButton {
-			margin-top: 15px;
-		}
+	#submitButton {
+		margin-top: 15px;
+	}
 
-		#photoStrip {
-			position: absolute;
-			left: 255px;
-			top: 500px;
-			z-index: -5;
-		}
+	#photoStrip {
+		position: absolute;
+		left: 255px;
+		top: 500px;
+		z-index: -5;
+	}
 
-		.faded {
-			-webkit-filter: opacity(0.1);
-		}
+	.faded {
+		-webkit-filter: opacity(0.1);
+	}
 
-		.visible {
-			-webkit-filter: opacity(1);
-		}
+	.visible {
+		-webkit-filter: opacity(1);
+	}
 
-		#canvas {
-			padding-bottom: 30px;
-		}
+	#canvas {
+		padding-bottom: 30px;
+	}
 
 	/* for radio buttons */
 

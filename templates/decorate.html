@@ -2,15 +2,13 @@
 
 {% block header %}
 
-	
+	<!-- jqueryui form.js for the email form -->
+	<script type="text/javascript" src="{{ url_for('static', filename='js/jqueryui/jquery.form.js') }}"></script>
 
-	<!-- for the email form -->
-	<script src="http://malsup.github.com/jquery.form.js"></script> 
+	<!-- jqueryui for the toolbar accordion -->
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/jqueryui/jquery-ui.min.css') }}">
+	<script type="text/javascript" src="{{ url_for('static', filename='js/jqueryui/jquery-ui.min.js') }}"></script>
 
-	<!-- for the accordion stuff -->
-	<link rel="stylesheet" href="{{ url_for('static', filename='jqueryui/jquery-ui.css') }}">
-	<script type="text/javascript" src="{{ url_for('static', filename='jqueryui/jquery-ui.js') }}"></script>
-	<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap-tooltip.js') }}"></script>
 	<script>
 	$(function() {
 		$( "#accordion" ).accordion({
@@ -19,128 +17,30 @@
 	});
 	</script>
 
-	<!-- random styles for this particular page. will be put into a css file later -->
-	<style>
-
-		body {
-			background-color: #171717;
-			margin:0px;
-		}
-	/* for gallery */
-		.gallery {
-			display: block;
-			text-align: center;
-			position: relative;
-			padding: .7em .7em .7em .7em;
-			min-height: 0;
-			font-size: 100%;
-			background: #470024;
-			border-top: 10px solid black;
-		}
-		.gallery > img {
-			-webkit-filter: opacity(0.4);
-		}
-
-		.gallery >img:hover {
-			-webkit-filter: opacity(1);
-		}
-		.gallery-img-active {
-			-webkit-filter: opacity(1);
-		}
-
-	/* for accordion */
-		h3 > img {
-			-webkit-filter: invert(1);
-		}
-		.h3-faux-accordion {
-			display: block;
-			text-align: center;
-			position: relative;
-			margin: 2px 0 0 0;
-			padding: .5em .5em .5em .7em;
-			min-height: 0;
-			font-size: 100%;
-			height: 48px;
-		}
-
-		.form-group {
-			text-align: left;
-		}
-
-		#emailNote {
-			text-align: left;
-			font-size: 13px;
-			color: #FF0000;
-		}
-
-	/* for accordion icons and tool selection */
-		button {
-			border: none;
-			background: none;
-			-webkit-filter: opacity(0.4);
-		}
-
-		button:hover {
-			-webkit-filter: opacity(1);
-		}
-
-		button:focus {
-			outline: 0 !important;
-		}
-		.accordion-button-adjustment {
-			-webkit-filter: opacity(0.4) !important;
-		}
-
-		.icon-inactive {
-			display:inline-block; 
-			-webkit-filter: invert(1);
-		}
-
-		.button-active {
-			border: none;
-			background: none;
-			-webkit-filter: none;
-		}
-
-	/* for editor cursors */
-
-		.cursor-marker {
-			cursor: url("{{ url_for('static', filename='images/cursormarker.png') }}" ), auto;
-		}
-
-		.cursor-brush {
-			cursor: url( "{{ url_for('static', filename='images/cursorbrush.png') }}" ), auto;
-		}
-
-		.cursor-stamp {
-			cursor: url( "{{ url_for('static', filename='images/cursorstamp.png') }}" ), auto;
-		}
-
-		.cursor-eraser {
-			cursor: url( "{{ url_for('static', filename='images/cursoreraser.png') }}" ), auto;
-		}
-
-	</style>
+	<!-- styles for decorate page -->
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/decorate.css') }}">
 
 {% endblock %}
 
 {% block content %}
 
+<!-- image editor (2 layered html canvases) -->
 <div class="col-md-9">
 	<div style="position: relative;">
-		<!-- the javascript gets really jacked up if you move this.
-		probably b/c of the mouse placement offset. will look into later. -->
 
-		<!-- 494px height to match with sidebar -->
+		<!-- background canvas (not editable) -->
 		<canvas id="photo" width="700" height="494" style="left: 0; top: 0; z-index:0; margin-left:42px; margin-top:127px;"></canvas>
+
+		<!-- drawing canvas (editable) -->
 		<canvas id="c" width="700" height="494" style="position: absolute; left: 0; top: 0; z-index:1; margin-left:42px; margin-top:127px;"></canvas>
-		<!-- <img src="{{ filename }}" /> -->
 	</div>
 </div>
 
+<!-- toolbox -->
 <div class="col-md-3" style="position:absolute; right:0; height:700px; margin-right: 10px;">
+	
+	<!-- first toolbox segment: save, download, and email functions -->
 	<div>
-		<!-- margin 0px just for this guy b/c want top plumb with editor window -->
 		<h3 class="h3-faux-accordion" style="background-color: #660033; margin:0px;">
 			
 			<!-- Save function -->
@@ -150,59 +50,63 @@
 			<div class="modal fade" id="saveModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			  <div class="modal-dialog">
 			    <div class="modal-content">
-			      <div class="modal-header">
-			        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-			        <h4 class="modal-title" id="myModalLabel">Saved in Gallery!</h4>
-			      </div>
-			      <div class="modal-body">
-			      	<p>Click <a href="{{ url_for('main') }}">here</a> to see it!</p>  
-			      </div>
+
+				    <!-- save function popup header -->
+				    <div class="modal-header">
+				    	<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+				    	<h4 class="modal-title" id="myModalLabel">Saved in Gallery!</h4>
+				    </div>
+
+				    <!-- save function popup body -->
+				    <div class="modal-body">
+				    	<p>Click <a href="{{ url_for('main') }}">here</a> to see it!</p>  
+				    </div>
+
 			    </div>
 			  </div>
 			</div>
 
+			<!-- Download function -->
 			<button><a id="download"><img src="{{ url_for('static', filename='images/navigatordownload.png') }}" style="height:32px; width:32px;" class="icon-inactive"/></a></button>
 
 			<!-- Email function -->
 			<button data-toggle="modal" data-target="#emailModal"><a id="email"><img src="{{ url_for('static', filename='images/email.png') }}" style="height:26px; width:32px;" class="icon-inactive"/></a></button>
 
-
 			<!-- Email function popup -->
 			<div class="modal" id="emailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			  <div class="modal-dialog">
 			    <div class="modal-content">
-			      <div class="modal-header">
-			        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-			        <h4 class="modal-title" id="myModalLabel">Send Image</h4>
-			      </div>
-			      <div class="modal-body">
-			        <form id="emailImage">
-			        	<div class="form-group">
-			              <label for="email">Email addresses:</label>
-			              <p id="emailNote">Please enter email addresses separated by commas.</p>
-			              <input type="text" name="address" class="form-control" placeholder="example@example.com, example2@example.com" required autofocus name="email"/>
+			    	<!-- email function popup header -->
+			    	<div class="modal-header">
+			    		<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+			    		<h4 class="modal-title" id="myModalLabel">Send Image</h4>
+			    	</div>
 
-			              <br />
-			              <label for="subject">Email subject:</label>
-			              <input type="text" name="subject" class="form-control" placeholder="Subject..." required autofocus name="subject"/>
+			    	<!-- email function popup body -->
+			    	<div class="modal-body">
+				        <form id="emailImage">
 
-			              <br />
-			              <label for="subject">Email body:</label>
-			              <textarea class="form-control" rows="3" placeholder="Body..." name="body"></textarea>
-			              <!-- <input type="text" name="body" class="form-control" placeholder="Message..." required autofocus name="body"/> -->
+				        	<!-- email form -->
+				        	<div class="form-group">
+				              <label for="email">Email addresses:</label>
+				              <p id="emailNote">Please enter email addresses separated by commas.</p>
+				              <input type="text" name="address" class="form-control" placeholder="example@example.com, example2@example.com" required autofocus name="email"/>
 
-			              <input type="hidden" name="filename" value=" {{ filename }} " />
-			              <!-- <input class="btn btn-primary" type="submit" value="Submit" /> -->
-						  <br />
-			              <input class="btn btn-primary" type="submit" id="submitButton" value="Send email" />
-			            </div>
-<!-- 			            <input type="submit" value="submit" />
-	<button type="submit" class="btn btn-primary">Upload</button>
- -->			    </form>
-			      </div>
-			      <!-- <div class="modal-footer">
-			        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			      </div> -->
+				              <br />
+				              <label for="subject">Email subject:</label>
+				              <input type="text" name="subject" class="form-control" placeholder="Subject..." required autofocus name="subject"/>
+
+				              <br />
+				              <label for="subject">Email body:</label>
+				              <textarea class="form-control" rows="3" placeholder="Body..." name="body"></textarea>
+
+				              <input type="hidden" name="filename" value=" {{ filename }} " />
+
+							  <br />
+				              <input class="btn btn-primary" type="submit" id="submitEmailButton" value="Send email" />
+				            </div>
+					    </form>
+					</div>
 			    </div>
 			  </div>
 			</div>
@@ -210,31 +114,39 @@
 		</h3>
 	</div>
 
+	<!-- second toolbox segment: erase and clear functions -->
 	<div>
-		<div>
-			<h3 class="h3-faux-accordion" style="background-color: #8A002E;">
-				<button id="changeToolToEraser"><img src="{{ url_for('static', filename='images/navigatoreraser.png') }}" style="height:32px; width:32px" class="icon-inactive"/></button>
-				<button id="clear"><img src="{{ url_for('static', filename='images/navigatorreload.png') }}" style="height:32px; width:32px" class="icon-inactive"/></button>
-			</h3>
-		</div>
+		<h3 class="h3-faux-accordion" style="background-color: #8A002E;">
 
-		<div>
-			<h3 class="h3-faux-accordion" style="background-color: #B8005C;">
+			<!-- Eraser function -->
+			<button id="changeToolToEraser"><img src="{{ url_for('static', filename='images/navigatoreraser.png') }}" style="height:32px; width:32px" class="icon-inactive"/></button>
 
-				<!-- sizes should be universal. sticking outside for now. still need to implement sizing for brush and stamps -->
-				<button id="changeSizeToSmall" data-toggle="tooltip" data-placement="top" title="Change tool size to small"><img src="{{ url_for('static', filename='images/sizesmall.png') }}" style="height:32px; width: 32px" class="icon-inactive"/></button>
-				<button id="changeSizeToMedium"><img src="{{ url_for('static', filename='images/sizemedium.png') }}" style="height:32px; width: 32px" class="icon-inactive"/></button>
-				<button id="changeSizeToLarge"><img src="{{ url_for('static', filename='images/sizelarge.png') }}" style="height:32px; width: 32px" class="icon-inactive"/></button>
-				<button id="changeSizeToXLarge"><img src="{{ url_for('static', filename='images/sizexlarge.png') }}" style="height:32px; width: 32px" class="icon-inactive"/></button>
-			</h3>
-		</div>
-
+			<!-- Clear function -->
+			<button id="clear"><img src="{{ url_for('static', filename='images/navigatorreload.png') }}" style="height:32px; width:32px" class="icon-inactive"/></button>
+		</h3>
 	</div>
-	<!-- trying to make accordion height same as editor window. will deal with once window size finalized -->
 
-	<!-- we will also have to set the width of this so it's not dynamic -->
+	<!-- third toolbox segment: change tool size functions -->
+	<div>
+		<h3 class="h3-faux-accordion" style="background-color: #B8005C;">
+
+			<button id="changeSizeToSmall" data-toggle="tooltip" data-placement="top" title="Change tool size to small"><img src="{{ url_for('static', filename='images/sizesmall.png') }}" style="height:32px; width: 32px" class="icon-inactive"/></button>
+			<button id="changeSizeToMedium"><img src="{{ url_for('static', filename='images/sizemedium.png') }}" style="height:32px; width: 32px" class="icon-inactive"/></button>
+			<button id="changeSizeToLarge"><img src="{{ url_for('static', filename='images/sizelarge.png') }}" style="height:32px; width: 32px" class="icon-inactive"/></button>
+			<button id="changeSizeToXLarge"><img src="{{ url_for('static', filename='images/sizexlarge.png') }}" style="height:32px; width: 32px" class="icon-inactive"/></button>
+
+		</h3>
+	</div>
+
+	
+
+	<!-- fourth toolbox segment: change tool (marker, brush, stamp) functions -->
 	<div id="accordion">
+
+		<!-- markers -->
 		<h3 style="background-color: #FF5050; text-align: center;"><button><img src="{{ url_for('static', filename='images/navigatormarker.png') }}" class="icon-inactive"/></button></h3>
+
+		<!-- marker choices -->
 		<div style="border: 2px solid #FF5050; background-color:white;">
 			<button id="changeColorToPurple"><img src="{{ url_for('static', filename='images/brush2a.png') }}" style="height:32px; width:32px" /></button>
 			<button id="changeColorToBlack"><img src="{{ url_for('static', filename='images/brushblack.png') }}" style="height:32px; width:32px;" /></button>
@@ -253,8 +165,11 @@
 			<button id="changeColorToWhiteYellow"><img src="{{ url_for('static', filename='images/brush4.png') }}" style="height:32px; width:32px" /></button>
 			<button id="changeColorToWhitePink"><img src="{{ url_for('static', filename='images/brush1.png') }}" style="height:32px; width:32px" /></button>
 		</div>
-	
+
+		<!-- brushes -->
 		<h3 style="background-color: #FF987E; text-align: center;"><button><img src="{{ url_for('static', filename='images/navigatorbrush.png') }}" class="icon-inactive"/></button></h3>
+
+		<!-- brush choices -->
 		<div style="border: 2px solid #FF987E; background-color:white;">
 			<button id="changeToolToBrush"><img  src="{{ url_for('static', filename='images/brush.png') }}" style="height:32px; width:32px;" /></button>
 			<button id="changeToolToBrush2"><img  src="{{ url_for('static', filename='images/2.png') }}" style="height:32px; width:32px;"/></button>
@@ -262,8 +177,11 @@
 			<button id="changeToolToBlueSparkleBrush"><img src="{{ url_for('static', filename='images/bluesparkle.png') }}" style="height:32px; width:32px;"/></button>
 			<button id="changeToolToPinkSparkleBrush"><img  src="{{ url_for('static', filename='images/pinksparkle.png') }}" style="height:32px; width:32px;"/></button>
 		</div>
-		
+
+		<!-- stamps -->
 		<h3 style="background-color: #FFCC99; text-align: center;"><button><img src="{{ url_for('static', filename='images/navigatorstamp.png') }}" class="icon-inactive"/></button></h3>
+
+		<!-- stamp choices -->
 		<div style="border: 2px solid #FFCC99; background-color:white;">
 			<button id="changeStamp2"><img src="{{ url_for('static', filename='images/2.png') }}" style="height:32px; width:32px;"/></button>
 			<button id="changeStamp3"><img src="{{ url_for('static', filename='images/3.png') }}" style="height:32px; width:32px;"/></button>
@@ -297,6 +215,12 @@
 
 
 <script>
+
+//Note: All the image decorating logic is in this script tag.
+
+/**********************************************************************************
+Setting up
+***********************************************************************************/
 
 //Get the chosen image from the user
 var imageObj = new Image();
@@ -690,19 +614,17 @@ document.getElementById("clear").addEventListener('click', function(){
 	document.getElementById("ui-id-1").click();
 });
 
-
+//Selects purple medium marker as default.
 function selectDefaults() {
-	//the sizes of the marker stuff will be taken care of by the clicks.
-	//you still need to update the sizes of the other tools.
-
-	activeBrushSize = brushMedium;
-	activeStampSize = stampMedium;
 	document.getElementById("changeColorToPurple").click();
 	document.getElementById("changeSizeToMedium").click();
+
+	//make brush and stamp size medium as well
+	activeBrushSize = brushMedium;
+	activeStampSize = stampMedium;
 }
 
-
-
+//Sets up canvas starting with purple medium marker.
 function setUpCanvas() {
 	
 	ctx.lineWidth = 5; 
@@ -728,20 +650,24 @@ function setUpCanvas() {
 Interface updates
 ***********************************************************************************/
 
+//Updates the interface according to what you selected
 function updateInterface(tool, button){
+	//Eraser updates
 	if (tool == "eraser") {
 		ctx.globalCompositeOperation = "destination-out";
 		activeTool = "marker";
 		updateCursor("eraser");
 		drawWithMarker("purple", "purple");
 		updateActiveBrushOrStampElement(button);
-	} else if (tool == "marker") {
+	}
+	//Marker updates
+	else if (tool == "marker") {
 		ctx.globalCompositeOperation = "source-over";
 		activeTool = "marker";
 		updateCursor("marker");
 		updateActiveBrushOrStampElement(button);
 
-		//marker size stuff
+		//update marker size
 		if (activeMarkerSize == markerSmall) {
 			updateActiveSizeElement(document.getElementById("changeSizeToSmall"));
 		} else if (activeMarkerSize == markerMedium) {
@@ -751,7 +677,9 @@ function updateInterface(tool, button){
 		} else {
 			updateActiveSizeElement(document.getElementById("changeSizeToXLarge"));
 		}
-	} else if (tool == "brush") {
+	}
+	//Brush updates
+	else if (tool == "brush") {
 		ctx.globalCompositeOperation = "source-over";
 		activeTool = "brush";
 		updateCursor("brush");
@@ -759,7 +687,7 @@ function updateInterface(tool, button){
 		drawWithBrush(button.childNodes[0].src);
 		updateActiveBrushOrStampElement(button);
 
-		//brushSize stuff
+		//update brush size
 		if (activeBrushSize == brushSmall) {
 			updateActiveSizeElement(document.getElementById("changeSizeToSmall"));
 		} else if (activeBrushSize == brushMedium) {
@@ -769,14 +697,16 @@ function updateInterface(tool, button){
 		} else {
 			updateActiveSizeElement(document.getElementById("changeSizeToXLarge"));
 		}
-	} else {
+	}
+	//Stamp updates
+	else {
 		ctx.globalCompositeOperation = "source-over";
 		activeTool = "stamp";
 		updateCursor("stamp");
 		drawStamp(button.childNodes[0].src);
 		updateActiveBrushOrStampElement(button);
 
-		//stampSize stuff
+		//update stamp size
 		if (activeStampSize == stampSmall) {
 			updateActiveSizeElement(document.getElementById("changeSizeToSmall"));
 		} else if (activeStampSize == stampMedium) {
@@ -789,6 +719,7 @@ function updateInterface(tool, button){
 	}
 }
 
+//Switches cursor to the one you're using
 function updateCursor(type) {
 	if (type == "brush") {
 		document.getElementById("c").className = "cursor-brush";
@@ -801,35 +732,37 @@ function updateCursor(type) {
 	}
 };
 
+//Highlights current active size
 function updateActiveSizeElement(newElement) {
 	activeSizeElement.className = "";
 	newElement.className = "button-active";
 	activeSizeElement = newElement;
-	activeSizeElement.blur(); //I don't want focus showing up b/c you have multiple things selected
+
+	//Don't want the browser's focus to show up because multiple things are selected
+	activeSizeElement.blur();
 };
 
+//Highlights current brush/stamp element
 function updateActiveBrushOrStampElement(newElement) {
-	//console.log(newElement);
 
-	//all this logic is to make sure the header is lighted/dimmed when selecting the eraser
+	//If the eraser is selected, dim the toolbox icons
 	if (newElement == document.getElementById("changeToolToEraser")) {
 		var headerToBeUpdated = document.getElementById("accordion").childNodes;
-		for (var i = 1; i< headerToBeUpdated.length; i += 4) {
-			//console.log(i, headerToBeUpdated[i]);
+		for (var i = 3; i< headerToBeUpdated.length; i += 8) {
 			 if (headerToBeUpdated[i].classList.contains("ui-state-active")) {
 				var buttonToBeUpdated = headerToBeUpdated[i].childNodes[1];
-				//console.log(buttonToBeUpdated);
 				buttonToBeUpdated.classList.add("accordion-button-adjustment");
 			}
 		}
-	} else {
+	}
+	//Otherwise, highlight the appropriate icon
+	else {
 		var headerToBeUpdated = document.getElementById("accordion").childNodes;
-		//console.log(headerToBeUpdated);
-		for (var i = 1; i< headerToBeUpdated.length; i += 4) {
-			//console.log(i, headerToBeUpdated[i]);
+		console.log(headerToBeUpdated);
+		for (var i = 3; i< headerToBeUpdated.length; i += 8) {
 			 if (headerToBeUpdated[i].classList.contains("ui-state-active")) {
 				var buttonToBeUpdated = headerToBeUpdated[i].childNodes[1];
-				//console.log(buttonToBeUpdated);
+				console.log(buttonToBeUpdated);
 				buttonToBeUpdated.classList.remove("accordion-button-adjustment");
 			}
 		}
@@ -837,29 +770,37 @@ function updateActiveBrushOrStampElement(newElement) {
 	activeBrushOrStampElement.className = "";
 	newElement.className = "button-active";
 	activeBrushOrStampElement = newElement;
-	activeBrushOrStampElement.blur(); //I don't want focus showing up b/c you have multiple things selected
+
+	//Don't want the browser's focus to show up because multiple things are selected
+	activeBrushOrStampElement.blur();
 };
 
 /**********************************************************************************
 Drawing functions
 ***********************************************************************************/
 
+//For stamp drawing, given a stamp image
 function drawStamp(src) {
+	
+	//Load the stamp image
 	var img = new Image();
 	img.src = src;
 
+	//When you click the mouse, draw the stamp
 	el.onmousedown = function(e) {
-		//the minuses are offsets
-		ctx.drawImage(img, e.pageX-200, e.pageY-200, activeStampSize, activeStampSize); //200s for offset
+		ctx.drawImage(img, e.pageX-200, e.pageY-200, activeStampSize, activeStampSize); //200px for offset
 	};
 };
 
-//MAKE A SPACING PARAMETER. EVERY BRUSH HAS DIFFERENT SPACING!!!
 
+//For brush drawing, given a brush image
 function drawWithBrush(src) {
+	
+	//Load the brush image
 	var img = new Image();
 	img.src = src;
 
+	//Helper functions to make brush look nice
 	function distanceBetween(point1, point2) {
 		return Math.sqrt(Math.pow(point2.x - point1.x, 2) + Math.pow(point2.y - point1.y, 2));
 	};
@@ -871,17 +812,16 @@ function drawWithBrush(src) {
 
 	var isDrawing, lastPoint;
 
+	//When you click the mouse, start keeping track of your last point
 	el.onmousedown = function(e) {
-		//console.log("here?");
 		isDrawing = true;
-		lastPoint = { x: e.pageX-160, y: e.pageY-160}; //changed clientX to pageX. 160s for offset
+		lastPoint = { x: e.pageX-160, y: e.pageY-160}; //changed clientX to pageX. 160px for offset
 
-		//make sure there's no shadow, in case you used the marker
+		//Remove shadow in case you used the marker before
 		ctx.shadowBlur = 0;
 	};
 
-	//
-
+	//If you're drawing, draw the current point and then update the last point var
 	el.onmousemove = function(e) {
 		if (!isDrawing) return;
 
@@ -889,54 +829,51 @@ function drawWithBrush(src) {
 		var dist = distanceBetween(lastPoint, currentPoint);
 		var angle = angleBetween(lastPoint, currentPoint);
 
-		//The 100 is what dictates how far apart the images are
+		//For the entire distance between your last point and the current point, draw the loaded brush image
+		//The i+=100 is what dictates how far apart the images are
 		for (var i = 0; i < dist; i+= 100) {
 			x = lastPoint.x + (Math.sin(angle) * i) - 25;
 			y = lastPoint.y + (Math.cos(angle) * i) - 25;
-			ctx.drawImage(img, x, y, activeBrushSize, activeBrushSize); //the 32's are FOR SCALING!
+			ctx.drawImage(img, x, y, activeBrushSize, activeBrushSize);
 		}
 
 		lastPoint = currentPoint;
 	};
 
+	//Stop drawing once you lift up your click
 	el.onmouseup = function() {
 		isDrawing = false;
 	};
 
 };
 
+//For marker drawing, given a color and shadowcolor
 function drawWithMarker(color, shadowColor) {
 
 	var isDrawing;
 
-
+	//When you click the mouse, begin a path
 	el.onmousedown = function(e) {
 	  isDrawing = true;
-	  //moving to onload
 	  
-	  // ctx.lineJoin = ctx.lineCap = 'round';
 	  ctx.moveTo(e.pageX-180, e.pageY-180); //changed clientX to pageX 180s for offset
 	  ctx.beginPath();
 	};
+
+	//If you're drawing, draw a line to the current point
 	el.onmousemove = function(e) {
 	  if (isDrawing) {
 	    ctx.strokeStyle = color;
 	    ctx.shadowColor = shadowColor;
-	    ctx.lineWidth = activeMarkerSize; //have to set these again because they dont show up after the brush..not sure why
-		ctx.shadowBlur = ctx.lineWidth; //orignally set this to "activeSize" but it didn't like it?
-		// console.log("linewidth", ctx.lineWidth);
-		// console.log("shadow", ctx.shadowBlur);
+	    ctx.lineWidth = activeMarkerSize;
+		ctx.shadowBlur = ctx.lineWidth;
 
-
-
-	    //THIS WORKS FINE IF THE TOOL BFORE YOU IS A MARKER. NOT OK IF ITS A BRUSH
-	    //(LOOKS LIKE NO SETTINGS IF AFTER BRUSH). OK if you select a size fn.
-	    //FIGURE OUT WHATS UP
-
-	    ctx.lineTo(e.pageX-180, e.pageY-165); //the minuses are for offsets. //changed clientX to pageX
+	    ctx.lineTo(e.pageX-180, e.pageY-165); //the minuses are for offsets. changed clientX to pageX
 	    ctx.stroke();
 	  }
 	};
+
+	//Stop drawing once you lift up your click
 	el.onmouseup = function() {
 	  isDrawing = false;
 	};
@@ -946,38 +883,10 @@ function drawWithMarker(color, shadowColor) {
 Saving, downloading, and emailing functions
 ***********************************************************************************/
 
-function save_image(){
-	//Makes a new canvas for saving
-	var copyForDownloading = document.createElement('canvas');
-	var ctxCopyForDownloading = copyForDownloading.getContext('2d');
-	ctxCopyForDownloading.canvas.width = document.getElementById("photo").width;
-	ctxCopyForDownloading.canvas.height = document.getElementById("photo").height;
-
-	//Copies the 2 working canvases onto the canvas for saving
-	ctxCopyForDownloading.drawImage(document.getElementById("photo"), 0, 0);
-	ctxCopyForDownloading.drawImage(document.getElementById("c"), 0, 0);
-
-	//Sends the canvas for saving to the backend for storage in the gallery
-	$.ajax({
-		type: "POST",
-		url: "{{ url_for('update_purikura') }}",
-		data: { filename: '{{ filename }}', updated_src: copyForDownloading.toDataURL('image/jpeg', 1.0) },
-		success: function(response) {
-			//console.log(response);
-		},
-		error: function(error) {
-			//console.log(error)
-		}
-
-	});
-}
-
 //Saves image in gallery
 document.getElementById('save').addEventListener('click', function(){
-
 	save_image();
 });
-
 
 //Downloads image to disk
 document.getElementById('download').addEventListener('click', function(){
@@ -997,11 +906,8 @@ document.getElementById('download').addEventListener('click', function(){
 	this.download = 'purikura.jpg';
 });
 
-
-
 //Sends image to user-specified email address
 $("#emailImage").submit(function(e){
-	console.log('sent email...?');
 	
 	save_image();
 
@@ -1011,38 +917,50 @@ $("#emailImage").submit(function(e){
 		url: "{{ url_for('send_mail') }}",
 		data: $("#emailImage").serialize(),
 		success: function(response) {
-			//console.log(response);
+			console.log(response);
 		},
 		error: function(error) {
-			//console.log(error)
+			console.log(error)
 		}
 
 	});
 
-	// $('#emailModal').modal('hide');
-	e.preventDefault();
-	
+	//Prevent refreshing page
+	e.preventDefault();	
 });
 
-// $('#submitButton').on('click', function() { 
-//   $('.modal').modal('hide');
-// });
-
-document.getElementById('submitButton').addEventListener('click', function(){
+//Makes sure email popup closes after emailing the image
+document.getElementById('submitEmailButton').addEventListener('click', function(){
 	$('#emailModal').modal('hide');
 });
 
-$(function () {
-  $('[data-toggle="tooltip"]').tooltip({
-  	'placement':'top'
-  });
-});
+//Helper function to save image. Used in saving image to gallery + emailing image
+function save_image(){
+	//Makes a new canvas for saving
+	var copyForDownloading = document.createElement('canvas');
+	var ctxCopyForDownloading = copyForDownloading.getContext('2d');
+	ctxCopyForDownloading.canvas.width = document.getElementById("photo").width;
+	ctxCopyForDownloading.canvas.height = document.getElementById("photo").height;
 
-$('[data-toggle="popover"]').popover({
-	trigger: 'hover',
-	'placement': 'top'
-});
+	//Copies the 2 working canvases onto the canvas for saving
+	ctxCopyForDownloading.drawImage(document.getElementById("photo"), 0, 0);
+	ctxCopyForDownloading.drawImage(document.getElementById("c"), 0, 0);
 
-// </script>
+	//Sends the canvas for saving to the backend for storage in the gallery
+	$.ajax({
+		type: "POST",
+		url: "{{ url_for('update_purikura') }}",
+		data: { filename: '{{ filename }}', updated_src: copyForDownloading.toDataURL('image/jpeg', 1.0) },
+		success: function(response) {
+			console.log(response);
+		},
+		error: function(error) {
+			console.log(error)
+		}
+
+	});
+}
+
+</script>
 
 {% endblock %}

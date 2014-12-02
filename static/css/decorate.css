@@ -1,0 +1,98 @@
+/* set background to grey */
+body {
+	background-color: #171717;
+	margin:0px;
+}
+
+/* styles for gallery */
+.gallery {
+	display: block;
+	text-align: center;
+	position: relative;
+	padding: .7em .7em .7em .7em;
+	min-height: 0;
+	font-size: 100%;
+	background: #470024;
+	border-top: 10px solid black;
+}
+.gallery > img {
+	-webkit-filter: opacity(0.4);
+}
+
+.gallery >img:hover {
+	-webkit-filter: opacity(1);
+}
+.gallery-img-active {
+	-webkit-filter: opacity(1);
+}
+
+/* styles for toolbox accordion */
+h3 > img {
+	-webkit-filter: invert(1);
+}
+.h3-faux-accordion {
+	display: block;
+	text-align: center;
+	position: relative;
+	margin: 2px 0 0 0;
+	padding: .5em .5em .5em .7em;
+	min-height: 0;
+	font-size: 100%;
+	height: 48px;
+}
+
+.form-group {
+	text-align: left;
+}
+
+#emailNote {
+	text-align: left;
+	font-size: 13px;
+	color: #FF0000;
+}
+
+/* styles for accordion icons and tool selection */
+button {
+	border: none;
+	background: none;
+	-webkit-filter: opacity(0.4);
+}
+
+button:hover {
+	-webkit-filter: opacity(1);
+}
+
+button:focus {
+	outline: 0 !important;
+}
+.accordion-button-adjustment {
+	-webkit-filter: opacity(1) !important;
+}
+
+.icon-inactive {
+	display:inline-block; 
+	-webkit-filter: invert(1);
+}
+
+.button-active {
+	border: none;
+	background: none;
+	-webkit-filter: none;
+}
+
+/* styles for editor cursors */
+.cursor-marker {
+	cursor: url("../images/cursormarker.png" ), auto;
+}
+
+.cursor-brush {
+	cursor: url( "../images/cursorbrush.png" ), auto;
+}
+
+.cursor-stamp {
+	cursor: url( "../images/cursorstamp.png" ), auto;
+}
+
+.cursor-eraser {
+	cursor: url( "../images/cursoreraser.png" ), auto;
+}
