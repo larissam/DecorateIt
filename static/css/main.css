@@ -6,11 +6,6 @@ button {
 	-webkit-filter: opacity(1);
 }
 
-button:hover {
-	transform: scale(1.1);
-	/*-webkit-filter: brightness(50%);*/
-}
-
 button:focus {
 	outline: 0 !important;
 }
