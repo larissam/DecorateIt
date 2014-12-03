@@ -31,12 +31,12 @@
 - Photobooth built using pure HTML5 canvas and Javascript. No plugins used.
 
 ### Stack:
--Photo editor and photobooth: HTML5 Canvas, JavaScript, HTML, CSS, Bootstrap
--Image processing, email handling, and database: Python, OpenCV, SQLite, SQLAlchemy, Flask-Mail
--Framework: Flask
+- Photo editor and photobooth: HTML5 Canvas, JavaScript, HTML, CSS, Bootstrap
+- Image processing, email handling, and database: Python, OpenCV, SQLite, SQLAlchemy, Flask-Mail
+- Framework: Flask
 
 
 ### Notes
 
-OpenCV can be difficult to install and configure. For your convenience, is a [version without the OpenCV image processing](https://github.com/larissam/DecorateIt-NoOpenCV). Additionally, here is an in-progress [version deployed on Heroku](http://decorateit5.herokuapp.com/). 
+OpenCV can be difficult to install and configure. For your convenience, is a [version without the OpenCV image processing](https://github.com/larissam/DecorateIt-NoOpenCV). Additionally, here is an in-progress [version deployed on Heroku](http://decorateit5.herokuapp.com/).	 
 
