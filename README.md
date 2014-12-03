@@ -3,6 +3,9 @@
 ### DecorateIt is a web application that...
 1. Lets you upload a photo or take one using the built-in photobooth
 
+![Photobooth](https://github.com/larissam/DecorateIt/blob/master/readmeimages/editor.png "Photobooth")
+
+
 2. Automatically enhances your photo by enlarging your eyes and smoothing your skin
 
 3. Lets you decorate your chosen photo using markers, brushes, and stamps
