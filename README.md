@@ -9,11 +9,9 @@
 ![Image Processing](https://github.com/larissam/DecorateIt/blob/master/readmeimages/enlargeeyes.gif "Image Processing")
 
 3. Lets you decorate your chosen photo using markers, brushes, and stamps
-
 ![Editor](https://github.com/larissam/DecorateIt/blob/master/readmeimages/editor.png "Editor")
 
 4. Lets you download, email, or save your decorated photo to your gallery
-
 ![Gallery](https://github.com/larissam/DecorateIt/blob/master/readmeimages/gallery.png "Gallery")
 
 
