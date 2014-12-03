@@ -6,6 +6,7 @@
 ![Photobooth After](https://github.com/larissam/DecorateIt/blob/master/readmeimages/photoboothafter.png "Photobooth After")
 
 2. Automatically enhances your photo by enlarging your eyes and smoothing your skin
+![Image Processing](https://github.com/larissam/DecorateIt/blob/master/readmeimages/enlargeeyes.gif "Image Processing")
 
 3. Lets you decorate your chosen photo using markers, brushes, and stamps
 
