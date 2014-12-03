@@ -1,6 +1,6 @@
 # DecorateIt
 
-### DecorateIt is a web application that...
+### DecorateIt is a web app that...
 1. Lets you upload a photo or take one using the built-in photobooth
 ![Photobooth Before](https://github.com/larissam/DecorateIt/blob/master/readmeimages/photoboothbefore.png "Photobooth Before")
 ![Photobooth After](https://github.com/larissam/DecorateIt/blob/master/readmeimages/photoboothafter.png "Photobooth After")
