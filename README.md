@@ -1,6 +1,6 @@
 # DecorateIt
 
-### DecorateIt is a web application that:
+### DecorateIt is a web application that...
 1. Lets you upload a photo or take one using the built-in photobooth
 
 2. Automatically enhances your photo by enlarging your eyes and smoothing your skin
@@ -24,19 +24,22 @@
 <code>$ python routes.py </code>
 
 
+### Alternate versions
+1. [DecorateIt without OpenCV](https://github.com/larissam/DecorateIt-NoOpenCV) - download this repo to run locally if OpenCV is difficult to configure.
+2. [DecorateIt on Heroku](http://decorateit5.herokuapp.com/) - In-progress version deployed on Heroku. Caveats: does not have photobooth or OpenCV functionality. Only tested on Chrome version 39.0.2171.71 running OSX.
+
+
 ### How it works
 
 - Image enhancement (eye enlargement and skin smoothing) done using OpenCV. First, OpenCV is used to detect the face and eyes. Then, it enlarges the eyes. To improve blending, it applies a transparency mask (created by deconstructing the image into r,g,b channels and reconstructing it with an alpha/transparency channel) to each enlarged eye before pasting it back on the face. Finally, bilateral filtering is used to smooth facial skin without sacrificing image sharpness.
 - Image editor built using pure HTML5 Canvas and Javascript. Javascript uses the mouse's position on the canvas to determine where to draw. No plugins used.
 - Photobooth built using pure HTML5 canvas and Javascript. No plugins used.
 
-### Stack:
+
+### Stack
 - Photo editor and photobooth: HTML5 Canvas, JavaScript, HTML, CSS, Bootstrap
 - Image processing, email handling, and database: Python, OpenCV, SQLite, SQLAlchemy, Flask-Mail
 - Framework: Flask
 
 
-### Notes
-
-OpenCV can be difficult to install and configure. For your convenience, is a [version without the OpenCV image processing](https://github.com/larissam/DecorateIt-NoOpenCV). Additionally, here is an in-progress [version deployed on Heroku](http://decorateit5.herokuapp.com/).	 
 
