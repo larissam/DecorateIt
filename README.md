@@ -44,7 +44,7 @@
 
 
 ### Stack
-- Photo editor and photobooth: HTML5 Canvas, JavaScript, HTML, CSS, Bootstrap
+- Photo editor and photobooth: HTML5 Canvas, JavaScript, Python, HTML, CSS, Bootstrap
 - Image processing, email handling, and database: Python, OpenCV, SQLite, SQLAlchemy, Flask-Mail
 - Framework: Flask
 
