@@ -20,14 +20,6 @@
 	<!-- styles for decorate page -->
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/decorate.css') }}">
 
-	<style>
-
-	.ui-accordion .ui-accordion-icons {
-padding-left: 0;
-}
-
-	</style>
-
 {% endblock %}
 
 {% block content %}
@@ -212,8 +204,11 @@ padding-left: 0;
 			<button id="pinkSparkleStamp"><img src="{{ url_for('static', filename='images/pinksparkle.png') }}" style="height:32px; width:32px;"/></button>
 			<button id="orangeSparkleStamp"><img src="{{ url_for('static', filename='images/orangesparkle.png') }}" style="height:32px; width:32px;"/></button>
 			<button id="yellowSparkleStamp"><img src="{{ url_for('static', filename='images/yellowsparkle.png') }}" style="height:32px; width:32px;"/></button>
-			<button id="pinkGlassesStamp"><img src="{{ url_for('static', filename='images/pinkGlasses.png') }}" style="height:32px; width:32px;"/></button>
-			<button id="glassesStamp"><img src="{{ url_for('static', filename='images/glasses.png') }}" style="height:32px; width:32px;"/></button>
+
+			<!-- Glasses commented out until can be resized -->
+			<!-- <button id="pinkGlassesStamp"><img src="{{ url_for('static', filename='images/pinkGlasses.png') }}" style="height:32px; width:32px;"/></button>
+			<button id="glassesStamp"><img src="{{ url_for('static', filename='images/glasses.png') }}" style="height:32px; width:32px;"/></button> -->
+			
 			<button id="stacheStamp"><img src="{{ url_for('static', filename='images/stache.png') }}" style="height:32px; width:32px;"/></button>
 			<button id="bearStamp"><img src="{{ url_for('static', filename='images/teddybear.png') }}" style="height:32px; width:32px;"/></button>
 
@@ -264,7 +259,7 @@ imageObj.onload = function() {
 	background.height = imageObj.height;
 	backgroundctx = background.getContext('2d');
 
-    backgroundctx.drawImage(imageObj, 0, 0);
+    backgroundctx.drawImage(imageObj, 0, 0, imageObj.width, imageObj.height);
 
     setUpCanvas();
  };
@@ -283,8 +278,8 @@ var markerLarge = 10;
 var markerXlarge = 15;
 
 //Brush sizes
-var brushSmall = 32;
-var brushMedium = 50;
+var brushSmall = 50;
+var brushMedium = 60;
 var brushLarge = 75;
 var brushXlarge = 100;
 
@@ -526,16 +521,17 @@ document.getElementById("pearlStamp").addEventListener('click', function() {
 	drawStamp(document.getElementById("pearlStamp").childNodes[0].src);
 });
 
-document.getElementById("pinkGlassesStamp").addEventListener('click', function() {
-	updateInterface("stamp", document.getElementById("pinkGlassesStamp"));
-	drawStamp(document.getElementById("pinkGlassesStamp").childNodes[0].src);
-});
+//Removing glasses until they can be resized
+// document.getElementById("pinkGlassesStamp").addEventListener('click', function() {
+// 	updateInterface("stamp", document.getElementById("pinkGlassesStamp"));
+// 	drawStamp(document.getElementById("pinkGlassesStamp").childNodes[0].src);
+// });
 
 
-document.getElementById("glassesStamp").addEventListener('click', function() {
-	updateInterface("stamp", document.getElementById("glassesStamp"));
-	drawStamp(document.getElementById("glassesStamp").childNodes[0].src);
-});
+// document.getElementById("glassesStamp").addEventListener('click', function() {
+// 	updateInterface("stamp", document.getElementById("glassesStamp"));
+// 	drawStamp(document.getElementById("glassesStamp").childNodes[0].src);
+// });
 
 document.getElementById("heartDiamondStamp").addEventListener('click', function() {
 	updateInterface("stamp", document.getElementById("heartDiamondStamp"));
@@ -805,7 +801,7 @@ function drawStamp(src) {
 
 	//When you click the mouse, draw the stamp
 	el.onmousedown = function(e) {
-		ctx.drawImage(img, e.pageX-200, e.pageY-200, activeStampSize, activeStampSize); //200px for offset
+		ctx.drawImage(img, e.pageX-160, e.pageY-220, activeStampSize, activeStampSize); //200px for offset
 	};
 };
 
@@ -832,7 +828,7 @@ function drawWithBrush(src, space) {
 	//When you click the mouse, start keeping track of your last point
 	el.onmousedown = function(e) {
 		isDrawing = true;
-		lastPoint = { x: e.pageX-160, y: e.pageY-160}; //changed clientX to pageX. 160px for offset
+		lastPoint = { x: e.pageX-125, y: e.pageY-185}; //changed clientX to pageX. 160px for offset
 
 		//Remove shadow in case you used the marker before
 		ctx.shadowBlur = 0;
@@ -842,7 +838,7 @@ function drawWithBrush(src, space) {
 	el.onmousemove = function(e) {
 		if (!isDrawing) return;
 
-		var currentPoint = { x: e.pageX-160, y: e.pageY-160}; //changed clientX to pageX
+		var currentPoint = { x: e.pageX-125, y: e.pageY-185}; //changed clientX to pageX
 		var dist = distanceBetween(lastPoint, currentPoint);
 		var angle = angleBetween(lastPoint, currentPoint);
 
@@ -874,7 +870,7 @@ function drawWithMarker(color, shadowColor) {
 	el.onmousedown = function(e) {
 	  isDrawing = true;
 	  
-	  ctx.moveTo(e.pageX-180, e.pageY-180); //changed clientX to pageX 180s for offset
+	  ctx.moveTo(e.pageX-125, e.pageY-185); //changed clientX to pageX 180s for offset
 	  ctx.beginPath();
 	};
 
@@ -886,7 +882,7 @@ function drawWithMarker(color, shadowColor) {
 	    ctx.lineWidth = activeMarkerSize;
 		ctx.shadowBlur = ctx.lineWidth;
 
-	    ctx.lineTo(e.pageX-180, e.pageY-165); //the minuses are for offsets. changed clientX to pageX
+	    ctx.lineTo(e.pageX-125, e.pageY-185); //the minuses are for offsets. changed clientX to pageX
 	    ctx.stroke();
 	  }
 	};
@@ -965,6 +961,7 @@ function save_image(){
 	ctxCopyForDownloading.drawImage(document.getElementById("photo"), 0, 0);
 	ctxCopyForDownloading.drawImage(document.getElementById("c"), 0, 0);
 
+
 	//Sends the canvas for saving to the backend for storage in the gallery
 	$.ajax({
 		type: "POST",
@@ -978,7 +975,8 @@ function save_image(){
 		}
 
 	});
-}
+};
+
 
 </script>
 

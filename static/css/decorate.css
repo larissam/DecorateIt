@@ -80,6 +80,10 @@ button:focus {
 	-webkit-filter: none;
 }
 
+.ui-accordion .ui-accordion-icons {
+	padding-left: 0;
+}
+
 /* styles for editor cursors */
 .cursor-marker {
 	cursor: url("../images/cursormarker.png" ), auto;
