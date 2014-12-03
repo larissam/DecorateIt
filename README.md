@@ -30,7 +30,7 @@
 
 ### Alternate versions
 1. [DecorateIt without OpenCV](https://github.com/larissam/DecorateIt-NoOpenCV) - download this repo to run locally if OpenCV is difficult to configure.
-2. [DecorateIt on Heroku](http://decorateit5.herokuapp.com/) - In-progress version deployed on Heroku. CAVEATS: does not have photobooth or OpenCV functionality. Only supports jpgs and pngs. Needs security improvements. Only tested on Chrome version 39.0.2171.71 running OSX. 
+2. DecorateIt on Heroku - In-progress version deployed on Heroku. CAVEATS: does not have photobooth or OpenCV functionality. Only supports jpgs and pngs. Needs security improvements. Only tested on Chrome version 39.0.2171.71 running OSX. 
 
 
 ### How it works
