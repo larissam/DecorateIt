@@ -294,7 +294,7 @@ def send_mail():
                   sender="larissa.muramoto@gmail.com",
                   recipients=addresses)
 	msg.add_recipient(session['email'])
-	msg.html = request.form['body'] + "<br />" + "<br />" + "Here is your decorated image from DecorateIt! Visit us again!"
+	msg.html = request.form['body'] + "<br />" + "<br />" + "Here is your decorated image from DecorateIt. Please view our source code <a href='https://github.com/larissam/DecorateIt'>here on github</a>!"
 	
 	with app.open_resource(request.form['filename'].strip()) as fp:
 		msg.attach("image.jpg", "image/jpg", fp.read())

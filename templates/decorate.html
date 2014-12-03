@@ -20,6 +20,14 @@
 	<!-- styles for decorate page -->
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/decorate.css') }}">
 
+	<style>
+
+	.ui-accordion .ui-accordion-icons {
+padding-left: 0;
+}
+
+	</style>
+
 {% endblock %}
 
 {% block content %}
@@ -94,7 +102,7 @@
 
 				              <br />
 				              <label for="subject">Email subject:</label>
-				              <input type="text" name="subject" class="form-control" placeholder="Subject..." required autofocus name="subject"/>
+				              <input type="text" name="subject" class="form-control" placeholder="Subject..." required autofocus name="subject" value="{{ session.email ~ ' sent you an image from DecorateIt!' }}" />
 
 				              <br />
 				              <label for="subject">Email body:</label>
@@ -144,7 +152,7 @@
 	<div id="accordion">
 
 		<!-- markers -->
-		<h3 style="background-color: #FF5050; text-align: center;"><button><img src="{{ url_for('static', filename='images/navigatormarker.png') }}" class="icon-inactive"/></button></h3>
+		<h3 style="background-color: #FF5050; text-align: center; outline:0;"><button class="accordion-button-adjustment"><img src="{{ url_for('static', filename='images/navigatormarker.png') }}" class="icon-inactive"/></button></h3>
 
 		<!-- marker choices -->
 		<div style="border: 2px solid #FF5050; background-color:white;">
@@ -167,7 +175,7 @@
 		</div>
 
 		<!-- brushes -->
-		<h3 style="background-color: #FF987E; text-align: center;"><button><img src="{{ url_for('static', filename='images/navigatorbrush.png') }}" class="icon-inactive"/></button></h3>
+		<h3 style="background-color: #FF987E; text-align: center; outline:0;"><button><img src="{{ url_for('static', filename='images/navigatorbrush.png') }}" class="icon-inactive"/></button></h3>
 
 		<!-- brush choices -->
 		<div style="border: 2px solid #FF987E; background-color:white;">
@@ -179,7 +187,7 @@
 		</div>
 
 		<!-- stamps -->
-		<h3 style="background-color: #FFCC99; text-align: center;"><button><img src="{{ url_for('static', filename='images/navigatorstamp.png') }}" class="icon-inactive"/></button></h3>
+		<h3 style="background-color: #FFCC99; text-align: center; outline:0;"><button><img src="{{ url_for('static', filename='images/navigatorstamp.png') }}" class="icon-inactive"/></button></h3>
 
 		<!-- stamp choices -->
 		<div style="border: 2px solid #FFCC99; background-color:white;">
@@ -392,27 +400,27 @@ Brushes
 
 document.getElementById("changeToolToBrush").addEventListener('click', function(){
 	updateInterface("brush", document.getElementById("changeToolToBrush"));
-	drawWithBrush(document.getElementById("changeToolToBrush").childNodes[0].src);
+	drawWithBrush(document.getElementById("changeToolToBrush").childNodes[0].src, 1);
 });
 
 document.getElementById("changeToolToBrush2").addEventListener('click', function(){
 	updateInterface("brush", document.getElementById("changeToolToBrush2"));
-	drawWithBrush(document.getElementById("changeToolToBrush2").childNodes[0].src);
+	drawWithBrush(document.getElementById("changeToolToBrush2").childNodes[0].src, 100);
 });
 
 document.getElementById("changeToolToBrush3").addEventListener('click', function(){
 	updateInterface("brush", document.getElementById("changeToolToBrush3"));
-	drawWithBrush(document.getElementById("changeToolToBrush3").childNodes[0].src);
+	drawWithBrush(document.getElementById("changeToolToBrush3").childNodes[0].src, 100);
 });
 
 document.getElementById("changeToolToBlueSparkleBrush").addEventListener('click', function(){
 	updateInterface("brush", document.getElementById("changeToolToBlueSparkleBrush"));
-	drawWithBrush(document.getElementById("changeToolToBlueSparkleBrush").childNodes[0].src);
+	drawWithBrush(document.getElementById("changeToolToBlueSparkleBrush").childNodes[0].src, 100);
 });
 
 document.getElementById("changeToolToPinkSparkleBrush").addEventListener('click', function(){
 	updateInterface("brush", document.getElementById("changeToolToPinkSparkleBrush"));
-	drawWithBrush(document.getElementById("changeToolToPinkSparkleBrush").childNodes[0].src);
+	drawWithBrush(document.getElementById("changeToolToPinkSparkleBrush").childNodes[0].src, 100);
 });
 
 
@@ -644,28 +652,33 @@ function setUpCanvas() {
 	updateCursor("marker");
 	drawWithMarker("purple", "purple");
 
-};
+}
+
+//Prevent selecting the canvas in Chrome 27 Linux
+document.getElementById("c").addEventListener("mousemove",function (e){
+	e.preventDefault(); 
+});
 
 /**********************************************************************************
 Interface updates
 ***********************************************************************************/
 
 //Updates the interface according to what you selected
-function updateInterface(tool, button){
+function updateInterface(toolType, toolButton){
 	//Eraser updates
-	if (tool == "eraser") {
+	if (toolType == "eraser") {
 		ctx.globalCompositeOperation = "destination-out";
 		activeTool = "marker";
 		updateCursor("eraser");
 		drawWithMarker("purple", "purple");
-		updateActiveBrushOrStampElement(button);
+		updateActiveBrushOrStampElement(toolButton);
 	}
 	//Marker updates
-	else if (tool == "marker") {
+	else if (toolType == "marker") {
 		ctx.globalCompositeOperation = "source-over";
 		activeTool = "marker";
 		updateCursor("marker");
-		updateActiveBrushOrStampElement(button);
+		updateActiveBrushOrStampElement(toolButton);
 
 		//update marker size
 		if (activeMarkerSize == markerSmall) {
@@ -679,13 +692,13 @@ function updateInterface(tool, button){
 		}
 	}
 	//Brush updates
-	else if (tool == "brush") {
+	else if (toolType == "brush") {
 		ctx.globalCompositeOperation = "source-over";
 		activeTool = "brush";
 		updateCursor("brush");
 
-		drawWithBrush(button.childNodes[0].src);
-		updateActiveBrushOrStampElement(button);
+		drawWithBrush(toolButton.childNodes[0].src);
+		updateActiveBrushOrStampElement(toolButton);
 
 		//update brush size
 		if (activeBrushSize == brushSmall) {
@@ -703,8 +716,8 @@ function updateInterface(tool, button){
 		ctx.globalCompositeOperation = "source-over";
 		activeTool = "stamp";
 		updateCursor("stamp");
-		drawStamp(button.childNodes[0].src);
-		updateActiveBrushOrStampElement(button);
+		drawStamp(toolButton.childNodes[0].src);
+		updateActiveBrushOrStampElement(toolButton);
 
 		//update stamp size
 		if (activeStampSize == stampSmall) {
@@ -751,18 +764,22 @@ function updateActiveBrushOrStampElement(newElement) {
 		for (var i = 3; i< headerToBeUpdated.length; i += 8) {
 			 if (headerToBeUpdated[i].classList.contains("ui-state-active")) {
 				var buttonToBeUpdated = headerToBeUpdated[i].childNodes[1];
-				buttonToBeUpdated.classList.add("accordion-button-adjustment");
+				buttonToBeUpdated.classList.remove("accordion-button-adjustment");
 			}
 		}
 	}
 	//Otherwise, highlight the appropriate icon
 	else {
 		var headerToBeUpdated = document.getElementById("accordion").childNodes;
-		console.log(headerToBeUpdated);
 		for (var i = 3; i< headerToBeUpdated.length; i += 8) {
-			 if (headerToBeUpdated[i].classList.contains("ui-state-active")) {
-				var buttonToBeUpdated = headerToBeUpdated[i].childNodes[1];
-				console.log(buttonToBeUpdated);
+			var buttonToBeUpdated = headerToBeUpdated[i].childNodes[1];
+
+			if (headerToBeUpdated[i].classList.contains("ui-state-active")) {
+				buttonToBeUpdated.classList.add("accordion-button-adjustment");
+				console.log(headerToBeUpdated);
+				console.log(headerToBeUpdated[i]);
+				headerToBeUpdated[i].blur();
+			} else {
 				buttonToBeUpdated.classList.remove("accordion-button-adjustment");
 			}
 		}
@@ -793,8 +810,8 @@ function drawStamp(src) {
 };
 
 
-//For brush drawing, given a brush image
-function drawWithBrush(src) {
+//For brush drawing, given a brush image and space parameter. Space parameter ranges from 1(close)-100(far apart).
+function drawWithBrush(src, space) {
 	
 	//Load the brush image
 	var img = new Image();
@@ -831,7 +848,7 @@ function drawWithBrush(src) {
 
 		//For the entire distance between your last point and the current point, draw the loaded brush image
 		//The i+=100 is what dictates how far apart the images are
-		for (var i = 0; i < dist; i+= 100) {
+		for (var i = 0; i < dist; i+= space) {
 			x = lastPoint.x + (Math.sin(angle) * i) - 25;
 			y = lastPoint.y + (Math.cos(angle) * i) - 25;
 			ctx.drawImage(img, x, y, activeBrushSize, activeBrushSize);
@@ -840,8 +857,9 @@ function drawWithBrush(src) {
 		lastPoint = currentPoint;
 	};
 
-	//Stop drawing once you lift up your click
-	el.onmouseup = function() {
+	//Stop drawing once you lift up your click. Register event on window to account for
+	//mouse movement outside of the canvas
+	window.onmouseup = function() {
 		isDrawing = false;
 	};
 
@@ -873,8 +891,9 @@ function drawWithMarker(color, shadowColor) {
 	  }
 	};
 
-	//Stop drawing once you lift up your click
-	el.onmouseup = function() {
+	//Stop drawing once you lift up your click. Register event on window to account for
+	//mouse movement outside of the canvas
+	window.onmouseup = function() {
 	  isDrawing = false;
 	};
 };

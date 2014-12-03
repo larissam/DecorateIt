@@ -38,7 +38,7 @@
 {% block content %}
 
 <!-- upload image option -->
-<div class="col-md-4">
+<div class="col-md-4 text-center">
 	<button class="bigicons" id="uploadicon">
 		<a href="#uploadlink">
 			<img src="{{ url_for('static', filename='images/upload.png') }}" style="width:300px" />
@@ -63,21 +63,21 @@
 </div>
 
 <!-- "OR" text -->
-<div class="col-md-4">
-	<div style="position:absolute; top:150px; left:130px; font-size:60px;">
+<div class="col-md-4 text-center">
+	<div style="position:absolute; top:150px; left:150px; font-size:60px;">
 		<p>OR</p>
 	</div>
 </div>
 
 <!-- photobooth option -->
-<div class="col-md-4">
+<div class="col-md-4 text-center">
 	<button class="bigicons">
 	 	<a href="{{ url_for('photobooth') }}">
 	 		<img src="{{ url_for('static', filename='images/camera.png') }}" style="width:300px" />
 	 	</a>
 	</button>
 	 <!-- helper text-->
-	<p style="text-align:center; font-size:30px; padding-left:40px;">Take Picture</p>
+	<p style="text-align:center; font-size:30px;">Take Picture</p>
 </div>
 
 {% endblock %}

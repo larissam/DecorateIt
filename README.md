@@ -10,12 +10,6 @@
 4. Lets you download, email, or save your decorated photo to your gallery
 
 
-### How it works
-
-- Image enhancement (eye enlargement and skin smoothing) done using OpenCV. First, OpenCV is used to detect the face and eyes. Then, it enlarges the eyes. To improve blending, it applies a transparency mask (created by deconstructing the image into r,g,b channels and reconstructing it with an alpha/transparency channel) to each enlarged eye before pasting it back on the face. Finally, bilateral filtering is used to smooth facial skin without sacrificing image sharpness.
-- Image editor built using pure HTML5 Canvas and Javascript. Javascript uses the mouse's position on the canvas to determine where to draw. No plugins used.
-- Photobooth built using pure HTML5 canvas and Javascript. No plugins used.
-
 ### To get it running locally
 
 1. Clone this repo
@@ -29,7 +23,20 @@
 4. Run the app from the terminal
 <code>$ python routes.py </code>
 
+
+### How it works
+
+- Image enhancement (eye enlargement and skin smoothing) done using OpenCV. First, OpenCV is used to detect the face and eyes. Then, it enlarges the eyes. To improve blending, it applies a transparency mask (created by deconstructing the image into r,g,b channels and reconstructing it with an alpha/transparency channel) to each enlarged eye before pasting it back on the face. Finally, bilateral filtering is used to smooth facial skin without sacrificing image sharpness.
+- Image editor built using pure HTML5 Canvas and Javascript. Javascript uses the mouse's position on the canvas to determine where to draw. No plugins used.
+- Photobooth built using pure HTML5 canvas and Javascript. No plugins used.
+
+### Stack:
+-Photo editor and photobooth: HTML5 Canvas, JavaScript, HTML, CSS, Bootstrap
+-Image processing, email handling, and database: Python, OpenCV, SQLite, SQLAlchemy, Flask-Mail
+-Framework: Flask
+
+
 ### Notes
 
-OpenCV can be difficult to install and configure. For your convenience, is a [version without the OpenCV image processing](https://github.com/larissam/DecorateIt-NoOpenCV). Additionally, here is a [version deployed on Heroku](https://github.com/larissam/DecorateIt-Heroku).
+OpenCV can be difficult to install and configure. For your convenience, is a [version without the OpenCV image processing](https://github.com/larissam/DecorateIt-NoOpenCV). Additionally, here is an in-progress [version deployed on Heroku](http://decorateit5.herokuapp.com/). 
 
