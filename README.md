@@ -35,9 +35,12 @@
 
 ### How it works
 
-- Image enhancement (eye enlargement and skin smoothing) done using OpenCV. First, OpenCV is used to detect the face and eyes. Then, it enlarges the eyes. To improve blending, it applies a transparency mask (created by deconstructing the image into r,g,b channels and reconstructing it with an alpha/transparency channel) to each enlarged eye before pasting it back on the face. Finally, bilateral filtering is used to smooth facial skin without sacrificing image sharpness.
-- Image editor built using pure HTML5 Canvas and Javascript. Javascript uses the mouse's position on the canvas to determine where to draw. No plugins used.
-- Photobooth built using pure HTML5 canvas and Javascript. No plugins used.
+- Image enhancement (eye enlargement and skin smoothing) is done using OpenCV. First, OpenCV (Viola-Jones algorithm) is used to detect the face and eyes. Then, it cuts out the eyes and enlarges them 20%. To improve blending, it applies a transparency mask (created by deconstructing the image into r,g,b channels and reconstructing it with an alpha/transparency channel) to each enlarged eye before pasting it back on the face. Finally, bilateral filtering is used to smooth facial skin without sacrificing image sharpness.
+
+![Image Processing Method](https://github.com/larissam/DecorateIt/blob/master/readmeimages/imageprocessingmethod.png "Image Processing Method")
+
+- Image editor was built using pure HTML5 Canvas and Javascript. Javascript uses the mouse's position on the canvas to determine where to draw. No plugins used.
+- Photobooth was built using pure HTML5 canvas and Javascript. No plugins used.
 
 
 ### Stack
