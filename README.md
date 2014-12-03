@@ -1,18 +1,17 @@
 # DecorateIt
 
 ### DecorateIt is a web app that...
-1. Lets you upload a photo or take one using the built-in photobooth
-![Photobooth Before](https://github.com/larissam/DecorateIt/blob/master/readmeimages/photoboothbefore.png "Photobooth Before")
-![Photobooth After](https://github.com/larissam/DecorateIt/blob/master/readmeimages/photoboothafter.png "Photobooth After")
+1. Lets you upload a photo or take one using the built-in photobooth (seen below):
+![Photobooth](https://github.com/larissam/DecorateIt/blob/master/readmeimages/photobooth.png "Photobooth")
 
-2. Automatically enhances your photo by enlarging your eyes and smoothing your skin
+2. Automatically enhances your photo by enlarging your eyes and smoothing your skin, as shown in the gif below:
 ![Image Processing](https://github.com/larissam/DecorateIt/blob/master/readmeimages/enlargeeyes.gif "Image Processing")
 
-3. Lets you decorate your chosen photo using markers, brushes, and stamps
+3. Lets you decorate your chosen photo using markers, brushes, and stamps:
 
 ![Editor](https://github.com/larissam/DecorateIt/blob/master/readmeimages/editor.png "Editor")
 
-4. Lets you download, email, or save your decorated photo to your gallery
+4. Lets you download, email, or save your decorated photo to your gallery:
 
 ![Gallery](https://github.com/larissam/DecorateIt/blob/master/readmeimages/gallery.png "Gallery")
 
